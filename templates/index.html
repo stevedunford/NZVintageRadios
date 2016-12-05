@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <p>This bit is included via the templating engine... damn, now I'm just showing off</p>
+    <form action="/echo" method="POST"><input name="text"><input type="submit" value="Echo"></form>
+{% endblock %}

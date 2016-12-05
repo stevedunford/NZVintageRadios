@@ -1,0 +1,12 @@
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+        {% for message in messages %}
+          <li>
+            {% if loop.index0 == 0 %}<span class="close">☒</span>{% endif %}
+            {{ message }}
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}

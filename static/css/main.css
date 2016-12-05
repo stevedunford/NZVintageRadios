@@ -1,0 +1,54 @@
+/* flash is the Flask built-in messaging bar at the top of the page */
+@import url('https://fonts.googleapis.com/css?family=Limelight|Open+Sans');
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+#header {
+	background-color: silver;
+	width: 408px;
+	margin: 0;
+	padding: 10px;
+	border-radius: 15px 0 5px 0; 
+}
+
+#header h1 {
+	font-family: 'Limelight', cursive;
+	padding-left: 65px;
+}
+
+#header img {
+	position: absolute;
+    top: 9px;
+    left: 10px;
+    overflow: hidden;
+}
+
+.flash {
+	font-family: Arial, sans-serif;
+	font-weight: bolder;
+	background-color: #dd0000;
+	color: white;
+	width: 85%;
+	height: auto;
+	border-radius: 3px;
+	border: 1px black;
+	list-style:	none;
+	margin: 5px;
+	padding: 4px 10px;
+}
+
+.flash ul li {
+	left: 80px;
+}
+
+/* close is the 'X' in flash msgs and is used to trigger message hide fn */
+.close {
+	position: absolute;
+	right: 170px;
+}
+
+.close:hover {
+	cursor: pointer;
+}
