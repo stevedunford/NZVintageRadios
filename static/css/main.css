@@ -1,10 +1,35 @@
-/* flash is the Flask built-in messaging bar at the top of the page */
+/*
+
+  main.css - for the NZ Vintage Radios Site Dec 2016
+  Author: Steve Dunford
+  Licence: Beerware - If you like it then buy me a beer
+
+*/
+
+/* Title font and main site font */
 @import url('https://fonts.googleapis.com/css?family=Limelight|Open+Sans');
 
+
+/*******************************
+ * Main CSS setup for the site *
+ *******************************/
 body {
 	font-family: 'Open Sans', sans-serif;
 }
 
+a {
+	text-decoration: none;
+	color: #777;
+}
+
+a:hover {
+	color: #999;
+}
+
+
+/********************
+ * Header block CSS *
+ ********************/
 #header {
 	background-color: silver;
 	width: 408px;
@@ -25,6 +50,26 @@ body {
     overflow: hidden;
 }
 
+
+/******************
+ * Navigation Bar *
+ ******************/
+#nav {
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+}
+
+#nav ul li {
+	display: inline;
+	padding-left: 20px;
+	font-weight: bolder;
+}
+
+
+/********************************************************************
+ * flash is the Flask built-in messaging bar at the top of the page *
+ ********************************************************************/
 .flash {
 	font-family: Arial, sans-serif;
 	font-weight: bolder;
