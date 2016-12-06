@@ -6,13 +6,13 @@
 
 */
 
-/* Title font and main site font */
+/* Title font (Limelight) and main site font */
 @import url('https://fonts.googleapis.com/css?family=Limelight|Open+Sans');
 
 
-/*******************************
- * Main CSS setup for the site *
- *******************************/
+/*
+ * Main CSS setup for the site 
+ */
 body {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -27,15 +27,14 @@ a:hover {
 }
 
 
-/********************
- * Header block CSS *
- ********************/
+/*
+ * Header block CSS 
+ */
 #header {
 	background-color: silver;
-	width: 408px;
 	margin: 0;
 	padding: 10px;
-	border-radius: 15px 0 5px 0; 
+	border-radius: 15px 0 0 0; 
 }
 
 #header h1 {
@@ -51,13 +50,20 @@ a:hover {
 }
 
 
-/******************
- * Navigation Bar *
- ******************/
+/*
+ * Navigation Bar 
+ */
 #nav {
 	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-bottom-right-radius: 10px;
 	background-color: #000;
 	color: #fff;
+}
+
+#nav ul {
+	margin: 0;
 }
 
 #nav ul li {
@@ -67,9 +73,9 @@ a:hover {
 }
 
 
-/********************************************************************
- * flash is the Flask built-in messaging bar at the top of the page *
- ********************************************************************/
+/*
+ * flash is the Flask built-in messaging bar at the top of the page 
+ */
 .flash {
 	font-family: Arial, sans-serif;
 	font-weight: bolder;
@@ -78,7 +84,6 @@ a:hover {
 	width: 85%;
 	height: auto;
 	border-radius: 3px;
-	border: 1px black;
 	list-style:	none;
 	margin: 5px;
 	padding: 4px 10px;
@@ -88,8 +93,7 @@ a:hover {
 	left: 80px;
 }
 
-/* close is the 'X' in flash msgs and is used to trigger message hide fn */
-.close {
+.close {   /* 'X' in flash msgs used to trigger message hide fn */
 	position: absolute;
 	right: 170px;
 }

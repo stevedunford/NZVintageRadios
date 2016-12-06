@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
+  {% if rad %}
+    {% include 'radio1.html' %}
+  {% else %}  
     <p>This bit is included via the templating engine... damn, now I'm just showing off</p>
     <form action="/echo" method="POST"><input name="text"><input type="submit" value="Echo"></form>
+  {% endif %}
 {% endblock %}

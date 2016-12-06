@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+
+<!--  
+NZ Vintage Radio Site
+Author: Steve Dunford
+Licence: Beerware - 'cos coding is thirsty work
+-->
+
 <html>
   <head>
     <title>NZ Vintage Radios</title>
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
     <script>
       $( document ).ready(function() {
@@ -15,15 +21,12 @@
   </head>
 
   <body>
-  
+
     <!-- title, branding etc --> {% include 'header.html' %} 
 
     <!-- menu bar --> {% include 'navigation.html' %} 
 
     <!-- flash messaging - Flask builtin --> {% include 'flash.html' %} 
-
-    <p>Welcome to the hardest single line of text ever put on the web!  Fuck me, what a pain...</p>
-    <hr/>
 
     <!-- main page content -->
     {% block content %}{% endblock %}

@@ -11,8 +11,11 @@ def index():
 @app.route("/echo", methods=['POST'])
 def echo():
     flash(request.form['text'])
-    flash("Hi, I'm noodles")
-    return '<a href="/">HAHAHA</a> You said: '
+    return '<a href="/">Click here</a> to test Flash Messages'
+
+@app.route("/radio1")
+def radio1():
+	return render_template("index.html", rad=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
