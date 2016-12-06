@@ -15,7 +15,12 @@
  */
 body {
 	font-family: 'Open Sans', sans-serif;
+	max-width: 960px;
 }
+
+ #container {    /* Used to encapsulate main content */
+ 	width: 100%;
+ }
 
 a {
 	text-decoration: none;
@@ -55,7 +60,7 @@ a:hover {
  */
 #nav {
 	width: 100%;
-	margin: 0;
+	margin: 0 0 2px 0;
 	padding: 0;
 	border-bottom-right-radius: 10px;
 	background-color: #000;
@@ -101,3 +106,26 @@ a:hover {
 .close:hover {
 	cursor: pointer;
 }
+
+
+/*
+ * Radio pages layout
+ */
+ #radio_specs {
+ 	display: inline-block;
+ 	vertical-align: top;
+ 	background-color: #eee;
+ }
+
+ #radio_imgs {
+ 	float: right;
+ 	border: 1px solid silver;
+ 	border-radius: 15px 0 10px 0;
+ 	padding: 2px;
+ 	vertical-align: top;
+ 	background-color: #aaa;
+ }
+
+ #radio_imgs #main_img {
+ 	border-radius: 15px 0 10px 0;
+ }
