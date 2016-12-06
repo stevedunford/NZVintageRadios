@@ -11,7 +11,7 @@
 
 
 /*
- * Main CSS setup for the site 
+ * Main CSS setup for the site .
  */
 body {
 	font-family: 'Open Sans', sans-serif;
@@ -29,6 +29,11 @@ a {
 
 a:hover {
 	color: #999;
+}
+
+#bold_right {
+  font-weight: bolder;
+  text-align: right;
 }
 
 
@@ -52,6 +57,11 @@ a:hover {
     top: 9px;
     left: 10px;
     overflow: hidden;
+}
+
+#login_wrapper {
+  float: right;
+  text-align: right;
 }
 
 
@@ -121,7 +131,7 @@ a:hover {
  	float: right;
  	border: 1px solid silver;
  	border-radius: 15px 0 10px 0;
- 	padding: 2px;
+ 	padding: 1px;
  	vertical-align: top;
  	background-color: #aaa;
  }
