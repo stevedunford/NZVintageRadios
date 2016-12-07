@@ -2,6 +2,7 @@
 
 {% block content %}
   {% if rad %}
+    {% include 'uploads.html' %}
     {% include 'radio1.html' %}
   {% else %}  
     <p>This bit is included via the templating engine... damn, now I'm just showing off</p>
