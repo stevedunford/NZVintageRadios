@@ -127,15 +127,22 @@ a:hover {
  	background-color: #eee;
  }
 
+#radio_specs img {
+  float: right;
+  max-width: 100px;
+  border: 1px solid silver;
+  margin: 3px;
+}
+
  #radio_imgs {
  	float: right;
  	border: 1px solid silver;
- 	border-radius: 15px 0 10px 0;
+ 	border-radius: 0 10px 0 15px;
  	padding: 1px;
  	vertical-align: top;
  	background-color: #aaa;
  }
 
  #radio_imgs #main_img {
- 	border-radius: 15px 0 10px 0;
+ 	border-radius: 0 10px 0 15px;
  }
