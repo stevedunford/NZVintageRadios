@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, session, request, render_template, url_for
+from flask import Flask, flash, session, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
 from flask.ext.hashing import Hashing
 
@@ -14,16 +14,22 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 hashing = Hashing(app)
 SALT = 'salt'  
+logged_in = 0
 
 #TODO before live - salt and db password
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        password = hashing.hash_value(request.form['password'], salt=SALT)
+        authenticate(username, password)
+    return render_template("index.html", logged_in=logged_in)
 
 @app.route("/authenticate")
 def authenticate():
+    global logged_in
     username = request.args.get('username')
     password = hashing.hash_value(request.args.get('password'), salt=SALT)
     conn = mysql.connect()
@@ -33,12 +39,20 @@ def authenticate():
     if data is None:
         return "WRONG!" + password
     else:
-        return "YAY!"
+        logged_in = 1
+        return redirect(redirect_url())
   
 @app.route("/echo", methods=['POST'])
 def echo():
     flash(request.form['text'])
     return '<a href="/">Click here</a> to test Flash Messages'
+
+# Return to previous page helper function
+# http://flask.pocoo.org/docs/reqcontext/
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
 
 @app.route("/radio1")
 def radio1():
