@@ -1,6 +1,7 @@
 import os
 from flask import Flask, flash, session, request, render_template, url_for
 from flaskext.mysql import MySQL
+from flask.ext.hashing import Hashing
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -10,13 +11,30 @@ app.config['MYSQL_DATABASE_USER'] = 'nzvr_db'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'nzvr_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+hashing = Hashing(app)
+SALT = 'salt'  
+
+#TODO before live - salt and db password
 
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
+@app.route("/authenticate")
+def authenticate():
+    username = request.args.get('username')
+    password = hashing.hash_value(request.args.get('password'), salt=SALT)
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM user WHERE username='" + username + "' AND password='" + password + "'")
+    data = cursor.fetchone()
+    if data is None:
+        return "WRONG!" + password
+    else:
+        return "YAY!"
+  
 @app.route("/echo", methods=['POST'])
 def echo():
     flash(request.form['text'])
