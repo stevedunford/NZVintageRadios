@@ -56,6 +56,7 @@ def redirect_url(default='index'):
 
 @app.route("/radio1")
 def radio1():
+    global logged_in
     path = "/".join([APP_ROOT, 'static/images'])
     print("___________________________\n {0} \n ---------------------------------".format(path))
     logo = os.listdir(path)[0]
@@ -77,7 +78,7 @@ def uploads():
 		print("file being stored in: " + destination)
 		file.save(destination)
 
-	return render_template("index.html")
+	return render_template("index.html", logged_in=logged_in)
 
 
 
