@@ -18,7 +18,9 @@ def echo():
 
 @app.route("/radio1")
 def radio1():
-    logo=os.listdir('static/images')[0]
+    path = "/".join([APP_ROOT, 'static/images'])
+    print("___________________________\n {0} \n ---------------------------------".format(path))
+    logo = os.listdir(path)[0]
     return render_template("index.html", rad=True, logo=logo)
 
 @app.route("/uploads", methods=['POST'])
