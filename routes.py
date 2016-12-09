@@ -41,6 +41,20 @@ def authenticate():
     else:
         logged_in = 1
         return redirect(redirect_url())
+
+@app.route("/radio", methods=['GET', 'POST'])
+def radio():
+    if request.method == "POST":
+	return ("POST this time around")
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM manufacturer ORDER BY name ASC")
+    data = cursor.fetchall()
+    if data is None:
+        return "NONE!"
+    else:
+        out = [str(item[0]) for item in data]
+        return render_template("radio.html", manufacturers=out)
   
 @app.route("/echo", methods=['POST'])
 def echo():
