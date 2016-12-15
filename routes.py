@@ -14,7 +14,7 @@ Licence: Beerware.  I need a beer, you need a website - perfect
 import os # for file upload path determination
 from flask import Flask, flash, session, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
-from flask_login import LoginManager
+#from flask_login import LoginManager
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,8 +31,8 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app) 
 
 # User login config
-login_manager = LoginManager()
-login_manager.init_app(app)
+#login_manager = LoginManager()
+#login_manager.init_app(app)
 
 
 #TODO before live - salt and db password
@@ -40,18 +40,18 @@ login_manager.init_app(app)
 '''
 USER MANAGEMENT
 '''
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+#@login_manager.user_loader
+#def load_user(user_id):
+#    return User.get(user_id)
 
-class User():
-    pass
+#class User():
+#    pass
 
-@app.route("/logout")
-@login_required         #Only for logged-in users
-def logout():
-    logout_user()
-    return redirect(somewhere)
+#@app.route("/logout")
+#@login_required         #Only for logged-in users
+#def logout():
+#    logout_user()
+#    return redirect(somewhere)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -87,6 +87,17 @@ def radio():
     else:
         out = [str(item[0]) for item in data]
         return render_template("radio.html", manufacturers=out)
+
+@app.route("/brand/<id>")
+def brand(id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM brand WHERE id={0}".format(id))
+    _brand=cursor.fetchall()
+    print(_brand)
+    print("-------")
+    print(_brand[0])
+    return render_template("brand.html", brand=_brand)
   
 @app.route("/echo", methods=['POST'])
 def echo():
