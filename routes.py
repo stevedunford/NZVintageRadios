@@ -1,37 +1,61 @@
-import os
+'''
+NZ Vintage Radios Site - Steve Dunford steve@dunford.org.nz
+Started: December 2016
+Current version: 0.00.00.01 - a looong way to go
+Based on Flask 0.11
+dependencies (pip install): 
+ - flask-mysql
+ - flask-login   TODO: email address login - do away with login
+ - flask-uploads TODO: IS this needed?
+GitHub: github.com/stevedunford/NZVintageRadios
+Licence: Beerware.  I need a beer, you need a website - perfect
+'''
+
+import os # for file upload path determination
 from flask import Flask, flash, session, request, render_template, redirect, url_for
 from flaskext.mysql import MySQL
-from flask.ext.hashing import Hashing
+from flask_login import LoginManager
 
-mysql = MySQL()
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# app config
 app = Flask(__name__)
 app.secret_key = "~1\xe4\xa77b\x04\x0c\xcc1\x89\xb9\xce\x1c\xa1H\xc7\x82\xe2\xc3\x97\xe9\x13z"
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# MySQL config
+mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'nzvr_db'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'nzvr_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
-hashing = Hashing(app)
-SALT = 'salt'  
-logged_in = 0
+mysql.init_app(app) 
+
+# User login config
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 #TODO before live - salt and db password
 
+'''
+USER MANAGEMENT
+'''
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
-@app.route("/", methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = hashing.hash_value(request.form['password'], salt=SALT)
-        authenticate(username, password)
-    return render_template("index.html", logged_in=logged_in)
+class User():
+    pass
 
-@app.route("/authenticate")
-def authenticate():
-    global logged_in
-    username = request.args.get('username')
-    password = hashing.hash_value(request.args.get('password'), salt=SALT)
+@app.route("/logout")
+@login_required         #Only for logged-in users
+def logout():
+    logout_user()
+    return redirect(somewhere)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM user WHERE username='" + username + "' AND password='" + password + "'")
@@ -42,10 +66,18 @@ def authenticate():
         logged_in = 1
         return redirect(redirect_url())
 
+
+'''
+SITE LOGIC
+'''
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 @app.route("/radio", methods=['GET', 'POST'])
 def radio():
     if request.method == "POST":
-	return ("POST this time around")
+        return ("POST this time around")
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM manufacturer ORDER BY name ASC")
@@ -70,7 +102,6 @@ def redirect_url(default='index'):
 
 @app.route("/radio1")
 def radio1():
-    global logged_in
     path = "/".join([APP_ROOT, 'static/images'])
     print("___________________________\n {0} \n ---------------------------------".format(path))
     logo = os.listdir(path)[0]
