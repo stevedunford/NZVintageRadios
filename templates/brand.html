@@ -2,9 +2,12 @@
 
 {% block content %}
 
-<h2 class="page_title">{{ brand[1] }}</h2>
+<div id="container">
+<h2 class="page_title">{{ brand[1]|upper }}
+    {% if brand[3]|length > 1 %} <span class="subheading"> - '{{ brand[3] }}'</span>{% endif %}
+    <img id="logo" src="{{ url_for('static', filename=logo[1] ) }}" /></h2>
 
-<img id="logo" src="{{ url_for('static', filename=logo[1] ) }}" />
+
 {% if brand[7]|int %}
   <p id="timespan">{{ brand[1] }} was introduced in {{ brand[7] }}
   {% if brand[8]|int %} and lasted until {{ brand[8] }}
@@ -13,7 +16,7 @@
 <div id="description">
   {{ brand[9]|safe }}
 </div>
-
+</div>
 {% endblock %}
 
 

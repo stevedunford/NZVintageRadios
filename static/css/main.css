@@ -16,27 +16,63 @@
 body {
 	font-family: 'Open Sans', sans-serif;
 	max-width: 960px;
+    font-size: 1em;
+    background-color: #fedc3d;
 }
 
- #container {    /* Used to encapsulate main content */
- 	width: 100%;
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-family: 'Limelight', cursive;
+    font-size: 1em;
+    text-align: right;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#container {    /* Used to encapsulate main content */
+    padding: 5px;
+    margin-top: -2px;
+    min-height: 320px;
+    background-color: #6f3415;
+    color: azure;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
  }
 
+.inline_image {
+    border: 1px solid black;
+}
+
 .page_title {
-    width: 100%;
-    background-color: silver;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid black
+    padding-left: 10px;
+    font-family: 'Limelight', cursive;
+    font-weight: 800;
+}
+
+.subheading {
+    font-style: italic;
+    font-size: 90%;
+    font-weight: 100;
 }
 
 a {
 	text-decoration: none;
-	color: #777;
+	color: #4c030c;
 }
 
 a:hover {
-	color: #999;
+	color: #fedc3d;
 }
 
 #bold_right {
@@ -49,10 +85,12 @@ a:hover {
  * Header block CSS 
  */
 #header {
-	background-color: silver;
+    width: 50%;
 	margin: 0;
 	padding: 10px;
-	border-radius: 15px 0 0 0; 
+    border-top: 1px solid #ffef3f;
+    border-right: 1px solid #ffef3f;
+    border-top-right-radius: 15px;
 }
 
 #header h1 {
@@ -77,12 +115,12 @@ a:hover {
  * Navigation Bar 
  */
 #nav {
-	width: 100%;
+	width: 80%;
 	margin: 0 0 2px 0;
 	padding: 0;
-	border-bottom-right-radius: 10px;
-	background-color: #000;
-	color: #fff;
+	border-top-right-radius: 15px;
+	background-color: #d4bc7d;
+	color: #000;
 }
 
 #nav ul {
@@ -162,6 +200,7 @@ a:hover {
 #logo {
     float: right;
     max-width: 320px;
+    border-top-right-radius: 15px;
 }
 
 .brand_image {
@@ -176,6 +215,20 @@ a:hover {
 
 #description {
     width: auto;
+}
+
+
+/*
+ * Footer
+ */
+#footer {
+    width: 80%;
+    float: right;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #4c030c;
+    color: white;
+    border-bottom-left-radius: 15px;
 }
 
 /*
