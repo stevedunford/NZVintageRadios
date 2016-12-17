@@ -22,6 +22,14 @@ body {
  	width: 100%;
  }
 
+.page_title {
+    width: 100%;
+    background-color: silver;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid black
+}
+
 a {
 	text-decoration: none;
 	color: #777;
@@ -146,3 +154,36 @@ a:hover {
  #radio_imgs #main_img {
  	border-radius: 0 10px 0 15px;
  }
+
+
+/*
+ * Radio Brands
+ */
+#logo {
+    float: right;
+    max-width: 320px;
+}
+
+.brand_image {
+    max-width: 320px;
+    max-height: 320px;
+}
+
+#timespan {
+    font-weight: 700;
+    font-style: italic;
+}
+
+#description {
+    width: auto;
+}
+
+/*
+ * DEBUG
+ */
+#debug {
+    background-color: red;
+    color: white;
+    display: inline-block;
+    clear: both;
+}

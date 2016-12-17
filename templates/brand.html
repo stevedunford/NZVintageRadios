@@ -1,7 +1,19 @@
-{{brand}}<br><br>
-{{logo}}<br><br>
+{% extends "layout.html" %}
 
-<img src="{{ url_for('static', filename=logo[1] ) }}" width="320" />
-<ul>{% for item in brand[0] %}
-  <li>{{ item }}</li>
-{% endfor %}</ul>
+{% block content %}
+
+<h2 class="page_title">{{ brand[1] }}</h2>
+
+<img id="logo" src="{{ url_for('static', filename=logo[1] ) }}" />
+{% if brand[7]|int %}
+  <p id="timespan">{{ brand[1] }} was introduced in {{ brand[7] }}
+  {% if brand[8]|int %} and lasted until {{ brand[8] }}
+  {% endif %}</p>
+{% endif %}
+<div id="description">
+  {{ brand[9]|safe }}
+</div>
+
+{% endblock %}
+
+

@@ -12,7 +12,7 @@ Licence: Beerware.  I need a beer, you need a website - perfect
 '''
 
 import os # for file upload path determination
-from flask import Flask, flash, session, request, render_template, redirect, url_for
+from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for
 from flaskext.mysql import MySQL
 #from flask_login import LoginManager
 
@@ -29,6 +29,8 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'nzvr_db'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app) 
+
+app.logger.debug('NZVRS Website Starting Up...')
 
 # User login config
 #login_manager = LoginManager()
@@ -88,16 +90,52 @@ def radio():
         out = [str(item[0]) for item in data]
         return render_template("radio.html", manufacturers=out)
 
+    
+@app.route("/brands", methods=['GET', 'POST'])
+def brands():
+    if request.method == "POST":
+        print("--------------------------------------")
+        print(request.form.get('id'))
+        print("--------------------------------------")
+        return redirect(url_for('brand', id=request.form.get('id')))
+    else:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name FROM brand ORDER BY name ASC")
+        brands = cursor.fetchall()
+        print (brands)
+        if brands is None:
+            out = []
+        else:
+            out = [[str(item[0]), str(item[1])] for item in brands]
+        
+        return render_template("brands.html", brands=out)
+                
+
 @app.route("/brand/<id>")
-def brand(id):
+def brand(id=None):
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM brand WHERE id={0}".format(id))
-    _brand=cursor.fetchall()
-    print(_brand)
-    print("-------")
-    print(_brand[0])
-    return render_template("brand.html", brand=_brand)
+    if id == None:
+        print("-----------------------------------------------------------------------------------------------")
+        #return render_template_string("This is the main Brands page - for now use <b>brand/&lt;num&gt;</b> for particular brands<br>ie: <b>/brand/1</b> will give Courtenay")
+    try:
+        id = int(id) #id number - database id
+        cursor.execute("SELECT alias FROM brand WHERE id={0}".format(id))
+        _brand=cursor.fetchone()
+        return redirect(request.url.replace('/brand/{0}'.format(id), '/brand/{0}'.format(_brand[0].lower().strip().replace(' ', '_'))))
+    except:
+        cursor.execute("SELECT * FROM brand WHERE name='{0}'".format(id))
+        _brand=cursor.fetchone()
+        cursor.execute("SELECT * FROM brand_logo WHERE brand_id={0}".format(_brand[0]))
+        _logo=cursor.fetchone()
+            
+            
+
+    if _brand is None:
+        return "NONE!"
+    else:
+        return render_template("brand.html", brand=_brand, logo=_logo)
   
 @app.route("/echo", methods=['POST'])
 def echo():
@@ -136,6 +174,9 @@ def uploads():
 
 	return render_template("index.html", logged_in=logged_in)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 if __name__ == "__main__":
