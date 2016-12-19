@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+<form action="manufacturers" method="POST">
+  <select name="id" onchange="this.form.submit()">
+    <option value="" disabled selected style="display:none;">Choose a manufacturer</option>
+    {% for manufacturer in manufacturers %}
+      <option value="{{ manufacturer[0] }}">{{ manufacturer[1] }}</option>
+    {% endfor %}
+  </select>
+</form>
+</div>
+
+<br><br>--------------------<br>
+{{manufacturers}}
+
+{% endblock %}

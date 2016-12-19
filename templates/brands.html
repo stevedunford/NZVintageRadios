@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div id="container">
 <form action="brands" method="POST">
   <select name="id" onchange="this.form.submit()">
     <option value="" disabled selected style="display:none;">Choose a brand</option>
@@ -10,7 +11,7 @@
     {% endfor %}
   </select>
 </form>
-
+</div>
 
 <br><br>--------------------<br>
 {{brands}}

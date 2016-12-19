@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+<h2 class="page_title">{{ manufacturer[1]|upper }}
+    {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}</h2>
+
+
+{% if manufacturer[5]|int %}
+  <p id="timespan">{{ manufacturer[1] }} was introduced in
+      {% if manufacturer[6] == "1" %} around {% endif %}
+      {{ manufacturer[5] }}
+  {% if manufacturer[7]|int %} and lasted until
+      {% if manufacturer[8] == "1" %} around {% endif %}
+      {{ manufacturer[7] }}
+  {% endif %}</p>
+{% endif %}
+<div id="description">
+  {{ manufacturer[8]|safe }}
+</div>
+</div>
+{{manufacturer}}<br><br>
+{{brand}}<br><br>
+{{logo}}<br><br>
+{% endblock %}
+
+

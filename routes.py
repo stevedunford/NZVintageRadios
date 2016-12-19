@@ -12,11 +12,13 @@ Licence: Beerware.  I need a beer, you need a website - perfect
 '''
 
 import os # for file upload path determination
-from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for
+from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g
 from flaskext.mysql import MySQL
 #from flask_login import LoginManager
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+TIDY_URL = True #Tidy URLs (convert '/brand/1' to 'brand/courtenay')
 
 # app config
 app = Flask(__name__)
@@ -91,12 +93,58 @@ def radio():
         return render_template("radio.html", manufacturers=out)
 
     
+@app.route("/manufacturers", methods=['GET', 'POST'])
+def manufacturers():
+    if request.method == "POST":
+        return redirect(url_for('manufacturer', id=request.form.get('id')))
+    else:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name FROM manufacturer ORDER BY name ASC")
+        manufacturers = cursor.fetchall()
+        if manufacturers is None:
+            out = []
+        else:
+            out = [[str(item[0]), str(item[1])] for item in manufacturers]
+        
+        return render_template("manufacturers.html", manufacturers=out)
+                
+@app.route("/manufacturer/<id>")
+def manufacturer(id=None):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        id = int(id) #id number - database id
+        cursor.execute("SELECT alias FROM manufacturer WHERE id={0}".format(id))
+        _manufacturer=cursor.fetchone()
+        session['id'] = id
+        print("================={0}=================".format(session['id']))
+        return redirect(request.url.replace('/manufacturer/{0}'.format(id), '/manufacturer/{0}'.format(_manufacturer[0].lower().strip().replace(' ', '_'))))
+    except ValueError: # id is not an int, ie: redirect worked
+        num = session['id']
+        print("================={0}=================".format(num))
+        # find the manufacturers details
+        cursor.execute("SELECT * FROM manufacturer WHERE alias='{0}'".format(id))
+        _manufacturer=cursor.fetchone()
+        # find all models currently held for this manufacturer
+        cursor.execute("SELECT * FROM model WHERE brand_id='{0}'".format(num))
+        _brand=cursor.fetchone()
+        _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer[2]))
+        if not os.path.isfile(APP_ROOT + _logo):
+            _logo = None
+    except: # if all else fails
+        abort(404)        
+
+    if _manufacturer is None:
+        return "NONE!"
+    else:
+        return render_template("manufacturer.html", manufacturer=_manufacturer, brand=_brand, logo=_logo)
+  
+
+
 @app.route("/brands", methods=['GET', 'POST'])
 def brands():
     if request.method == "POST":
-        print("--------------------------------------")
-        print(request.form.get('id'))
-        print("--------------------------------------")
         return redirect(url_for('brand', id=request.form.get('id')))
     else:
         conn = mysql.connect()
@@ -112,25 +160,31 @@ def brands():
         return render_template("brands.html", brands=out)
                 
 
+'''
+brand(id) takes an id which is either numeric or a string.
+brands() passes it an int, taken from the brand table in the
+db which is converted to a string in the 'try' section in
+order to make a tidy url.  It then runs again with the string
+type id and the lookup is done.  There may be a tidier way to
+do this...
+'''
 @app.route("/brand/<id>")
 def brand(id=None):
     conn = mysql.connect()
     cursor = conn.cursor()
-    if id == None:
-        print("-----------------------------------------------------------------------------------------------")
-        #return render_template_string("This is the main Brands page - for now use <b>brand/&lt;num&gt;</b> for particular brands<br>ie: <b>/brand/1</b> will give Courtenay")
     try:
         id = int(id) #id number - database id
         cursor.execute("SELECT alias FROM brand WHERE id={0}".format(id))
         _brand=cursor.fetchone()
         return redirect(request.url.replace('/brand/{0}'.format(id), '/brand/{0}'.format(_brand[0].lower().strip().replace(' ', '_'))))
-    except:
-        cursor.execute("SELECT * FROM brand WHERE name='{0}'".format(id))
+    except ValueError: # id is not an int, ie: redirect worked
+        cursor.execute("SELECT * FROM brand WHERE alias='{0}'".format(id))
         _brand=cursor.fetchone()
-        cursor.execute("SELECT * FROM brand_logo WHERE brand_id={0}".format(_brand[0]))
-        _logo=cursor.fetchone()
-            
-            
+        #cursor.execute("SELECT * FROM brand_logo WHERE brand_id={0}".format(_brand[0]))
+        #_logo=cursor.fetchone()  
+        _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand[2]))
+    except: # if all else fails
+        abort(404)        
 
     if _brand is None:
         return "NONE!"
