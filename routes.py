@@ -12,7 +12,7 @@ Licence: Beerware.  I need a beer, you need a website - perfect
 '''
 
 import os # for file upload path determination
-from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g
+from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g, abort
 from flaskext.mysql import MySQL
 #from flask_login import LoginManager
 
@@ -126,9 +126,11 @@ def manufacturer(id=None):
         # find the manufacturers details
         cursor.execute("SELECT * FROM manufacturer WHERE alias='{0}'".format(id))
         _manufacturer=cursor.fetchone()
+        
         # find all models currently held for this manufacturer
-        cursor.execute("SELECT * FROM model WHERE brand_id='{0}'".format(num))
-        _brand=cursor.fetchone()
+        cursor.execute("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(num))
+        _brands=cursor.fetchall()
+        
         _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer[2]))
         if not os.path.isfile(APP_ROOT + _logo):
             _logo = None
@@ -138,7 +140,7 @@ def manufacturer(id=None):
     if _manufacturer is None:
         return "NONE!"
     else:
-        return render_template("manufacturer.html", manufacturer=_manufacturer, brand=_brand, logo=_logo)
+        return render_template("manufacturer.html", manufacturer=_manufacturer, brands=_brands, logo=_logo)
   
 
 
@@ -180,6 +182,9 @@ def brand(id=None):
     except ValueError: # id is not an int, ie: redirect worked
         cursor.execute("SELECT * FROM brand WHERE alias='{0}'".format(id))
         _brand=cursor.fetchone()
+        print("=================")
+        print(_brand)
+        print("=================")
         #cursor.execute("SELECT * FROM brand_logo WHERE brand_id={0}".format(_brand[0]))
         #_logo=cursor.fetchone()  
         _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand[2]))

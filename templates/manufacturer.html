@@ -3,25 +3,33 @@
 {% block content %}
 
 <div id="container">
-<h2 class="page_title">{{ manufacturer[1]|upper }}
+  <h2 class="page_title">{{ manufacturer[1]|upper }}
     {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}</h2>
 
 
-{% if manufacturer[5]|int %}
-  <p id="timespan">{{ manufacturer[1] }} was introduced in
-      {% if manufacturer[6] == "1" %} around {% endif %}
-      {{ manufacturer[5] }}
-  {% if manufacturer[7]|int %} and lasted until
-      {% if manufacturer[8] == "1" %} around {% endif %}
-      {{ manufacturer[7] }}
-  {% endif %}</p>
-{% endif %}
-<div id="description">
-  {{ manufacturer[8]|safe }}
-</div>
+  {% if manufacturer[5]|int %}
+    <p id="timespan">
+      {{ manufacturer[1] }} was introduced in{% if manufacturer[6] == "1" %} around {% endif %}{{ manufacturer[5] }}{% if manufacturer[7]|int %} and lasted until{% if manufacturer[8] == "1" %} around {% endif %}{{ manufacturer[7] }}{% endif %}
+    </p>
+  {% endif %}
+  <div id="description">
+    {{ manufacturer[8]|safe }}
+  </div>
+
+  <div class="list">
+    <ul>
+      {% for brand in brands %}
+        <li>
+          <a href={{ url_for('brand', id=brand[2]) }}>
+             {{brand[1]}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {{manufacturer}}<br><br>
-{{brand}}<br><br>
+{{brands}}<br><br>
 {{logo}}<br><br>
 {% endblock %}
 
