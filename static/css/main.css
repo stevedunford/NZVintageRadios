@@ -52,6 +52,20 @@ h4 {
     text-align: right;
 }
 
+.odd {
+    background-color: #eeeeee;
+}
+
+.reqd {
+    color: #f00;
+    font-weight: bold;
+}
+
+.error {
+    color: #f00;
+    font-size: smaller;
+}
+
 #title {
     width: 85%;
     background-image: url("img/title.jpg");

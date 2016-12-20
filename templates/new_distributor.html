@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="container">
+  
+  <form action="" method="post" name="new_distributor">
+    {{ form.hidden_tag() }}
+    <table>
+      <tr>
+        <td>Name<span class='reqd'>*</span>:{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.name(size=60) }}</td>
+      </tr>
+      <tr class='odd'>
+        <td>Alias<span class='reqd'>*</span>:{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.alias(size=60) }}</td>
+      </tr>
+      <tr>
+        <td>City:</td><td>{{ form.address(size=60) }} or {{ form.nz_wide }} NZ Wide / Various</td>
+      </tr>
+      <tr class='odd'>
+        <td>Notes<span class='reqd'>*</span>:{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.notes }}</td>
+      </tr>       
+    </table>
+    <p>
+      <input type="submit" value="Add Distributor">
+    </p>
+  </form>
+</div>
+{% endblock %}
+
+

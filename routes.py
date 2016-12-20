@@ -14,15 +14,18 @@ Licence: Beerware.  I need a beer, you need a website - perfect
 import os # for file upload path determination
 from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g, abort
 from flaskext.mysql import MySQL
-#from flask_login import LoginManager
+from flask_wtf import Form
+from wtforms import StringField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-TIDY_URL = True #Tidy URLs (convert '/brand/1' to 'brand/courtenay')
+WTF_CSRF_ENABLED = True
+SECRET_KEY = 'uxjSShEJs}jbMSW\x80hMl\x80Yq1VFz\x82Wpg{y||GyYAXISqSJBFt\x83w}Y\x80E`AVTFQyhsKiGCVzoIROIRC\x81\x83\x82n]zCw`]ZYwZw`PO{UDPGiGH'
 
 # app config
 app = Flask(__name__)
-app.secret_key = "~1\xe4\xa77b\x04\x0c\xcc1\x89\xb9\xce\x1c\xa1H\xc7\x82\xe2\xc3\x97\xe9\x13z"
+app.secret_key = '}g\x83^jSvlazDyhxHCV^YUXw\\crxOddpw~\x83Q\x80eP|ZZqOSBcO\x80IGvlphvZkqCcv~\x7foJJHgYou|]rxvSDZN\x82OIo{Qis55N}Mo\x7fJK\x80G|Hdt'
 
 # MySQL config
 mysql = MySQL()
@@ -34,47 +37,31 @@ mysql.init_app(app)
 
 app.logger.debug('NZVRS Website Starting Up...')
 
-# User login config
-#login_manager = LoginManager()
-#login_manager.init_app(app)
-
-
-#TODO before live - salt and db password
 
 '''
-USER MANAGEMENT
+Web data entry
 '''
-#@login_manager.user_loader
-#def load_user(user_id):
-#    return User.get(user_id)
-
-#class User():
-#    pass
-
-#@app.route("/logout")
-#@login_required         #Only for logged-in users
-#def logout():
-#    logout_user()
-#    return redirect(somewhere)
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
+class Distributor(Form):
+    name = StringField('name', validators=[DataRequired()])
+    alias = StringField('alias', validators=[DataRequired()])
+    address = StringField('address', validators=[DataRequired()])
+    nz_wide = BooleanField('nz_wide', default=False)
+    notes = TextAreaField('notes', validators=[DataRequired()])
     
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM user WHERE username='" + username + "' AND password='" + password + "'")
-    data = cursor.fetchone()
-    if data is None:
-        return "WRONG!" + password
-    else:
-        logged_in = 1
-        return redirect(redirect_url())
 
+@app.route('/new_distributor', methods=['GET', 'POST'])
+def new_distributor():
+    form = Distributor()
+    if form.validate_on_submit():
+        flash('name = {0}'.format(form.name.data))
+        return redirect('/index')
+    return render_template('new_distributor.html', title='Add New Distributor', form=form)
 
 '''
 SITE LOGIC
 '''
 @app.route("/")
+@app.route("/index")
 def index():
     return render_template("index.html", title="Welcome")
 
