@@ -20,6 +20,10 @@ body {
     background-color: #fedc3d;
 }
 
+.artdeco {
+    font-family: 'Limelight', cursive;
+}
+
 h1 {
     font-size: 2em;
 }
@@ -35,11 +39,17 @@ h3 {
 h4 {
     font-family: 'Limelight', cursive;
     font-size: 1em;
-    text-align: right;
     margin-top: 3px;
     margin-bottom: 3px;
 }
 
+.right{
+    text-align: right;
+}
+
+/*
+ * Content container
+ */
 #container {    /* Used to encapsulate main content */
     padding: 5px;
     margin-top: -2px;
@@ -49,6 +59,14 @@ h4 {
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
  }
+
+#container li {
+    list-style: none;
+}
+
+#container a {
+    color: #d4bc7d;
+}
 
 .inline_image {
     border: 1px solid black;
@@ -142,11 +160,11 @@ a:hover {
 	font-weight: bolder;
 	background-color: #dd0000;
 	color: white;
-	width: 85%;
+	width: 90%;
 	height: auto;
-	border-radius: 3px;
+	border-top-right-radius: 15px;
 	list-style:	none;
-	margin: 5px;
+	margin: -2px 0 0 0;
 	padding: 4px 10px;
 }
 
@@ -155,8 +173,7 @@ a:hover {
 }
 
 .close {   /* 'X' in flash msgs used to trigger message hide fn */
-	position: absolute;
-	right: 170px;
+	color: aquamarine;
 }
 
 .close:hover {

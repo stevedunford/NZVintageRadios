@@ -1,0 +1,24 @@
+{
+    "defaultExtension": "py",
+    "path": {
+        "*.htm": {
+            "spaceUnits": 4
+        },
+        "*.html": {
+            "spaceUnits": 2
+        },
+        "*.css": {
+            "spaceUnits": 4
+        },
+        "*.py": {
+            "spaceUnits": 4
+        },
+        "*.txt": {
+            "spaceUnits": 2,
+            "wordWrap": true
+        }
+    },
+    "wordWrap": true,
+    "spaceUnits": 4,
+    "useTabChar": false
+}
