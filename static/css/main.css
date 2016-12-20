@@ -17,11 +17,16 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	max-width: 960px;
     font-size: 1em;
-    background-color: #fedc3d;
+    background-color: #b8860b;
+    background-image: url("img/lightwood.jpg");
 }
 
 .artdeco {
     font-family: 'Limelight', cursive;
+    margin-top: -2px;
+    margin-bottom: 0;
+    padding: 3px 5px;
+    text-shadow: #fff 0 0 10px;
 }
 
 h1 {
@@ -47,17 +52,61 @@ h4 {
     text-align: right;
 }
 
+#title {
+    width: 85%;
+    background-image: url("img/title.jpg");
+    background-position: bottom left;
+    border-top-right-radius: 15px;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+}
+
+/*
+ * Header block CSS 
+ */
+#header {
+    width: 60%;
+	margin: 0;
+	padding: 10px;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+    border-top-right-radius: 15px;
+    background-image: url(img/white-linen.png);
+}
+
+#header h1 {
+	font-family: 'Limelight', cursive;
+	padding-left: 65px;
+}
+
+#header img {
+	position: relative;
+    top: -10px;
+    left: -5px;
+    overflow: hidden;
+    float: left;
+}
+
+#login_wrapper {
+  float: right;
+  text-align: right;
+}
+
+
 /*
  * Content container
  */
 #container {    /* Used to encapsulate main content */
     padding: 5px;
-    margin-top: -2px;
     min-height: 320px;
-    background-color: #6f3415;
-    color: azure;
+    background-color: #fff;
+    opacity: 0.9;
+    color: #6f3415;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
+    border: 2px solid #752A13;
  }
 
 #container li {
@@ -65,7 +114,11 @@ h4 {
 }
 
 #container a {
-    color: #d4bc7d;
+    color: #000;
+}
+
+#container a:hover {
+    color: #666;
 }
 
 .inline_image {
@@ -73,9 +126,11 @@ h4 {
 }
 
 .page_title {
-    padding-left: 10px;
+    text-align: center;
     font-family: 'Limelight', cursive;
     font-weight: 800;
+    color: #fff;
+    clear: left; /* stops logo pushing it right */
 }
 
 .subheading {
@@ -86,7 +141,7 @@ h4 {
 
 a {
 	text-decoration: none;
-	color: #4c030c;
+	color: #ddd;
 }
 
 a:hover {
@@ -100,45 +155,19 @@ a:hover {
 
 
 /*
- * Header block CSS 
- */
-#header {
-    width: 50%;
-	margin: 0;
-	padding: 10px;
-    border-top: 1px solid #ffef3f;
-    border-right: 1px solid #ffef3f;
-    border-top-right-radius: 15px;
-}
-
-#header h1 {
-	font-family: 'Limelight', cursive;
-	padding-left: 65px;
-}
-
-#header img {
-	position: absolute;
-    top: 9px;
-    left: 10px;
-    overflow: hidden;
-}
-
-#login_wrapper {
-  float: right;
-  text-align: right;
-}
-
-
-/*
  * Navigation Bar 
  */
 #nav {
-	width: 80%;
-	margin: 0 0 2px 0;
-	padding: 0;
+	width: 95%;
+	margin: 0;
+	padding: 0 0 2px 0;
 	border-top-right-radius: 15px;
 	background-color: #d4bc7d;
-	color: #000;
+    background-image: url(img/nav.jpg);
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+	color: #fff;
 }
 
 #nav ul {
@@ -147,7 +176,7 @@ a:hover {
 
 #nav ul li {
 	display: inline;
-	padding-left: 20px;
+	padding-right: 20px;
 	font-weight: bolder;
 }
 
@@ -160,11 +189,10 @@ a:hover {
 	font-weight: bolder;
 	background-color: #dd0000;
 	color: white;
-	width: 90%;
 	height: auto;
-	border-top-right-radius: 15px;
+	border-radius: 5px;
 	list-style:	none;
-	margin: -2px 0 0 0;
+	margin: 0 0 4px 0;
 	padding: 4px 10px;
 }
 
@@ -218,6 +246,8 @@ a:hover {
     float: right;
     max-width: 320px;
     border-top-right-radius: 15px;
+    margin-right: 5px;
+    box-shadow: -5px 5px 5px #752A13;
 }
 
 .brand_image {
@@ -245,6 +275,10 @@ a:hover {
     padding-right: 10px;
     background-color: #4c030c;
     color: white;
+    background-image: url("img/mediumwood.jpg");
+    border-bottom: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+    border-right: 2px solid #752A13;
     border-bottom-left-radius: 15px;
 }
 

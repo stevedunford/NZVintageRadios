@@ -76,7 +76,7 @@ SITE LOGIC
 '''
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", title="Welcome")
 
 @app.route("/radio", methods=['GET', 'POST'])
 def radio():
@@ -107,7 +107,7 @@ def manufacturers():
         else:
             out = [[str(item[0]), str(item[1])] for item in manufacturers]
         
-        return render_template("manufacturers.html", manufacturers=out)
+        return render_template("manufacturers.html", manufacturers=out, title='Manufacturers')
                 
 @app.route("/manufacturer/<id>")
 def manufacturer(id=None):
@@ -140,7 +140,7 @@ def manufacturer(id=None):
     if _manufacturer is None:
         return "NONE!"
     else:
-        return render_template("manufacturer.html", manufacturer=_manufacturer, brands=_brands, logo=_logo)
+        return render_template("manufacturer.html", manufacturer=_manufacturer, title=_manufacturer[1], brands=_brands, logo=_logo)
   
 
 
@@ -159,7 +159,7 @@ def brands():
         else:
             out = [[str(item[0]), str(item[1])] for item in brands]
         
-        return render_template("brands.html", brands=out)
+        return render_template("brands.html", brands=out, title='NZ Radio Brands')
                 
 
 '''
@@ -194,7 +194,7 @@ def brand(id=None):
     if _brand is None:
         return "NONE!"
     else:
-        return render_template("brand.html", brand=_brand, logo=_logo)
+        return render_template("brand.html", title=_brand[1], brand=_brand, logo=_logo)
   
 @app.route("/echo", methods=['POST'])
 def echo():
