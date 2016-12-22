@@ -49,14 +49,6 @@ class Distributor(Form):
     notes = TextAreaField('notes', validators=[DataRequired()])
     
 
-@app.route('/new_distributor', methods=['GET', 'POST'])
-def new_distributor():
-    form = Distributor()
-    if form.validate_on_submit():
-        flash('name = {0}'.format(form.name.data))
-        return redirect('/index')
-    return render_template('new_distributor.html', title='Add New Distributor', form=form)
-
 '''
 SITE LOGIC
 '''
@@ -80,6 +72,72 @@ def radio():
         return render_template("radio.html", manufacturers=out)
 
     
+@app.route('/new_distributor', methods=['GET', 'POST'])
+def new_distributor():
+    form = Distributor()
+    if form.validate_on_submit():
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        flash('name = {0}'.format(form.name.data))
+        query = "INSERT INTO distributor (name, alias, address, notes) VALUES ('{0}', '{1}', '{2}', '{3}')".format(form.name.data, form.alias.data, form.address.data, form.notes.data)
+        cursor.execute(query)
+        conn.commit()
+        return redirect('/index')
+    else:
+        flash("All required (*) fields need to be filled in")
+    return render_template('new_distributor.html', title='Add New Distributor', form=form)
+
+@app.route("/distributors", methods=['GET', 'POST'])
+def distributors():
+    if request.method == "POST":
+        return redirect(url_for('distributor', id=request.form.get('id')))
+    else:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name FROM distributor ORDER BY name ASC")
+        distributors = cursor.fetchall()
+        if distributors is None:
+            out = []
+        else:
+            out = [[str(item[0]), str(item[1])] for item in distributors]
+        
+        return render_template("distributors.html", distributors=out, title='Distributors')
+                
+@app.route("/distributor/<id>")
+def distributor(id=None):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        id = int(id) #id number - database id
+        cursor.execute("SELECT alias FROM distributor WHERE id={0}".format(id))
+        _distributor=cursor.fetchone()
+        session['id'] = id
+        print("================={0}=================".format(session['id']))
+        return redirect(request.url.replace('/distributor/{0}'.format(id), '/distributor/{0}'.format(_distributor[0].lower().strip().replace(' ', '_'))))
+    except ValueError: # id is not an int, ie: redirect worked
+        num = session['id']
+        print("================={0}=================".format(num))
+        # find the distributors details
+        cursor.execute("SELECT * FROM distributor WHERE alias='{0}'".format(id))
+        _distributor=cursor.fetchone()
+        
+        # find all models currently sold by this distributor
+        cursor.execute("SELECT * FROM brand WHERE distributor_id='{0}'".format(num))
+        _brands=cursor.fetchall()
+        
+        _logo = url_for('static', filename='images/distributors/{0}.jpg'.format(_distributor[2]))
+        if not os.path.isfile(APP_ROOT + _logo):
+            _logo = None
+    except: # if all else fails
+        abort(404)        
+
+    if _distributor is None:
+        return "NONE!"
+    else:
+        return render_template("distributor.html", distributor=_distributor, title=_distributor[1], brands=_brands, logo=_logo)
+
+
+
 @app.route("/manufacturers", methods=['GET', 'POST'])
 def manufacturers():
     if request.method == "POST":
