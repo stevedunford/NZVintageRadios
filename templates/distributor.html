@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="container">
+  {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}
+  {% if distributor[3]|length > 1 %}
+    <p id="timespan">
+      {{ distributor[1] }} was known to be in {{ distributor[3] }}.
+    </p>
+  {% endif %}
+  <div id="description">
+    {{ distributor[4]|safe }}
+  </div>
+  
+  {% if brands|length > 0 %}
+  <h4>
+    Documented Brands
+  </h4>
+  <div class="list">
+    <ul>
+      {% for brand in brands %}
+        <li>
+          <a href={{ url_for('brand', id=brand[2]) }}>
+             {{brand[1]}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+</div>
+{{distributor}}<br><br>
+{{brands}}<br><br>
+{{logo}}<br><br>
+{% endblock %}
+
+

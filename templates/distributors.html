@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+<form action="distributors" method="POST">
+  <select name="id" onchange="this.form.submit()">
+    <option value="" disabled selected style="display:none;">Choose a distributor</option>
+    {% for distributor in distributors %}
+      <option value="{{ distributor[0] }}">{{ distributor[1] }}</option>
+    {% endfor %}
+  </select>
+</form>
+</div>
+
+<br><br>--------------------<br>
+{{distributors}}
+
+{% endblock %}
