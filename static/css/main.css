@@ -135,8 +135,32 @@ h4 {
     color: #666;
 }
 
+#breadcrumb {
+    font-size: smaller;
+    color: black;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
 .inline_image {
     border: 1px solid black;
+}
+
+#radio_images {
+    width: 99%;
+    background-color: silver;
+    padding: 2px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    max-height: 137px;
+    white-space: nowrap;
+}
+
+#radio_images img {
+    max-width: 120px;
+    max-height: 120px;
+    vertical-align: middle;
 }
 
 .page_title {
@@ -160,6 +184,10 @@ a {
 
 a:hover {
 	color: #fedc3d;
+}
+
+.bold_left {
+  font-weight: bolder;
 }
 
 #bold_right {

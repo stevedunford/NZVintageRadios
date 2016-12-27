@@ -23,9 +23,11 @@ Licence: Beerware - 'cos coding is thirsty work
     </script>
     <script>
       $(document).ready(function () {
-        $('a.gallery').colorbox({
-          opacity:0.5,
-          rel:'group1'
+        $('.gallery').colorbox({
+          rel: 'group1',
+          transition: 'fade',
+          maxWidth: '90%',
+          maxHeight: '90%'
         });
       });
     </script>

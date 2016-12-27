@@ -3,12 +3,12 @@
 {% block content %}
 
 <div id="container">
-<h2>{{ brand[1]|upper }}
+  <h2>{{ brand[1]|upper }}
     {% if brand[3] %} <span class="subheading"> - '{{ brand[3] }}'</span>{% endif %}
     {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}</h2>
 
 
-{% if brand[6]|int %}
+  {% if brand[6]|int %}
   <p id="timespan">{{ brand[1] }} was introduced in
       {% if brand[7] != 0 %} around {% endif %}
       {{ brand[6] }}
@@ -16,10 +16,27 @@
       {% if brand[9] != 0 %} around {% endif %}
       {{ brand[8] }}
   {% endif %}</p>
+  {% endif %}
+  <div id="description">
+    {{ brand[10]|safe }}
+  </div>
+  {% if models|length > 0 %}
+  <h4>
+    Documented Models
+  </h4>
+  <div class="list">
+    <ul>
+      {% for model in models %}
+        <li>
+          <a href={{ url_for('radio', brand=brand[1], id=model) }}>
+             {{ brand[1] }} {{ model }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endif %}
-<div id="description">
-  {{ brand[10]|safe }}
-</div>
+  
 </div>
 {% endblock %}
 

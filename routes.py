@@ -53,23 +53,40 @@ class Distributor(Form):
 SITE LOGIC
 '''
 @app.route("/")
-@app.route("/index")
+@app.route("/home")
 def index():
     return render_template("index.html", title="Welcome")
 
-@app.route("/radio", methods=['GET', 'POST'])
-def radio():
-    if request.method == "POST":
-        return ("POST this time around")
+
+@app.route("/radio/<brand>/<id>")
+@app.route("/radio/<brand>/<id>/<variant>")
+def radio(brand, id, variant=None):
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM manufacturer ORDER BY name ASC")
-    data = cursor.fetchall()
-    if data is None:
+
+    # find the db's id for the brand name
+    cursor.execute("SELECT id, manufacturer_id FROM brand WHERE alias='{0}'".format(brand))
+    _brand, _manufacturer = cursor.fetchone()
+    
+    # get all matching radios
+    cursor.execute("SELECT * FROM radio WHERE brand_id='{0}' AND number='{1}'".format(_brand, id))
+    models = cursor.fetchall()
+    
+    # get the manufacturer and alias (for link)
+    cursor.execute("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer))
+    manufacturer, manufacturer_alias = cursor.fetchone()
+
+    images = []
+    if len(models) == 1:
+        for file in os.listdir("static/images/radio/{0}/{1}".format(brand, id)):
+            if file.endswith(".jpg"):
+                images.append("/static/images/radio/{0}/{1}".format(brand, id) + '/' + file)
+        
+    if models is None:
         return "NONE!"
     else:
-        out = [str(item[0]) for item in data]
-        return render_template("radio.html", manufacturers=out)
+        return render_template("radio.html", models=models, title=brand+' '+id, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, id=id, variant=variant, images=images)
+
 
     
 @app.route('/new_distributor', methods=['GET', 'POST'])
@@ -82,7 +99,7 @@ def new_distributor():
         query = "INSERT INTO distributor (name, alias, address, notes) VALUES ('{0}', '{1}', '{2}', '{3}')".format(form.name.data, form.alias.data, form.address.data, form.notes.data)
         cursor.execute(query)
         conn.commit()
-        return redirect('/index')
+        return redirect('/home')
     else:
         flash("All required (*) fields need to be filled in")
     return render_template('new_distributor.html', title='Add New Distributor', form=form)
@@ -225,13 +242,28 @@ def brand(id=None):
         _brand=cursor.fetchone()
         return redirect(request.url.replace('/brand/{0}'.format(id), '/brand/{0}'.format(_brand[0].lower().strip().replace(' ', '_'))))
     except ValueError: # id is not an int, ie: redirect worked
+        # find the info for this brand
         cursor.execute("SELECT * FROM brand WHERE alias='{0}'".format(id))
         _brand=cursor.fetchone()
-        print("=================")
         print(_brand)
-        print("=================")
-        #cursor.execute("SELECT * FROM brand_logo WHERE brand_id={0}".format(_brand[0]))
-        #_logo=cursor.fetchone()  
+        print()
+        
+        #find the brand id
+        cursor.execute("SELECT id FROM brand WHERE alias='{0}'".format(id))
+        brand_id=cursor.fetchone()[0]
+        
+        # find all models for this brand
+        cursor.execute("SELECT number FROM radio WHERE brand_id='{0}'".format(brand_id))
+        _models=cursor.fetchall()
+        if _models is None:
+            _models = []
+        else:
+            _models = [str(item[0]) for item in _models]
+        print(_models)
+        print()
+        
+            
+        
         _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand[2]))
     except: # if all else fails
         abort(404)        
@@ -239,7 +271,7 @@ def brand(id=None):
     if _brand is None:
         return "NONE!"
     else:
-        return render_template("brand.html", title=_brand[1], brand=_brand, logo=_logo)
+        return render_template("brand.html", title=_brand[1], brand=_brand, logo=_logo, models=_models)
   
 @app.route("/echo", methods=['POST'])
 def echo():
@@ -253,13 +285,7 @@ def redirect_url(default='index'):
            request.referrer or \
            url_for(default)
 
-@app.route("/radio1")
-def radio1():
-    path = "/".join([APP_ROOT, 'static/images'])
-    print("___________________________\n {0} \n ---------------------------------".format(path))
-    logo = os.listdir(path)[0]
-    return render_template("index.html", rad=True, logo=logo)
-
+        
 @app.route("/uploads", methods=['POST'])
 def uploads():
 	target=os.path.join(APP_ROOT, 'images/')

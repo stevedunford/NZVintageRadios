@@ -1,8 +1,50 @@
-<select>
-{% for manufacturer in manufacturers %}
-    <option value="{{ manufacturer }}">{{ manufacturer }}</option>
-{% endfor %}
-</select>
+{% extends "layout.html" %}
 
+{% block content %}
+
+<div id="container">
+  <div id="breadcrumb">
+    RADIO » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {{ id }}
+  </div>
+  
+  <!-- No radio found matching the URL-->
+  {% if models|length == 0 %}
+  <p>Sorry, you're looking for a radio that just isn't there...</p>
+  <img src="/static/images/missing/missing.jpg">
+  
+  <!-- Multiple radios found, this is a variant landing page -->
+  {% elif models|length > 1 %}
+  There are currently {{ models|length }} variants of this model:
+  <ul>
+    {% for model in models %}
+    <li>{{ model[1] }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  
+  <!-- Main section for showing a radio / variant -->
+  <div id="radio_images">
+    {% for image in images %}
+      <a class="gallery" href="{{ image }}"><img src="{{ image }}"></a>
+    {% endfor %}
+  </div>
+  <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if models[0][3] > 0 %} in {% if models[0][4] != 0 %}about {% endif %}{{ models[0][3] }}{% if models[0][5] > 0 %}, production ran until {% if models[0][6] != 0 %} about {% endif %}{{ models[0][5]}}{% endif %}.{% endif %}</p>
+  <p><span class="bold_left">Valve Lineup:</span> {{ models[0][7] }}</p>
+  <p>{{ models[0][9]|safe }}</p>
+  
+  
+  
+  
+  {% endif %}
+  
 <br><br>--------------------<br>
-{{manufacturers}}
+title:{{ title }}<br>
+models:{{ models }}<br>
+brand:{{brand}}<br>
+manufacturer:{{ manufacturer }}<br>
+id:{{id}}<br>
+variant:{{variant}}
+</div>
+
+
+{% endblock %}

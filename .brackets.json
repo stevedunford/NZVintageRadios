@@ -5,13 +5,16 @@
             "spaceUnits": 4
         },
         "*.html": {
-            "spaceUnits": 2
+            "spaceUnits": 2,
+            "themes.theme": "dark-theme"
         },
         "*.css": {
-            "spaceUnits": 4
+            "spaceUnits": 4,
+            "themes.theme": "dark-theme"
         },
         "*.py": {
-            "spaceUnits": 4
+            "spaceUnits": 4,
+            "themes.theme": "dark-theme"
         },
         "*.txt": {
             "spaceUnits": 2,
