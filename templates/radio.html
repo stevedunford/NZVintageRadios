@@ -25,7 +25,7 @@
   <!-- Main section for showing a radio / variant -->
   <div id="radio_images">
     {% for image in images %}
-      <a class="gallery" href="{{ image }}"><img src="{{ image }}"></a>
+      <a class="gallery" href="/static{{ image[1] }}"><img src="/static{{ image[1] }}"></a>
     {% endfor %}
   </div>
   <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if models[0][3] > 0 %} in {% if models[0][4] != 0 %}about {% endif %}{{ models[0][3] }}{% if models[0][5] > 0 %}, production ran until {% if models[0][6] != 0 %} about {% endif %}{{ models[0][5]}}{% endif %}.{% endif %}</p>

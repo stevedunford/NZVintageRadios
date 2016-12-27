@@ -68,6 +68,10 @@ def radio(brand, id, variant=None):
     cursor.execute("SELECT id, manufacturer_id FROM brand WHERE alias='{0}'".format(brand))
     _brand, _manufacturer = cursor.fetchone()
     
+    # find the db's id for the radio model number
+    cursor.execute("SELECT id FROM radio WHERE number='{0}'".format(id))
+    radio_id = cursor.fetchone()[0]
+    
     # get all matching radios
     cursor.execute("SELECT * FROM radio WHERE brand_id='{0}' AND number='{1}'".format(_brand, id))
     models = cursor.fetchall()
@@ -76,11 +80,10 @@ def radio(brand, id, variant=None):
     cursor.execute("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer))
     manufacturer, manufacturer_alias = cursor.fetchone()
 
-    images = []
-    if len(models) == 1:
-        for file in os.listdir("static/images/radio/{0}/{1}".format(brand, id)):
-            if file.endswith(".jpg"):
-                images.append("/static/images/radio/{0}/{1}".format(brand.lower(), id.lower()) + '/' + file)
+    # get the images related to the radio (or primary image for each variant)
+    cursor.execute("SELECT name, path FROM images WHERE type=1 AND id='{0}'".format(radio_id))
+    images = cursor.fetchall()
+
         
     if models is None:
         return "NONE!"
