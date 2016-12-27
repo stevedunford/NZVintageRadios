@@ -80,7 +80,7 @@ def radio(brand, id, variant=None):
     if len(models) == 1:
         for file in os.listdir("static/images/radio/{0}/{1}".format(brand, id)):
             if file.endswith(".jpg"):
-                images.append("/static/images/radio/{0}/{1}".format(brand, id) + '/' + file)
+                images.append("/static/images/radio/{0}/{1}".format(brand.lower(), id.lower()) + '/' + file)
         
     if models is None:
         return "NONE!"
