@@ -4,7 +4,7 @@
 
 <div id="container">
   <div id="breadcrumb">
-    RADIO » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {{ id }}
+    RADIO » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/radio/{{brand}}/{{id}}">{{ id }}</a>{% else %}{{ id }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
   </div>
   
   <!-- No radio found matching the URL-->
@@ -13,11 +13,13 @@
   <img src="/static/images/missing/missing.jpg">
   
   <!-- Multiple radios found, this is a variant landing page -->
-  {% elif models|length > 1 %}
-  There are currently {{ models|length }} variants of this model:
+  {% elif models|length > 1 and not variant %}
+  <p>There are currently {{ models|length }} variants of this model:</p>
   <ul>
     {% for model in models %}
-    <li>{{ model[1] }}</li>
+    <li>
+      <a href="/radio/{{brand}}/{{id}}/{{model[1]}}">{{ model[1] }}</a>
+    </li>
     {% endfor %}
   </ul>
   {% else %}
@@ -25,7 +27,8 @@
   <!-- Main section for showing a radio / variant -->
   <div id="radio_images">
     {% for image in images %}
-      <a class="gallery" title="{{ image[0] }}" href="/static{{ image[1] }}"><img src="/static{{ image[1] }}"></a>
+      <!-- Using resized main image if no thumbnail path provided -->
+      <a class="gallery" title="{{ image[0] }}" href="/static{{ image[1] }}"><img src="/static{% if image[2]|length < 1 %}{{ image[1] }}{% else %}{{ image[2] }}{% endif %}"></a>
     {% endfor %}
   </div>
   <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if models[0][3] > 0 %} in {% if models[0][4] != 0 %}about {% endif %}{{ models[0][3] }}{% if models[0][5] > 0 %}, production ran until {% if models[0][6] != 0 %} about {% endif %}{{ models[0][5]}}{% endif %}.{% endif %}</p>

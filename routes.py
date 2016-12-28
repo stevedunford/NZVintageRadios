@@ -69,11 +69,17 @@ def radio(brand, id, variant=None):
     _brand, _manufacturer = cursor.fetchone()
     
     # find the db's id for the radio model number
-    cursor.execute("SELECT id FROM radio WHERE number='{0}'".format(id))
+    if variant:
+        cursor.execute("SELECT id FROM radio WHERE number='{0}' AND name='{1}'".format(id, variant))
+    else:
+        cursor.execute("SELECT id FROM radio WHERE number='{0}'".format(id))
     radio_id = cursor.fetchone()[0]
     
-    # get all matching radios
-    cursor.execute("SELECT * FROM radio WHERE brand_id='{0}' AND number='{1}'".format(_brand, id))
+    # get the variant if specified, or all matching radios
+    if variant:
+        cursor.execute("SELECT * FROM radio WHERE brand_id='{0}' AND number='{1}' AND name='{2}'".format(_brand, id, variant))
+    else:
+        cursor.execute("SELECT * FROM radio WHERE brand_id='{0}' AND number='{1}'".format(_brand, id))
     models = cursor.fetchall()
     
     # get the manufacturer and alias (for link)
@@ -81,7 +87,7 @@ def radio(brand, id, variant=None):
     manufacturer, manufacturer_alias = cursor.fetchone()
 
     # get the images related to the radio (or primary image for each variant)
-    cursor.execute("SELECT name, path, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(radio_id))
+    cursor.execute("SELECT name, path, thumb, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(radio_id))
     images = cursor.fetchall()
     print(images)
 
@@ -257,7 +263,7 @@ def brand(id=None):
         brand_id=cursor.fetchone()[0]
         
         # find all models for this brand
-        cursor.execute("SELECT number FROM radio WHERE brand_id='{0}'".format(brand_id))
+        cursor.execute("SELECT DISTINCT number FROM radio WHERE brand_id='{0}'".format(brand_id))
         _models=cursor.fetchall()
         if _models is None:
             _models = []
@@ -290,23 +296,26 @@ def redirect_url(default='index'):
            url_for(default)
 
         
-@app.route("/uploads", methods=['POST'])
+@app.route("/uploads", methods=['GET', 'POST'])
 def uploads():
-	target=os.path.join(APP_ROOT, 'images/')
-	print("images dir: " + target)
+    if request.method == "GET":
+        return render_template('uploads.html')
+    else:
+        target=os.path.join(APP_ROOT, 'images/')
+        print("images dir: " + target)
 
-	# check to see if images directory exists, make if not
-	if not os.path.isdir(target):
-		os.mkdir(target)
+        # check to see if images directory exists, make if not
+        if not os.path.isdir(target):
+            os.mkdir(target)
 
-	for file in request.files.getlist("file"):
-		print ("filename: " + str(file))
-		filename = file.filename
-		destination = "/".join([target, filename])
-		print("file being stored in: " + destination)
-		file.save(destination)
+        for file in request.files.getlist("file"):
+            print ("filename: " + str(file))
+            filename = file.filename
+            destination = "/".join([target, filename])
+            print("file being stored in: " + destination)
+            file.save(destination)
 
-	return render_template("index.html", logged_in=logged_in)
+        return render_template("index.html", logged_in=logged_in)
 
 @app.errorhandler(404)
 def page_not_found(e):
