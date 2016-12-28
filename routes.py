@@ -189,18 +189,15 @@ def manufacturer(id=None):
         id = int(id) #id number - database id
         cursor.execute("SELECT alias FROM manufacturer WHERE id={0}".format(id))
         _manufacturer=cursor.fetchone()
-        session['id'] = id
-        print("================={0}=================".format(session['id']))
         return redirect(request.url.replace('/manufacturer/{0}'.format(id), '/manufacturer/{0}'.format(_manufacturer[0].lower().strip().replace(' ', '_'))))
     except ValueError: # id is not an int, ie: redirect worked
-        num = session['id']
-        print("================={0}=================".format(num))
         # find the manufacturers details
         cursor.execute("SELECT * FROM manufacturer WHERE alias='{0}'".format(id))
         _manufacturer=cursor.fetchone()
+        print("================={0}=================".format(_manufacturer))
         
         # find all models currently held for this manufacturer
-        cursor.execute("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(num))
+        cursor.execute("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer[0]))
         _brands=cursor.fetchall()
         
         _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer[2]))
