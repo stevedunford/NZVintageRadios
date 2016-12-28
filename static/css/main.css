@@ -4,6 +4,8 @@
   Author: Steve Dunford
   Licence: Beerware - If you like it then buy me a beer
 
+  See bottom for simple small-screen layout tweaks
+
 */
 
 /* Title font (Limelight) and main site font */
@@ -16,7 +18,7 @@
 body {
 	font-family: 'Open Sans', sans-serif;
 	max-width: 960px;
-    font-size: 1em;
+    font-size: 1.1em;
     letter-spacing: 0.03em;
     background-color: #b8860b;
     background-image: url("img/bg.jpg");
@@ -30,8 +32,11 @@ body {
     text-shadow: #fff 0 0 10px, #fff 0 0 2px;
 }
 
+/* only EVER used to display 'NZ Vintage Radios' at top */
 h1 {
-    font-size: 2em;
+    font-family: 'Limelight', cursive;
+	font-size: 1.9em;
+    padding-left: 65px;
 }
 
 h2 {
@@ -91,10 +96,6 @@ h4 {
     background-image: url(img/white-linen.png);
 }
 
-#header h1 {
-	font-family: 'Limelight', cursive;
-	padding-left: 65px;
-}
 
 #header img {
 	position: relative;
@@ -117,19 +118,23 @@ h4 {
 #container {    /* Used to encapsulate main content */
     padding: 5px;
     min-height: 320px;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #391b0b;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #111;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
     border: 2px solid #752A13;
  }
+
+#container p {
+    line-height: 1.5;
+}
 
 #container li {
     list-style: none;
 }
 
 #container a {
-    color: #000;
+    color: darkcyan;
     text-decoration-line: underline;
     text-decoration-style: dotted;
 }
@@ -161,9 +166,11 @@ h4 {
 }
 
 #radio_images img {
-    max-width: 120px;
-    max-height: 120px;
-    vertical-align: middle;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    overflow: hidden;
+    border: 1px solid black;
 }
 
 .page_title {
@@ -335,4 +342,27 @@ a:hover {
     color: white;
     display: inline-block;
     clear: both;
+}
+
+
+/*
+ * Mobile / small screen layout tweaks 
+ 
+@media (max-width: 720px) {
+    #header {
+        max-height 50px;
+    }
+}
+*/
+@media (max-width: 720px) {
+    h1 {
+        padding-left: 0;
+        margin: 0;
+    }
+    
+    #header img {
+        display: none;
+    }
+    
+    
 }
