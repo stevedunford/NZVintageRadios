@@ -77,7 +77,7 @@ h4 {
 }
 
 #title {
-    width: 85%;
+    width: 95%;
     background-image: url("img/title.jpg");
     background-position: bottom left;
     border-top-right-radius: 15px;
@@ -120,7 +120,7 @@ h4 {
  * Navigation Bar 
  */
 .nav {
-	width: 95%;
+	width: 85%;
 	margin: 0;
 	padding: 0 0 2px 0;
 	border-top-right-radius: 15px;
