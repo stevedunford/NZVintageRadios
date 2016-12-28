@@ -194,7 +194,6 @@ def manufacturer(id=None):
         # find the manufacturers details
         cursor.execute("SELECT * FROM manufacturer WHERE alias='{0}'".format(id))
         _manufacturer=cursor.fetchone()
-        print("================={0}=================".format(_manufacturer))
         
         # find all models currently held for this manufacturer
         cursor.execute("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer[0]))

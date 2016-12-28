@@ -14,7 +14,7 @@ Licence: Beerware - 'cos coding is thirsty work
     <script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.colorbox-min.js') }}"></script>
     <script>
-      <!-- click-to-hide Flask flash messages -->
+      /* click-to-hide Flask flash messages */
       $( document ).ready(function() {
         $( ".close" ).click(function() {
           $( ".flash" ).hide( "fast");
@@ -22,12 +22,22 @@ Licence: Beerware - 'cos coding is thirsty work
       });
     </script>
     <script>
+      /* Colorbox images */
       $(document).ready(function () {
         $('.gallery').colorbox({
           rel: 'group1',
           transition: 'fade',
           maxWidth: '90%',
           maxHeight: '90%'
+        });
+      });
+    </script>
+    <script>
+      /* burger menu for mobile */
+      $(function() {
+        $(".menuIcon").click(function(e) {
+          $(".menu").toggleClass("menuOpen");
+          e.preventDefault();
         });
       });
     </script>
