@@ -81,8 +81,9 @@ def radio(brand, id, variant=None):
     manufacturer, manufacturer_alias = cursor.fetchone()
 
     # get the images related to the radio (or primary image for each variant)
-    cursor.execute("SELECT name, path FROM images WHERE type=1 AND id='{0}'".format(radio_id))
+    cursor.execute("SELECT name, path, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(radio_id))
     images = cursor.fetchall()
+    print(images)
 
         
     if models is None:
