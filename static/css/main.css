@@ -22,6 +22,10 @@ body {
     letter-spacing: 0.03em;
     background-color: #b8860b;
     background-image: url("img/bg_bp.jpg");
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 0px
 }
 
 .artdeco {
@@ -77,8 +81,17 @@ h4 {
     font-size: smaller;
 }
 
+#titleTop {
+    height: 8px;
+    width: 85%;
+    background-image: url("img/nav.jpg");
+    border-top-right-radius: 15px;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+}
+
 #title {
-    position: relative;
     width: 95%;
     background-image: url("img/title.jpg");
     background-position: bottom left;
@@ -95,17 +108,12 @@ h4 {
     width: 60%;
 	margin: 0;
 	padding: 10px;
-    /*border-top: 2px solid #752A13;
-    border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
-    border-top-right-radius: 15px;
-    background-image: url(img/white-linen.png);*/
 }
 
 
 #header img {
 	position: relative;
-    top: -10px;
+    top: -6px;
     left: -5px;
     overflow: hidden;
     float: left;
@@ -123,10 +131,14 @@ h4 {
  */
 .nav {
     height: auto;
-	width: 100%;
 	margin: 0;
 	padding: 0 0 2px 0;
-	background-color: #000;
+    background-image: url("img/nav.jpg");
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
 }
 
 .nav ul {
