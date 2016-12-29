@@ -33,6 +33,12 @@ body {
     margin-top: -2px;
     margin-bottom: 0;
     padding: 3px 5px;
+    text-shadow:
+        -1px -1px 0 #333,  
+        1px -1px 0 #333,
+        -1px 1px 0 #333,
+        1px 1px 0 #333,
+        0 0 8px #fff;
 }
 
 /* only EVER used to display 'NZ Vintage Radios' at top */
@@ -393,10 +399,6 @@ a:hover {
         font-size: 1.7em;
         padding-left: 0;
         margin: 0;
-    }
-    
-    .artdeco {
-        text-shadow: #fff 0 0 4px;
     }
     
     #header {
