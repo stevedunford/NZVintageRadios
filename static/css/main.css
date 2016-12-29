@@ -21,7 +21,7 @@ body {
     font-size: 1.1em;
     letter-spacing: 0.03em;
     background-color: #b8860b;
-    background-image: url("img/bg.jpg");
+    background-image: url("img/bg_bp.jpg");
 }
 
 .artdeco {
@@ -93,11 +93,11 @@ h4 {
     width: 60%;
 	margin: 0;
 	padding: 10px;
-    border-top: 2px solid #752A13;
+    /*border-top: 2px solid #752A13;
     border-right: 2px solid #752A13;
     border-left: 2px solid #752A13;
     border-top-right-radius: 15px;
-    /*background-image: url(img/white-linen.png);*/
+    background-image: url(img/white-linen.png);*/
 }
 
 
@@ -142,7 +142,6 @@ h4 {
 }
 
 .nav a {
-    text-decoration: underline dotted black;
     color: #e3dedb;
 }
 
@@ -192,8 +191,6 @@ menuIcon img {
 
 #container a {
     color: darkcyan;
-    text-decoration-line: underline;
-    text-decoration-style: dotted;
 }
 
 #container a:hover {
@@ -387,7 +384,7 @@ a:hover {
     }
 }
 */
-@media (max-width: 730px) {
+@media (max-width: 750px) {
     h1 {
         font-size: 1.7em;
         padding-left: 0;
@@ -415,7 +412,7 @@ a:hover {
     
 }
 
-@media (max-width: 560px) {
+@media (max-width: 580px) {
     .menu {
         max-height: 0;
         overflow: hidden;
