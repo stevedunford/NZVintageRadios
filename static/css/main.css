@@ -36,6 +36,7 @@ body {
 h1 {
     font-family: 'Limelight', cursive;
 	font-size: 1.9em;
+    color: black;
     padding-left: 65px;
 }
 
@@ -77,6 +78,7 @@ h4 {
 }
 
 #title {
+    position: relative;
     width: 95%;
     background-image: url("img/title.jpg");
     background-position: bottom left;
@@ -120,15 +122,11 @@ h4 {
  * Navigation Bar 
  */
 .nav {
-	width: 85%;
+    height: auto;
+	width: 100%;
 	margin: 0;
 	padding: 0 0 2px 0;
-	border-top-right-radius: 15px;
-	background-color: #d4bc7d;
-    background-image: url(img/nav.jpg);
-    border-top: 2px solid #752A13;
-    border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
+	background-color: #000;
 }
 
 .nav ul {
@@ -174,7 +172,6 @@ menuIcon img {
     min-height: 320px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #111;
-    text-align: justify;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
     border: 2px solid #752A13;
@@ -392,7 +389,7 @@ a:hover {
     }
     
     .artdeco {
-        text-shadow: none;
+        text-shadow: #fff 0 0 4px;
     }
     
     #header {
@@ -412,7 +409,12 @@ a:hover {
     
 }
 
+/* Push the menu to a mobile 'hamburger' style */
 @media (max-width: 580px) {
+    body {
+        position: relative;
+    }
+    
     .menu {
         max-height: 0;
         overflow: hidden;
