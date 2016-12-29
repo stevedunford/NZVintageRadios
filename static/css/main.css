@@ -33,7 +33,6 @@ body {
     margin-top: -2px;
     margin-bottom: 0;
     padding: 3px 5px;
-    text-shadow: #fff 0 0 10px, #fff 0 0 2px;
 }
 
 /* only EVER used to display 'NZ Vintage Radios' at top */
@@ -42,6 +41,7 @@ h1 {
 	font-size: 1.9em;
     color: black;
     padding-left: 65px;
+    text-shadow: #fff 0 0 10px, #fff 0 0 2px;
 }
 
 h2 {
@@ -131,6 +131,7 @@ h4 {
  */
 .nav {
     height: auto;
+    width: 95%;
 	margin: 0;
 	padding: 0 0 2px 0;
     background-image: url("img/nav.jpg");
@@ -386,12 +387,6 @@ a:hover {
 
 /*
  * Mobile / small screen layout tweaks 
- 
-@media (max-width: 720px) {
-    #header {
-        max-height 50px;
-    }
-}
 */
 @media (max-width: 750px) {
     h1 {
