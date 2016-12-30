@@ -55,14 +55,18 @@ h2 {
 }
 
 h3 {
+    font-family: 'Limelight', cursive;
     font-size: 1.2em;
+    margin: 3px 0;
 }
 
 h4 {
-    font-family: 'Limelight', cursive;
+    background-color: black;
+    color: white;
     font-size: 1em;
-    margin-top: 3px;
+    margin-top: 23px;
     margin-bottom: 3px;
+    padding-left: 5px;
 }
 
 .right{
@@ -87,49 +91,7 @@ h4 {
     font-size: smaller;
 }
 
-#titleTop {
-    height: 8px;
-    width: 85%;
-    background-image: url("img/nav.jpg");
-    border-top-right-radius: 15px;
-    border-top: 2px solid #752A13;
-    border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
-}
 
-#title {
-    width: 95%;
-    background-image: url("img/title.jpg");
-    background-position: bottom left;
-    border-top-right-radius: 15px;
-    border-top: 2px solid #752A13;
-    border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
-}
-
-/*
- * Header block CSS 
- */
-#header {
-    width: 60%;
-	margin: 0;
-	padding: 10px;
-}
-
-
-#header img {
-	position: relative;
-    top: -6px;
-    left: -5px;
-    overflow: hidden;
-    float: left;
-    filter: drop-shadow(0px 0px 10px #fff)
-}
-
-#login_wrapper {
-  float: right;
-  text-align: right;
-}
 
 
 /*
@@ -183,11 +145,72 @@ menuIcon img {
     vertical-align: middle;
 }
 
+
+
+/*
+ * Site header block 
+ */
+#header {
+    width: 60%;
+	margin: 0;
+	padding: 10px;
+}
+
+
+#header img {
+	position: relative;
+    top: -6px;
+    left: -5px;
+    overflow: hidden;
+    float: left;
+    filter: drop-shadow(0px 0px 10px #fff)
+}
+
+#login_wrapper {
+  float: right;
+  text-align: right;
+}
+
+
+
+/*
+ * Page title bar
+ */
+#pageTitleTop {
+    height: 8px;
+    width: 85%;
+    background-image: url("img/nav.jpg");
+    border-top-right-radius: 15px;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+}
+
+#pageTitle {
+    width: 95%;
+    background-image: url("img/title.jpg");
+    background-position: bottom left;
+    border-top-right-radius: 15px;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
+}
+
+.pageTitleText {
+    text-align: center;
+    font-family: 'Limelight', cursive;
+    font-weight: 800;
+    color: #fff;
+    clear: left; /* stops logo pushing it right */
+}
+
+
+
 /*
  * Content container
  */
 #container {    /* Used to encapsulate main content */
-    padding: 5px;
+    padding: 5px 15px 5px 15px;
     min-height: 320px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #111;
@@ -219,6 +242,7 @@ menuIcon img {
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 2px;
+    padding-bottom: 3px;
 }
 
 .inline_image {
@@ -242,14 +266,6 @@ menuIcon img {
     object-fit: contain;
     overflow: hidden;
     border: 1px solid black;
-}
-
-.page_title {
-    text-align: center;
-    font-family: 'Limelight', cursive;
-    font-weight: 800;
-    color: #fff;
-    clear: left; /* stops logo pushing it right */
 }
 
 .subheading {
@@ -304,37 +320,6 @@ a:hover {
 	cursor: pointer;
 }
 
-
-/*
- * Radio pages layout
- */
- #radio_specs {
- 	display: inline-block;
- 	vertical-align: top;
- 	background-color: #eee;
- }
-
-#radio_specs img {
-    float: right;
-    max-width: 100px;
-    border: 1px solid silver;
-    margin: 3px;
-}
-
- #radio_imgs {
-    position: relative;
-    z-index: 0;
-    float: right;
-    border: 1px solid silver;
-    border-radius: 0 10px 0 15px;
-    padding: 1px;
-    vertical-align: top;
-    background-color: #aaa;
- }
-
- #radio_imgs #main_img {
- 	border-radius: 0 10px 0 15px;
- }
 
 
 /*

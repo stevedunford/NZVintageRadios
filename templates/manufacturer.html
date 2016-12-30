@@ -3,13 +3,13 @@
 {% block content %}
 <div id="container">
   {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}
-  {% if manufacturer[5]|int %}
+  {% if manufacturer['year_started']|int %}
     <p id="timespan">
-      {{ manufacturer[1] }} was introduced in{% if manufacturer[6] == "1" %} around {% endif %}{{ manufacturer[5] }}{% if manufacturer[7]|int %} and lasted until{% if manufacturer[8] == "1" %} around {% endif %}{{ manufacturer[7] }}{% endif %}
+      {{ manufacturer['name'] }} began manufacturing in {% if manufacturer['year_started_approx'] == 1 %}around {% endif %}{{ manufacturer['year_started'] }}{% if manufacturer['year_ended']|int %} and finished up in {% if manufacturer['year_ended_approx'] == 1 %}around {% endif %}{{ manufacturer['year_ended'] }}{% if new_co %} when they became <a href="/manufacturer/{{ new_co['alias'] }}">{{ new_co['name'] }}</a>{% endif %}{% endif %}.
     </p>
   {% endif %}
   <div id="description">
-    {{ manufacturer[8]|safe }}
+    {{ manufacturer['notes']|safe }}
   </div>
   
   {% if brands|length > 0 %}
@@ -29,6 +29,7 @@
   </div>
 {% endif %}
 </div>
+new co: {{new_co}}<br>
 {{manufacturer}}<br><br>
 {{brands}}<br><br>
 {{logo}}<br><br>
