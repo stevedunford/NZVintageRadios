@@ -2,14 +2,18 @@
 
 {% block content %}
 <div id="container">
+  <div id="breadcrumb">
+    <a href="/distributors">DISTRIBUTORS</a> » {{ title }}
+  </div>
+  
   {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}
-  {% if distributor[3]|length > 1 %}
+  {% if distributor['address']|length > 1 %}
     <p id="timespan">
-      {{ distributor[1] }} was known to be in {{ distributor[3] }}.
+      {{ distributor['name'] }} was known to operate {% if distributor['address'] != "Nationwide" %}in {% endif %}{{ distributor['address'] }}.
     </p>
   {% endif %}
   <div id="description">
-    {{ distributor[4]|safe }}
+    {{ distributor['notes']|safe }}
   </div>
   
   {% if brands|length > 0 %}
@@ -20,8 +24,8 @@
     <ul>
       {% for brand in brands %}
         <li>
-          <a href={{ url_for('brand', id=brand[2]) }}>
-             {{brand[1]}}
+          <a href={{ url_for('brand', alias=brand['alias']) }}>
+             {{brand['name']}}
           </a>
         </li>
       {% endfor %}

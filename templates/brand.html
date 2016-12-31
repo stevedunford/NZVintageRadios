@@ -3,9 +3,8 @@
 {% block content %}
 
 <div id="container">
-  <h2>{{ brand['name']|upper }}
-    {% if brand['tagline'] %} <span class="subheading"> - '{{ brand['tagline'] }}'</span>{% endif %}
-    {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}</h2>
+  {% if brand['tagline'] %}<h2 class="subheading">'{{ brand['tagline'] }}'</h2>{% endif %}
+    {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}
 
 
   {% if brand['year_started']|int %}
@@ -29,7 +28,7 @@
       {% for model in models %}
         <li>
           <a href={{ url_for('model', brand=brand['name'], id=model['number']) }}>
-             {{ model['start_year'] }} {{ model['number'] }}
+             {{ model['start_year'] }} - {{ model['number'] }}
           </a>
         </li>
       {% endfor %}

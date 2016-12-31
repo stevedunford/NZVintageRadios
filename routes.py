@@ -103,7 +103,7 @@ def model(brand, id, variant=None):
 @app.route("/brands", methods=['GET', 'POST'])
 def brands():
     if request.method == "POST":
-        return redirect(url_for('brand', id=request.form.get('id')))
+        return redirect(url_for('brand', alias=request.form.get('id')))
     else:
         brands = query_db("SELECT alias, name FROM brand ORDER BY name ASC")
         print (brands)
@@ -116,40 +116,26 @@ def brands():
                 
 
 '''
-brand(id) takes an id which is either numeric or a string.
-brands() passes it an int, taken from the brand table in the
-db which is converted to a string in the 'try' section in
-order to make a tidy url.  It then runs again with the string
-type id and the lookup is done.  There may be a tidier way to
-do this...
+brand(alias) takes the alias for a brand and passes all the data for that brand and its logo - as well as all of the documented models for that brand - to brand.html 
 '''
-@app.route("/brand/<id>")
-def brand(id=None):
-    try:
-        id = int(id) #id number - database id
-        _brand = query_db("SELECT alias FROM brand WHERE id={0}".format(id), single=True)
-        return redirect(request.url.replace('/brand/{0}'.format(id), '/brand/{0}'.format(_brand[0].lower().strip().replace(' ', '_'))))
-    except ValueError: # id is not an int, ie: redirect worked
-        # find the info for this brand
-        _brand = query_db("SELECT * FROM brand WHERE alias='{0}'".format(id), single=True)
+@app.route("/brand/<alias>")
+def brand(alias=None):
+    # find the info for this brand
+    _brand = query_db("SELECT * FROM brand WHERE alias='{0}'".format(alias), single=True)
+    if not _brand:
+        abort(404) # Not found
         
-        #find the brand id
-        brand_id = (query_db("SELECT id FROM brand WHERE alias='{0}'".format(id), single=True))['id']
-        
-        # find all models for this brand
-        _models = (query_db("SELECT DISTINCT start_year, number FROM model WHERE brand_id='{0}'".format(brand_id)))
-        #if _models is None:
-        #    _models = []
-        #else:
-        #    _models = [(item[0], str(item[1])) for item in _models]
-        _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))
-    except: # if all else fails
-        abort(404)        
+    # find the brand id
+    brand_id = (query_db("SELECT id FROM brand WHERE alias='{0}'".format(alias), single=True))['id']
 
-    if _brand is None:
-        return "NONE!"
-    else:
-        return render_template("brand.html", title=_brand['name'], brand=_brand, logo=_logo, models=_models)
+    # find all models for this brand
+    _models = (query_db("SELECT DISTINCT start_year, number FROM model WHERE brand_id='{0}'".format(brand_id)))
+    
+    _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))     
+    if not os.path.isfile(APP_ROOT + _logo):
+        _logo = None 
+        
+    return render_template("brand.html", title=_brand['name'], brand=_brand, logo=_logo, models=_models)
   
 
 @app.route('/new_distributor', methods=['GET', 'POST'])
@@ -170,92 +156,64 @@ def new_distributor():
 @app.route("/distributors", methods=['GET', 'POST'])
 def distributors():
     if request.method == "POST":
-        return redirect(url_for('distributor', id=request.form.get('id')))
+        return redirect(url_for('distributor', alias=request.form.get('id')))
     else:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, name FROM distributor ORDER BY name ASC")
-        distributors = cursor.fetchall()
+        distributors = query_db("SELECT alias, name FROM distributor ORDER BY name ASC")
         if distributors is None:
             out = []
         else:
-            out = [[str(item[0]), str(item[1])] for item in distributors]
+            out = [[str(item['alias']), str(item['name'])] for item in distributors]
         
         return render_template("distributors.html", distributors=out, title='Distributors')
                 
-@app.route("/distributor/<id>")
-def distributor(id=None):
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    try:
-        id = int(id) #id number - database id
-        cursor.execute("SELECT alias FROM distributor WHERE id={0}".format(id))
-        _distributor=cursor.fetchone()
-        session['id'] = id
-        print("================={0}=================".format(session['id']))
-        return redirect(request.url.replace('/distributor/{0}'.format(id), '/distributor/{0}'.format(_distributor[0].lower().strip().replace(' ', '_'))))
-    except ValueError: # id is not an int, ie: redirect worked
-        num = session['id']
-        print("================={0}=================".format(num))
-        # find the distributors details
-        cursor.execute("SELECT * FROM distributor WHERE alias='{0}'".format(id))
-        _distributor=cursor.fetchone()
-        
-        # find all models currently sold by this distributor
-        cursor.execute("SELECT * FROM brand WHERE distributor_id='{0}'".format(num))
-        _brands=cursor.fetchall()
-        
-        _logo = url_for('static', filename='images/distributors/{0}.jpg'.format(_distributor[2]))
-        if not os.path.isfile(APP_ROOT + _logo):
-            _logo = None
-    except: # if all else fails
-        abort(404)        
+@app.route("/distributor/<alias>")
+def distributor(alias=None):
+    # find the distributors details
+    _distributor=query_db("SELECT * FROM distributor WHERE alias='{0}'".format(alias), single=True)
+    if not _distributor:
+        abort(404) # Not found
 
-    if _distributor is None:
-        return "NONE!"
-    else:
-        return render_template("distributor.html", distributor=_distributor, title=_distributor[1], brands=_brands, logo=_logo)
+    # find all models currently sold by this distributor
+    _distributor_id = (query_db("SELECT id FROM distributor WHERE alias='{0}'".format(alias), single=True))['id']
+    _brands = query_db("SELECT alias, name FROM brand WHERE distributor_id='{0}'".format(_distributor_id))
+
+    _logo = url_for('static', filename='images/distributors/{0}.jpg'.format(_distributor['alias']))
+    if not os.path.isfile(APP_ROOT + _logo):
+        _logo = None       
+
+    return render_template("distributor.html", distributor=_distributor, title=_distributor['name'], brands=_brands, logo=_logo)
 
 
 
 @app.route("/manufacturers", methods=['GET', 'POST'])
 def manufacturers():
     if request.method == "POST":
-        return redirect(url_for('manufacturer', id=request.form.get('id')))
+        return redirect(url_for('manufacturer', alias=request.form.get('id')))
     else:
-        manufacturers = query_db("SELECT id, name FROM manufacturer ORDER BY name ASC")
+        manufacturers = query_db("SELECT name, alias FROM manufacturer ORDER BY name ASC")
         if manufacturers is None:
             out = []
         else:
-            out = [[str(item[0]), str(item[1])] for item in manufacturers]
+            out = [[str(item['name']), str(item['alias'])] for item in manufacturers]
         
         return render_template("manufacturers.html", manufacturers=out, title='Manufacturers')
                 
-@app.route("/manufacturer/<id>")
-def manufacturer(id=None):
-    try:
-        id = int(id) #id number - database id
-        _manufacturer = query_db("SELECT alias FROM manufacturer WHERE id={0}".format(id), single=True)
-        return redirect(request.url.replace('/manufacturer/{0}'.format(id), '/manufacturer/{0}'.format(_manufacturer[0].lower().strip().replace(' ', '_'))))
-    except ValueError: # id is not an int, ie: redirect worked
-        # find the manufacturers details
-        _manufacturer = query_db("SELECT * FROM manufacturer WHERE alias='{0}'".format(id), single=True)
+@app.route("/manufacturer/<alias>")
+def manufacturer(alias=None):
+    _manufacturer = query_db("SELECT * FROM manufacturer WHERE alias='{0}'".format(alias), single=True)
+    if not _manufacturer:
+        abort(404) # Not found
         
-        _new_co = None
-        if _manufacturer['became']:
-            _new_co = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_manufacturer['became']), single=True)
-        print("==================")
-        print(_new_co)
-        print("==================")
-            
-        # find all models currently held for this manufacturer
-        _brands = query_db("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer['id']))
-        
-        _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer['alias']))
-        if not os.path.isfile(APP_ROOT + _logo):
-            _logo = None
-    except: # if all else fails
-        abort(404)        
+    _new_co = None
+    if _manufacturer['became']:
+        _new_co = query_db("SELECT name, alias FROM manufacturer WHERE alias={0}".format(_manufacturer['became']), single=True)
+
+    # find all models currently held for this manufacturer
+    _brands = query_db("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer['id']))
+
+    _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer['alias']))
+    if not os.path.isfile(APP_ROOT + _logo):
+        _logo = None     
 
     if _manufacturer is None:
         return "NONE!"
@@ -267,6 +225,13 @@ def manufacturer(id=None):
 def tips():
     return render_template("tips.html", title="Tips & Tricks")
     
+@app.route("/publications")
+def publications():
+    return render_template("publications.html", title="Publications")
+    
+@app.route("/about")
+def about():
+    return render_template("about.html", title="About")
     
 @app.route("/echo", methods=['POST'])
 def echo():

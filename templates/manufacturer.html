@@ -2,6 +2,9 @@
 
 {% block content %}
 <div id="container">
+  <div id="breadcrumb">
+    <a href="/manufacturers">MANUFACTURERS</a> » {{ title }}
+  </div>
   {% if logo %}<img id="logo" src="{{ logo }}" />{% endif %}
   {% if manufacturer['year_started']|int %}
     <p id="timespan">
@@ -20,8 +23,8 @@
     <ul>
       {% for brand in brands %}
         <li>
-          <a href={{ url_for('brand', id=brand[2]) }}>
-             {{brand[1]}}
+          <a href={{ url_for('brand', alias=brand['alias']) }}>
+             {{brand['name']}}
           </a>
         </li>
       {% endfor %}

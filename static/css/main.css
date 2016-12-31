@@ -9,25 +9,47 @@
 */
 
 /* Title font (Limelight) and main site font */
-@import url('https://fonts.googleapis.com/css?family=Limelight|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Limelight|Pacifico');
 
 
 /*
  * Main CSS setup for the site .
  */
 body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Arial', sans-serif;
 	max-width: 960px;
     font-size: 1.1em;
     letter-spacing: 0.03em;
     background-color: #122337;
     background-image: url("img/bg_bp.jpg");
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin-top: 0px
+    margin: 0 5px 5px 0;
 }
 
+/*
+ * flash is the Flask built-in messaging bar at the top of the page 
+ */
+.flash {
+	font-family: Arial, sans-serif;
+	font-weight: bolder;
+	background-color: #dd0000;
+	color: white;
+	height: auto;
+	border-bottom-right-radius: 15px;
+    border-bottom: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+	list-style:	none;
+	margin: 0;
+	padding: 4px 10px;
+}
+
+.flash ul li {
+	left: 80px;
+}
+
+
+/*
+ * font styles used throughout the site
+ */
 .artdeco {
     font-family: 'Limelight', cursive;
     margin-top: -2px;
@@ -51,7 +73,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.5em;
+    font-size: 1.7em;
 }
 
 h3 {
@@ -67,6 +89,22 @@ h4 {
     margin-top: 23px;
     margin-bottom: 3px;
     padding-left: 5px;
+}
+
+.subheading {
+    font-family: 'Pacifico', sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    padding-right: 7%;
+    margin: 5px 0;
+    color: #752A13;
+    text-shadow:
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+         1px 1px 0 #000;
+    
 }
 
 .right{
@@ -91,6 +129,15 @@ h4 {
     font-size: smaller;
 }
 
+.bold_left {
+  font-weight: bolder;
+}
+
+#bold_right {
+  font-weight: bolder;
+  text-align: right;
+}
+
 
 
 
@@ -103,11 +150,9 @@ h4 {
 	margin: 0;
 	padding: 0 0 2px 0;
     background-image: url("img/nav.jpg");
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 15px;
     border-bottom: 2px solid #752A13;
     border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
 }
 
 .nav ul {
@@ -116,12 +161,19 @@ h4 {
 
 .nav ul li {
 	display: inline;
+    font-size: 0.8em;
+	font-weight: bold;
 	padding-right: 20px;
-	font-weight: bolder;
+    text-shadow:
+        -1px -1px 0 #333,  
+        1px -1px 0 #333,
+        -1px 1px 0 #333,
+        1px 1px 0 #333,
+        0 0 8px #fff;
 }
 
 .nav a {
-    color: #e3dedb;
+    color: #bbb;
 }
 
 .menuIcon {
@@ -183,7 +235,6 @@ menuIcon img {
     border-top-right-radius: 15px;
     border-top: 2px solid #752A13;
     border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
 }
 
 #pageTitle {
@@ -193,7 +244,6 @@ menuIcon img {
     border-top-right-radius: 15px;
     border-top: 2px solid #752A13;
     border-right: 2px solid #752A13;
-    border-left: 2px solid #752A13;
 }
 
 .pageTitleText {
@@ -216,7 +266,9 @@ menuIcon img {
     color: #111;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    border: 2px solid #752A13;
+    border-top: 2px solid #752A13;
+    border-right: 2px solid #752A13;
+    border-bottom: 2px solid #752A13;
  }
 
 #container p {
@@ -237,7 +289,7 @@ menuIcon img {
 }
 
 #breadcrumb {
-    font-size: smaller;
+    font-size: 0.8em;
     color: black;
     font-style: italic;
     text-transform: uppercase;
@@ -268,12 +320,6 @@ menuIcon img {
     border: 1px solid black;
 }
 
-.subheading {
-    font-style: italic;
-    font-size: 90%;
-    font-weight: 100;
-}
-
 a {
 	text-decoration: none;
 	color: #ddd;
@@ -283,34 +329,6 @@ a:hover {
 	color: #fedc3d;
 }
 
-.bold_left {
-  font-weight: bolder;
-}
-
-#bold_right {
-  font-weight: bolder;
-  text-align: right;
-}
-
-
-/*
- * flash is the Flask built-in messaging bar at the top of the page 
- */
-.flash {
-	font-family: Arial, sans-serif;
-	font-weight: bolder;
-	background-color: #dd0000;
-	color: white;
-	height: auto;
-	border-radius: 5px;
-	list-style:	none;
-	margin: 0 0 4px 0;
-	padding: 4px 10px;
-}
-
-.flash ul li {
-	left: 80px;
-}
 
 .close {   /* 'X' in flash msgs used to trigger message hide fn */
 	color: aquamarine;
@@ -360,26 +378,17 @@ a:hover {
     color: white;
     background-image: url(img/nav.jpg);
     border-bottom: 2px solid #752A13;
-    border-left: 2px solid #752A13;
     border-right: 2px solid #752A13;
+    border-left: 2px solid #752A13;
     border-bottom-left-radius: 15px;
 }
 
-/*
- * DEBUG
- */
-#debug {
-    background-color: red;
-    color: white;
-    display: inline-block;
-    clear: both;
-}
 
 
 /*
  * Mobile / small screen layout tweaks 
 */
-@media (max-width: 750px) {
+@media (max-width: 760px) {
     h1 {
         font-size: 1.7em;
         padding-left: 0;
@@ -401,12 +410,20 @@ a:hover {
         letter-spacing: 1px;
     }
     
+    #footer h3 {
+        font-size: 0.8em;
+    }
+    
 }
 
 /* Push the menu to a mobile 'hamburger' style */
-@media (max-width: 580px) {
+@media (max-width: 959px) {
     body {
         position: relative;
+    }
+    
+    .subheading {
+        font-size: 1.3em;
     }
     
     .menu {
