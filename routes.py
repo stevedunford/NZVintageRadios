@@ -7,17 +7,20 @@ dependencies (pip install):
  - flask-mysql
  - flask-login   TODO: email address login - do away with login
  - flask-uploads TODO: IS this needed?
+ - PIL (Pillow) for images
 GitHub: github.com/stevedunford/NZVintageRadios
 Licence: Beerware.  I need a beer, you need a website - perfect
 '''
 
-import os # for file upload path determination
+import glob, os # for file upload path determination and images
+import errno
 from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g, abort
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask_wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired
+from PIL import Image
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -59,9 +62,52 @@ def index():
     return render_template("index.html", title="Welcome")
 
 
-@app.route("/model/<brand>/<id>")
-@app.route("/model/<brand>/<id>/<variant>")
-def model(brand, id, variant=None):
+@app.route("/model/import_photos", methods=['GET', 'POST'])
+def import_photos():
+    if request.method == 'POST':
+        path = request.form.get('path')
+        files=[photo for photo in os.listdir(path) if photo[-4:].lower() == ".jpg" or photo[-4:].lower() == ".png"]
+        thumbs = os.path.join(path, 'thumbs')
+        try:
+            os.mkdir(thumbs)
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                abort(500)
+        
+        # get all the allowed image types (jpg and png) and make thumbnails
+        files = glob.glob(os.path.join(path, '*.jpg'))
+        files.extend(glob.glob(os.path.join(path, '*.png')))
+        print('------------------')
+        print(os.path.relpath(path, APP_ROOT + url_for("static", filename = '')))
+        print('==================')
+        for image_file in files:
+            img = Image.open(image_file)
+            img.thumbnail((150,150))
+            _, filename = os.path.split(image_file)
+            img.save(os.path.join(thumbs, filename))
+            
+            # insert into images db if not already there
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            #query = "INSERT INTO images (name, path, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format(image_file.split('.')[0], )
+            #cursor.execute(query)
+            #conn.commit()
+        
+        return redirect('/model/import_photos')
+    
+    else:
+        photo_root = APP_ROOT + url_for("static", filename="images/model")
+        _directories = []
+        for root, dirs, files in os.walk(photo_root):
+            level = root.replace(photo_root, '').count(os.sep)
+            indent = '---' * (level)
+            _directories.append(('{0} {1}/'.format(indent, os.path.basename(root)), os.path.abspath(root)))
+       
+        return render_template("import_photos.html", directories=_directories)
+
+@app.route("/model/<brand>/<code>")
+@app.route("/model/<brand>/<code>/<variant>")
+def model(brand, code, variant=None):
     # find the db's id for the brand name
     result = query_db("SELECT id, manufacturer_id FROM brand WHERE alias='{0}'".format(brand), single=True)
     _brand = result['id']
@@ -69,18 +115,18 @@ def model(brand, id, variant=None):
     
     # find the db's id for the radio model number
     if variant:
-        result = query_db("SELECT id FROM model WHERE number='{0}' AND name='{1}'".format(id, variant), single=True)
+        result = query_db("SELECT id FROM model WHERE code='{0}' AND variant='{1}'".format(code, variant), single=True)
     else:
-        result = query_db("SELECT id FROM model WHERE number='{0}'".format(id), single=True)
+        result = query_db("SELECT id FROM model WHERE code='{0}'".format(code), single=True)
     if not result: # check to make sure a model was found
         abort(404)
     model_id = result['id']
 
     # get the variant if specified, or all matching radios
     if variant:
-        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND number='{1}' AND name='{2}'".format(_brand, id, variant))
+        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
     else:
-        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND number='{1}'".format(_brand, id))
+        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}'".format(_brand, code))
     
     # get the manufacturer and alias (for link)
     result = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer), single=True)
@@ -91,12 +137,17 @@ def model(brand, id, variant=None):
     if len(models) > 1:
         images = []
         for mod in models:
-            images.append(query_db("SELECT thumb FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(mod['id']))[0])
+            images.append(query_db("SELECT path FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(mod['id']))[0])
         
     else: # get all the images for the single model
-        images = query_db("SELECT name, path, thumb, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
+        images = query_db("SELECT name, path, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
+    
+    # manually add thumbnail paths
+    for image in images:
+        path, filename = os.path.split(image['path'])
+        image['thumb'] = os.path.join(path, 'thumbs', filename)
         
-    return render_template("model.html", models=models, title=brand+' '+id, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, id=id, variant=variant, images=images)
+    return render_template("model.html", models=models, title=brand+' '+code, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
 
 
     
@@ -129,7 +180,7 @@ def brand(alias=None):
     brand_id = (query_db("SELECT id FROM brand WHERE alias='{0}'".format(alias), single=True))['id']
 
     # find all models for this brand
-    _models = (query_db("SELECT DISTINCT start_year, number FROM model WHERE brand_id='{0}'".format(brand_id)))
+    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}'".format(brand_id)))
     
     _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))     
     if not os.path.isfile(APP_ROOT + _logo):
@@ -206,8 +257,7 @@ def manufacturer(alias=None):
         
     _new_co = None
     if _manufacturer['became']:
-        _new_co = query_db("SELECT name, alias FROM manufacturer WHERE alias={0}".format(_manufacturer['became']), single=True)
-
+        _new_co = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_manufacturer['became']), single=True)
     # find all models currently held for this manufacturer
     _brands = query_db("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer['id']))
 
@@ -271,15 +321,16 @@ def uploads():
 def page_not_found(e):
     return render_template('404.html', title="404"), 404
 
+@app.errorhandler(500)
+def server_broke(e):
+    return render_template('500.html', title="Server Error"), 500
+
 
 def query_db(query, single=False):
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(query)
     result = cursor.fetchone() if single else cursor.fetchall()
-    print("================================")
-    print(result)
-    print("================================")
     return result
     
 

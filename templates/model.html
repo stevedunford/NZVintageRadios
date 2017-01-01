@@ -4,7 +4,7 @@
 
 <div id="container">
   <div id="breadcrumb">
-    <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{id}}">{{ id }}</a>{% else %}{{ id }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
+    <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{code}}">{{ code }}</a>{% else %}{{ code }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
   </div>
   
   <!-- No radio found matching the URL-->
@@ -19,7 +19,7 @@
     {% for model in models %}
 
     <li>
-      <a href="/model/{{brand}}/{{id}}/{{model['name']}}"><img src="/static{{ images[loop.index0]['thumb'] }}" /> {{ model['name'] }}</a>
+      <a href="/model/{{brand}}/{{code}}/{{model['variant']}}"><img src="/static{{ images[loop.index0]['thumb'] }}" /> {{ model['variant'] }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -33,7 +33,7 @@
     {% endfor %}
   </div>
   {% set model = models[0] %}
-  <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year'] > 0 %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] > 0 %}, production ran until {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']}}{% endif %}.{% endif %}</p>
+  <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year'] > 0 %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran until {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']}}{% endif %}.{% endif %}</p>
   <p><span class="bold_left">Valve Lineup:</span> {{ model['valve_lineup'] }}</p>
   <p>{{ model['notes']|safe }}</p>
   

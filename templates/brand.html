@@ -27,8 +27,8 @@
     <ul>
       {% for model in models %}
         <li>
-          <a href={{ url_for('model', brand=brand['name'], id=model['number']) }}>
-             {{ model['start_year'] }} - {{ model['number'] }}
+          <a href={{ url_for('model', brand=brand['name'], code=model['code']) }}>
+             {{ model['start_year'] }} - {{ model['code'] }}
           </a>
         </li>
       {% endfor %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+<form action="import_photos" method="POST">
+  <select name="path" onchange="this.form.submit()">
+    <option value="" disabled selected style="display:none;">Choose a brand</option>
+    {% for directory in directories %}
+      <option value="{{ directory[1] }}">{{ directory[0] }}</option>
+    {% endfor %}
+  </select>
+</form>
+</div>
+
+{% endblock %}

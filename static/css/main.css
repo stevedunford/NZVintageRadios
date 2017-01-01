@@ -347,7 +347,7 @@ a:hover {
     float: right;
     max-width: 320px;
     border-top-right-radius: 15px;
-    margin-right: 5px;
+    margin: 5px;
     box-shadow: -5px 5px 5px #752A13;
 }
 
@@ -432,35 +432,22 @@ a:hover {
         float: none;
         text-align: left;
         width: 100%;
-        -webkit-transition: max-height 0.5s;
-        -moz-transition: max-height 0.5s;
-        transition: max-height 0.5s;
+        -webkit-transition: max-height 1s;
+        -moz-transition: max-height 1s;
+        transition: max-height 1s;
       }
     
     .menu.menuOpen {
         max-height: 1000px;
-        -webkit-transition: max-height 0.5s;
-        -moz-transition: max-height 0.5s;
-        transition: max-height 0.5s;
+        -webkit-transition: max-height 1s;
+        -moz-transition: max-height 1s;
+        transition: max-height 1s;
     }
     
     .menu ul li {
         display: block;
         text-align: center;
-        width: 80%;
-        background: #000;
-        border-top: 1px solid #4d4d4d;
-    }
-    
-    .menu ul li:hover {
-        background: #999;
-    }
-    
-    .menu ul li a {
-        color: #fff;
-        text-shadow: #848484 0px 1px 2px;
-        padding: 10px 0;
-        width: 100%;
+        padding-bottom: 5px;
     }
     
     .menuIcon {
@@ -468,5 +455,9 @@ a:hover {
         text-align: left;
         padding-left: 10px;
     }
+    
+    .nav ul li {
+    font-size: 1em;
+    margin-right: 10%;
 
 }
