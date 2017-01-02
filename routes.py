@@ -121,11 +121,13 @@ readable)
 def model(brand, code, variant=None):
     # if spaces then reroute to the proper version
     if brand.strip().count(' ') > 0 or code.strip().count(' ') > 0 or (variant.strip().count(' ') > 0 if variant else False):
-        brand = brand.replace(' ', '_').strip().lower()
-        code = code.replace(' ', '_').strip().lower()
-        variant = variant.replace(' ', '_').strip().lower() if variant else None
-        print(brand, code, variant)
-        return model(brand, code, variant)
+        _brand = brand.replace(' ', '_').strip().lower()
+        _code = code.replace(' ', '_').strip().lower()
+        _variant = variant.replace(' ', '_').strip().lower() if variant else None
+        if variant:
+            return redirect(request.url.replace('/model/{0}/{1}/{2}'.format(brand, code, variant), '/model/{0}/{1}/{2}'.format(_brand, _code, _variant)))
+        else:
+            return redirect(request.url.replace('/model/{0}/{1}'.format(brand, code), '/model/{0}/{1}'.format(_brand, _code)))
     
     # for the purpose of db queries, convert '_' back to ' '
     brand = brand.replace('_', ' ').strip().lower()
@@ -142,15 +144,9 @@ def model(brand, code, variant=None):
         result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND variant='{1}'".format(code, variant), single=True)
     else:
         result = query_db("SELECT id FROM model WHERE LOWER(code='{0}')".format(code), single=True)
-    print("----")
-    print(result, code, variant)
-    print("----")
     if not result: # check to make sure a model was found
         abort(404)
     model_id = result['id']
-    print("----")
-    print(result)
-    print("----")
     # get the variant if specified, or all matching radios
     if variant:
         models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
@@ -186,7 +182,6 @@ def brands():
         return redirect(url_for('brand', alias=request.form.get('id')))
     else:
         brands = query_db("SELECT alias, name FROM brand ORDER BY name ASC")
-        print (brands)
         if brands is None:
             out = []
         else:
@@ -300,9 +295,9 @@ def manufacturer(alias=None):
         return render_template("manufacturer.html", manufacturer=_manufacturer, title=_manufacturer['name'], new_co=_new_co, brands=_brands, logo=_logo)
  
 
-@app.route("/tips")
+@app.route("/tech")
 def tips():
-    return render_template("tips.html", title="Tips & Tricks")
+    return render_template("tech.html", title="Technical Info")
     
 @app.route("/publications")
 def publications():
