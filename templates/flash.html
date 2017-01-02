@@ -1,12 +1,14 @@
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <ul class="flash">
-        {% for message in messages %}
-          <li>
-            {% if loop.index0 == 0 %}<span class="close">☒</span>{% endif %}
-            {{ message }}
-          </li>
-        {% endfor %}
+      <div class="flash">
+        <ul>   
+          {% for class, message in messages %}
+              <li class="{{ class }}">
+                {% if loop.index0 == 0 %}<span class="close">Ⓧ</span>{% endif %}
+                {{ message }}
+              </li>
+          {% endfor %}
         </ul>
-      {% endif %}
+      </div>
+    {% endif %}
     {% endwith %}

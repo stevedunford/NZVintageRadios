@@ -31,19 +31,52 @@ body {
 .flash {
 	font-family: Arial, sans-serif;
 	font-weight: bolder;
-	background-color: #dd0000;
-	color: white;
+    background-image: url("img/title.jpg");
+	color: #fff;
 	height: auto;
+    position: relative;
 	border-bottom-right-radius: 15px;
     border-bottom: 2px solid #752A13;
     border-right: 2px solid #752A13;
-	list-style:	none;
 	margin: 0;
 	padding: 4px 10px;
 }
 
+.close {   /* 'X' in flash msgs used to trigger message hide fn */
+	color: #752A13;
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    font-size: 2em;
+    text-shadow:
+        -1px -1px 0 #fff,  
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff,
+        0 0 8px #fff;
+}
+
+.close:hover {
+	cursor: pointer;
+}
+
 .flash ul li {
-	left: 80px;
+	left: 10px;
+    width: 80%;
+    list-style:	none;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.message {
+    background-color: green;
+    border: 2px solid darkgreen;
+
+}
+
+.error {
+    background-color: red;
+    border: 2px solid darkred;
 }
 
 
@@ -103,8 +136,11 @@ h4 {
         -1px -1px 0 #000,  
         1px -1px 0 #000,
         -1px 1px 0 #000,
-         1px 1px 0 #000;
-    
+        1px 1px 0 #000;
+}
+
+.justify {
+    text-align: justify;
 }
 
 .right{
@@ -124,11 +160,6 @@ h4 {
     font-weight: bold;
 }
 
-.error {
-    color: #f00;
-    font-size: smaller;
-}
-
 .bold_left {
   font-weight: bolder;
 }
@@ -138,7 +169,19 @@ h4 {
   text-align: right;
 }
 
+.img_right {
+    padding: 5px;
+    float: right;
+    max-width: 150px;
+    max-height: 150px;
+}
 
+.img_left {
+    padding: 5px;
+    float: left;
+    max-width: 150px;
+    max-height: 150px;
+}
 
 
 /*
@@ -328,16 +371,6 @@ a {
 a:hover {
 	color: #fedc3d;
 }
-
-
-.close {   /* 'X' in flash msgs used to trigger message hide fn */
-	color: aquamarine;
-}
-
-.close:hover {
-	cursor: pointer;
-}
-
 
 
 /*

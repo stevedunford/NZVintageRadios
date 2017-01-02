@@ -77,9 +77,7 @@ def import_photos():
         # get all the allowed image types (jpg and png) and make thumbnails
         files = glob.glob(os.path.join(path, '*.jpg'))
         files.extend(glob.glob(os.path.join(path, '*.png')))
-        print('------------------')
-        print(os.path.relpath(path, APP_ROOT + url_for("static", filename = '')))
-        print('==================')
+        image_root = os.path.relpath(path, APP_ROOT + url_for("static", filename = ''))
         for image_file in files:
             img = Image.open(image_file)
             img.thumbnail((150,150))
@@ -87,6 +85,7 @@ def import_photos():
             img.save(os.path.join(thumbs, filename))
             
             # insert into images db if not already there
+            model = query_db("SELECT id FROM model WHERE code='{0}'".format())
             conn = mysql.connect()
             cursor = conn.cursor()
             #query = "INSERT INTO images (name, path, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format(image_file.split('.')[0], )
@@ -105,9 +104,34 @@ def import_photos():
        
         return render_template("import_photos.html", directories=_directories)
 
+    
+'''
+model   - this is a radio information page
+brand   - the brand of radio, eg: Pacific Radio Co. Ltd, or Clipper
+code    - the model number or chassis number, eg: 18, 6 Valve Dual Wave, or 5M4
+variant - the cabinet style or model nickname, eg: Raleigh, Elite, Tiki
+
+no brand, code or variant can contain an underscore due to this being used
+to replace spaces for www url rules stating urls can't have spaces (FF handles
+this gracefully, chrome currently replaces them with %20 which is not very
+readable)
+'''
 @app.route("/model/<brand>/<code>")
 @app.route("/model/<brand>/<code>/<variant>")
 def model(brand, code, variant=None):
+    # if spaces then reroute to the proper version
+    if brand.strip().count(' ') > 0 or code.strip().count(' ') > 0 or (variant.strip().count(' ') > 0 if variant else False):
+        brand = brand.replace(' ', '_').strip().lower()
+        code = code.replace(' ', '_').strip().lower()
+        variant = variant.replace(' ', '_').strip().lower() if variant else None
+        print(brand, code, variant)
+        return model(brand, code, variant)
+    
+    # for the purpose of db queries, convert '_' back to ' '
+    brand = brand.replace('_', ' ').strip().lower()
+    code = code.replace('_', ' ').strip().lower()
+    variant = variant.replace('_', ' ').strip().lower() if variant else None
+    
     # find the db's id for the brand name
     result = query_db("SELECT id, manufacturer_id FROM brand WHERE alias='{0}'".format(brand), single=True)
     _brand = result['id']
@@ -115,13 +139,18 @@ def model(brand, code, variant=None):
     
     # find the db's id for the radio model number
     if variant:
-        result = query_db("SELECT id FROM model WHERE code='{0}' AND variant='{1}'".format(code, variant), single=True)
+        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND variant='{1}'".format(code, variant), single=True)
     else:
-        result = query_db("SELECT id FROM model WHERE code='{0}'".format(code), single=True)
+        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}')".format(code), single=True)
+    print("----")
+    print(result, code, variant)
+    print("----")
     if not result: # check to make sure a model was found
         abort(404)
     model_id = result['id']
-
+    print("----")
+    print(result)
+    print("----")
     # get the variant if specified, or all matching radios
     if variant:
         models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
@@ -285,7 +314,8 @@ def about():
     
 @app.route("/echo", methods=['POST'])
 def echo():
-    flash(request.form['text'])
+    flash("You should see a nice green message here", 'message')
+    flash(request.form['text'], 'error')
     return '<a href="/">Click here</a> to test Flash Messages'
 
 # Return to previous page helper function
