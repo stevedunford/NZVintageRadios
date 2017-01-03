@@ -77,7 +77,27 @@ def import_photos():
         # get all the allowed image types (jpg and png) and make thumbnails
         files = glob.glob(os.path.join(path, '*.jpg'))
         files.extend(glob.glob(os.path.join(path, '*.png')))
+        # find the db-ready path to the images, strip any trailing slash
         image_root = os.path.relpath(path, APP_ROOT + url_for("static", filename = ''))
+        # this should be ['images','model', brand, code, <variant?>]
+        # so the indexes are: 0       1       2      3        4?  (len 4 or 5)
+        folder_names = image_root.split(os.sep)
+        if len(folder_names) != 4 and len(folder_names) != 5:
+            flash("{0}:image folder layout problem, contact admin, cry a little bit".format(folder_names), 'error')
+            abort(500)
+        print('                              {0}'.format(folder_names))
+        variant = folder_names[4] if len(folder_names) == 5 else None
+        code = folder_names[3]
+        brand = folder_names[2]
+        # find the model id for the photos (yuk!)
+        model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') {1} AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{2}'))".format(code, "AND LOWER(variant='{0}')".format(variant) if variant else 'AND variant IS NULL', brand), single=True)
+        print('---------------')
+        print(brand, code, variant, model)
+        print('---------------')
+        if not model or len(model) == 0:
+            flash("No record held for a {0} {1} by {2}".format(code, variant if variant else '', brand))
+            abort(500)
+        
         for image_file in files:
             img = Image.open(image_file)
             img.thumbnail((150,150))
@@ -85,15 +105,17 @@ def import_photos():
             img.save(os.path.join(thumbs, filename))
             
             # insert into images db if not already there
-            model = query_db("SELECT id FROM model WHERE code='{0}'".format())
+            check_existing = query_db("SELECT id FROM images WHERE filename='{0}' AND type=1 AND type_id={1}".format(filename, model['id']), single=True)
             conn = mysql.connect()
             cursor = conn.cursor()
-            #query = "INSERT INTO images (name, path, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format(image_file.split('.')[0], )
-            #cursor.execute(query)
-            #conn.commit()
-        
+            if not check_existing:
+                query = "INSERT INTO images (title, filename, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format((brand.title() + ' ' + variant.title()) if variant else (brand.title() + ' ' + code.title()), filename, 1, model['id'])
+                cursor.execute(query)
+                conn.commit()
+
         return redirect('/model/import_photos')
     
+    # GET
     else:
         photo_root = APP_ROOT + url_for("static", filename="images/model")
         _directories = []
@@ -101,7 +123,7 @@ def import_photos():
             level = root.replace(photo_root, '').count(os.sep)
             indent = '---' * (level)
             _directories.append(('{0} {1}/'.format(indent, os.path.basename(root)), os.path.abspath(root)))
-       
+        #print (_directories)
         return render_template("import_photos.html", directories=_directories)
 
     
@@ -161,16 +183,21 @@ def model(brand, code, variant=None):
     # get the images related to the radio (or primary image for each variant). type=1 means model images
     if len(models) > 1:
         images = []
-        for mod in models:
-            images.append(query_db("SELECT path FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(mod['id']))[0])
+        for model in models:
+            images.append(query_db("SELECT filename FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(model['id']))[0])
+            images[-1]['variant'] = model['variant'].lower()
         
     else: # get all the images for the single model
-        images = query_db("SELECT name, path, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
+        images = query_db("SELECT title, filename, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
     
-    # manually add thumbnail paths
+    # build image and thumb paths
+    # didn't use url_for for static due to stupid slashes it adds
     for image in images:
-        path, filename = os.path.split(image['path'])
-        image['thumb'] = os.path.join(path, 'thumbs', filename)
+        _variant = variant if not 'variant' in image else image['variant']
+        thumbfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'thumbs', image['filename'])
+        imgfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, _variant if _variant else '', image['filename'])
+        image['filename'] = imgfile
+        image['thumb'] = thumbfile
         
     return render_template("model.html", models=models, title=brand+' '+code, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
 
