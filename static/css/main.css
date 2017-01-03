@@ -170,14 +170,18 @@ h4 {
 }
 
 .img_right {
-    padding: 5px;
+    padding: 2px;
+    margin: 5px 0 5px 5px;
+    border: 1px solid #000;
     float: right;
     max-width: 150px;
     max-height: 150px;
 }
 
 .img_left {
-    padding: 5px;
+    padding: 2px;
+    margin: 5px 5px 5px 0;
+    border: 1px solid #000;
     float: left;
     max-width: 150px;
     max-height: 150px;

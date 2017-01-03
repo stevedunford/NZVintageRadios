@@ -91,9 +91,8 @@ def import_photos():
         brand = folder_names[2]
         # find the model id for the photos (yuk!)
         model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') {1} AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{2}'))".format(code, "AND LOWER(variant='{0}')".format(variant) if variant else 'AND variant IS NULL', brand), single=True)
-        print('---------------')
-        print(brand, code, variant, model)
-        print('---------------')
+        print("SELECT id FROM model WHERE LOWER(code='{0}') {1} AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{2}'))".format(code, "AND LOWER(variant='{0}')".format(variant) if variant else 'AND variant IS NULL', brand))
+        print(model, code, variant, brand)
         if not model or len(model) == 0:
             flash("No record held for a {0} {1} by {2}".format(code, variant if variant else '', brand))
             abort(500)
@@ -112,7 +111,7 @@ def import_photos():
                 query = "INSERT INTO images (title, filename, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format((brand.title() + ' ' + variant.title()) if variant else (brand.title() + ' ' + code.title()), filename, 1, model['id'])
                 cursor.execute(query)
                 conn.commit()
-
+        flash('Images added successfully')
         return redirect('/model/import_photos')
     
     # GET
@@ -173,8 +172,8 @@ def model(brand, code, variant=None):
     if variant:
         models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
     else:
-        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}'".format(_brand, code))
-    
+        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' ORDER BY start_year ASC".format(_brand, code))
+    print (models)
     # get the manufacturer and alias (for link)
     result = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer), single=True)
     manufacturer = result['name']
@@ -231,7 +230,7 @@ def brand(alias=None):
     brand_id = (query_db("SELECT id FROM brand WHERE alias='{0}'".format(alias), single=True))['id']
 
     # find all models for this brand
-    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}'".format(brand_id)))
+    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}' ORDER BY start_year ASC".format(brand_id)))
     
     _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))     
     if not os.path.isfile(APP_ROOT + _logo):
@@ -336,8 +335,8 @@ def about():
     
 @app.route("/echo", methods=['POST'])
 def echo():
-    flash("You should see a nice green message here", 'message')
-    flash(request.form['text'], 'error')
+    flash("NOTICE: notification message here", 'message')
+    flash("ERROR: " + request.form['text'], 'error')
     return '<a href="/">Click here</a> to test Flash Messages'
 
 # Return to previous page helper function
