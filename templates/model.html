@@ -35,7 +35,7 @@
   {% set model = models[0] %}
   <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year'] > 0 %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</p>
   <p><span class="bold_left">Valve Lineup:</span> {{ model['valve_lineup'] }}</p>
-  <p>{{ model['notes']|safe }}</p>
+  {{ model['notes']|safe }}
   
   {% endif %}
   

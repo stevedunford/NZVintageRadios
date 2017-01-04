@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+  <div id="breadcrumb">
+    SEARCH » <a href="/{{ search_term }}">{{ search_term }}</a>
+  </div>
+  
+  <!-- Nothing found matching the search-->
+  {% if search_results|length == 0 %}
+  <p>Sorry, you're looking for a radio that just isn't there...</p>
+  <img src="/static/images/missing/missing.jpg">
+  {% endif %}
+  
+  <ul>
+    {% for result in search_results %}
+    {{result[0]}}{{result[1]}}{{result[2]}}
+    {% endfor %}
+  </ul>
+  
+
+</div>
+
+
+{% endblock %}

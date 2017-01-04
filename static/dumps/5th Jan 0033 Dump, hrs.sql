@@ -50,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `brand` (
   `year_ended_approx` tinyint(1) unsigned DEFAULT '0' COMMENT 'Is this approximate',
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~8 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~6 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -64,7 +64,9 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(6, 'Well-Mayde', 'well_mayde', NULL, 5, 5, '1929', 0, NULL, 0, '<p>The brand name Well-Mayde was established by Johns Ltd in Auckland, and products were manufactured by their factory, Wellmade Ltd.</p>'),
 	(7, 'Pathfinder', 'pathfinder', NULL, 1, 0, NULL, 0, NULL, 0, '<p>One of the Akrad brands - possibly also Westonhouse?</p>'),
 	(8, 'Stella', 'stella', 'Proudly Made - Proudly Owned', 3, 0, '1933', 1, '1938', 1, '<p>Stella - one of the main private brand sets manufacturerd by RCNZ.  It seems 1937 may have been the last year of RCNZ models, but there were sets in 1938 under the Stella name manufacturered (it seems) by Collier and Beale.  Does anyone know the tie up here?  Was it a new company, just a new brand, or did Stella move to C&B after RCNZ finished up building private brand sets?</p>'),
-	(9, 'Philco', 'philco', 'A Musical Instrument of Quality', 4, 0, '1930', 0, '1962', 1, '<p>Philco as a brand in New Zealand started in 1930 when Chas Begg & Co. Ltd imported radios direct from America - Philco being one of the few US manufacturers to produce export sets with 230V transformers.</p>\r\n<p>By 1938, import restrictions meant that only chassis\' were being imported, and the cabinets were made locally.  This didn\'t last very long before Dominion Radio and Electrical was set up as a New Zealand franchise and Philco sets were being produced here lock, stock and barrel.</p>');
+	(9, 'Philco', 'philco', 'A Musical Instrument of Quality', 4, 0, '1930', 0, '1962', 1, '<p>Philco as a brand in New Zealand started in 1930 when Chas Begg & Co. Ltd imported radios direct from America - Philco being one of the few US manufacturers to produce export sets with 230V transformers.</p>\r\n<p>By 1938, import restrictions meant that only chassis\' were being imported, and the cabinets were made locally.  This didn\'t last very long before Dominion Radio and Electrical was set up as a New Zealand franchise and Philco sets were being produced here lock, stock and barrel.</p>'),
+	(10, 'Bell', 'bell', NULL, 8, 0, '1952', 0, '1980', 0, '<p>Bell was the mainstay brand name of Bell Radio-Television Corp., found on portables, bookshelf radios, table radios, radiograms, televisions and more from the early 50\'s until the 80\'s when Bell ceased production</p>'),
+	(11, 'General', 'general', NULL, 8, 0, '1962', 0, NULL, 0, '<p>General radios were a Bell Radio-Television Corp. brand, made in Japan by Yaou Radio Mfg. Co.  They never fully caught on in NZ despite being pushed heavily by Bell, and according to John Stokes the 7-pin Japanese valves used were unreliable by comparison to the modern noval valves being used in the <a href="/colt">colt</a> at the time.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -98,67 +100,94 @@ CREATE TABLE IF NOT EXISTS `images` (
   `type_id` int(10) unsigned NOT NULL COMMENT 'which item it belongs to',
   `is_schematic` bit(1) NOT NULL DEFAULT b'0' COMMENT 'Is this image a schematic',
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
+  `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~28 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~54 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`) VALUES
-	(1, 'Clipper 5M4 Front', 'clipper_5m4_front.jpg', 1, 1, b'0', 1),
-	(2, 'Clipper 5M4 Side', 'clipper_5m4_lside.jpg', 1, 1, b'0', 2),
-	(3, 'Clipper 5M4 Dial', 'clipper_5m4_dial.jpg', 1, 1, b'0', 3),
-	(4, 'Clipper 5M4 Rear', 'clipper_5m4_rear.jpg', 1, 1, b'0', 4),
-	(5, 'Clipper 5M4 Rear 2', 'clipper_5m4_rear_label.jpg', 1, 1, b'0', 5),
-	(7, 'Clipper 5M4 Schematic (early)', 'clipper_5m4_schematic.png', 1, 1, b'1', 30),
-	(8, 'Clipper 5M4 Label', 'clipper_5m4_label.png', 1, 1, b'0', 29),
-	(9, 'Clipper 5M4 Red', 'clipper_5m4_red.jpg', 1, 1, b'0', 9),
-	(10, 'Clipper 5M4 Blue', 'clipper_5m4_blue.jpg', 1, 1, b'0', 8),
-	(11, 'Clipper 5M4 Green', 'clipper_5m4_green.jpg', 1, 1, b'0', 7),
-	(12, 'Clipper 5M4 Brown', 'clipper_5m4_brown.jpg', 1, 1, b'0', 10),
-	(13, 'Clipper 5M4 Ivory', 'clipper_5m4_ivory.jpg', 1, 1, b'0', 6),
-	(14, 'Clipper 5M4 Black (RARE)', 'clipper_5m4_black.jpg', 1, 1, b'0', 11),
-	(15, 'Pacific Raleigh ', '20160320_144502.jpg', 1, 2, b'0', 2),
-	(16, 'Pacific Raleigh Dial', '20160322_104320.jpg', 1, 2, b'0', 3),
-	(17, 'Pacific Raleigh Valve Card', '20160322_104136.jpg', 1, 2, b'0', 4),
-	(18, 'Pacific RaleighFront', '20160322_104306.jpg', 1, 2, b'0', 1),
-	(19, 'Pacific Raleigh Advert', 'Pacific Raleigh 6-valve advert.png', 1, 2, b'0', 5),
-	(20, 'Pacific 6 Valve Dual Wave Schematic', 'Pacific 6-Valve Dual-Wave Schematic.png', 1, 2, b'1', 30),
-	(21, 'Pacific Elite', 'elite.jpg', 1, 3, b'0', 1),
-	(46, 'Pacific Elite', '20161005_102450.jpg', 1, 3, b'0', 7),
-	(47, 'Pacific Elite', '20161005_150428.jpg', 1, 3, b'0', 6),
-	(48, 'Pacific Elite', '20161005_161012.jpg', 1, 3, b'0', 8),
-	(49, 'Pacific Elite', 'chassis badge.jpg', 1, 3, b'0', 9),
-	(50, 'Pacific Elite', 'DSC00024.jpg', 1, 3, b'0', 4),
-	(51, 'Pacific Elite', 'DSC00025.jpg', 1, 3, b'0', 5),
-	(52, 'Pacific Elite', 'IMG_20161005_164726.jpg', 1, 3, b'0', 2),
-	(53, 'Pacific Elite', 'IMG_20161005_171653.jpg', 1, 3, b'0', 3),
-	(54, 'Philco Alabama', '20160718_105116.jpg', 1, 4, b'0', 99),
-	(55, 'Philco Alabama', '20160718_105400.jpg', 1, 4, b'0', 99),
-	(56, 'Under Chassis 1', '20160718_105542.jpg', 1, 4, b'0', 99),
-	(57, 'Under Chassis 2', '20160718_105549.jpg', 1, 4, b'0', 99),
-	(58, 'Grey Cabinet', '20160719_143549.jpg', 1, 4, b'0', 99),
-	(59, 'Philco Alabama', 'Dads philco 401 alabama front after restoration.jpg', 1, 4, b'0', 1),
-	(60, 'Chassis Under Original', 'Dads philco 401 alabama Full_chassis_before.jpg', 1, 4, b'0', 99),
-	(61, 'Philco Alabama', 'Dads philco 401 alabama rear after restoration.jpg', 1, 4, b'0', 99),
-	(62, 'Philco Alabama', 'LaGloria_PhilcoSiesta.jpg', 1, 4, b'1', 100),
-	(63, 'Philco 401', '463396333.jpg', 1, 5, b'0', 180),
-	(64, 'Philco 401', '463396384.jpg', 1, 5, b'0', 1),
-	(65, 'Philco 401', '463396440.jpg', 1, 5, b'0', 99),
-	(66, 'Philco 401', '463396563.jpg', 1, 5, b'0', 99),
-	(67, 'Philco 401', '463396643.jpg', 1, 5, b'0', 99),
-	(68, 'Philco 401', '463396663.jpg', 1, 5, b'0', 99),
-	(69, 'Philco 401', '463396748.jpg', 1, 5, b'0', 182),
-	(70, 'Philco Nevada', '523928129.jpg', 1, 5, b'0', 200),
-	(71, 'Courtenay 5M', '20141225_164116.jpg', 1, 6, b'0', 99),
-	(72, 'Courtenay 5M', '20141225_164141.jpg', 1, 6, b'0', 99),
-	(73, 'Courtenay 5M', 'Back_nearly_finished.jpg', 1, 6, b'0', 99),
-	(74, 'Courtenay 5M', 'Chassis-underside-before.jpg', 1, 6, b'0', 99),
-	(75, 'Courtenay model 5M', 'courtenay_5m_front.jpg', 1, 6, b'0', 1),
-	(76, 'Courtenay 5M', 'Front_nearly_finished.jpg', 1, 6, b'0', 99),
-	(77, 'Courtenay 5M', 'courtenay talisman.png', 1, 6, b'0', 99),
-	(78, 'Courtenay 5M', 'Valve Lineup and Chassis Layout.png', 1, 6, b'0', 99),
-	(79, 'Philco Alabama', 'philco-alabama-401-1-281212.jpg', 1, 4, b'0', 99);
+INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
+	(1, 'Clipper 5M4 Front', 'clipper_5m4_front.jpg', 1, 1, b'0', 1, NULL),
+	(2, 'Clipper 5M4 Side', 'clipper_5m4_lside.jpg', 1, 1, b'0', 2, NULL),
+	(3, 'Clipper 5M4 Dial', 'clipper_5m4_dial.jpg', 1, 1, b'0', 3, NULL),
+	(4, 'Clipper 5M4 Rear', 'clipper_5m4_rear.jpg', 1, 1, b'0', 4, NULL),
+	(5, 'Clipper 5M4 Rear 2', 'clipper_5m4_rear_label.jpg', 1, 1, b'0', 5, NULL),
+	(7, 'Clipper 5M4 Schematic (early)', 'clipper_5m4_schematic.png', 1, 1, b'1', 30, NULL),
+	(8, 'Clipper 5M4 Label', 'clipper_5m4_label.png', 1, 1, b'0', 29, NULL),
+	(9, 'Clipper 5M4 Red', 'clipper_5m4_red.jpg', 1, 1, b'0', 9, NULL),
+	(10, 'Clipper 5M4 Blue', 'clipper_5m4_blue.jpg', 1, 1, b'0', 8, NULL),
+	(11, 'Clipper 5M4 Green', 'clipper_5m4_green.jpg', 1, 1, b'0', 7, NULL),
+	(12, 'Clipper 5M4 Brown', 'clipper_5m4_brown.jpg', 1, 1, b'0', 10, NULL),
+	(13, 'Clipper 5M4 Ivory', 'clipper_5m4_ivory.jpg', 1, 1, b'0', 6, NULL),
+	(14, 'Clipper 5M4 Black (RARE)', 'clipper_5m4_black.jpg', 1, 1, b'0', 11, NULL),
+	(15, 'Pacific Raleigh ', '20160320_144502.jpg', 1, 2, b'0', 2, NULL),
+	(16, 'Pacific Raleigh Dial', '20160322_104320.jpg', 1, 2, b'0', 3, NULL),
+	(17, 'Pacific Raleigh Valve Card', '20160322_104136.jpg', 1, 2, b'0', 4, NULL),
+	(18, 'Pacific RaleighFront', '20160322_104306.jpg', 1, 2, b'0', 1, NULL),
+	(19, 'Pacific Raleigh Advert', 'Pacific Raleigh 6-valve advert.png', 1, 2, b'0', 5, NULL),
+	(20, 'Pacific 6 Valve Dual Wave Schematic', 'Pacific 6-Valve Dual-Wave Schematic.png', 1, 2, b'1', 30, NULL),
+	(21, 'Pacific Elite', 'elite.jpg', 1, 3, b'0', 1, NULL),
+	(46, 'Pacific Elite', '20161005_102450.jpg', 1, 3, b'0', 7, NULL),
+	(47, 'Pacific Elite', '20161005_150428.jpg', 1, 3, b'0', 6, NULL),
+	(48, 'Pacific Elite', '20161005_161012.jpg', 1, 3, b'0', 8, NULL),
+	(49, 'Pacific Elite', 'chassis badge.jpg', 1, 3, b'0', 9, NULL),
+	(50, 'Pacific Elite', 'DSC00024.jpg', 1, 3, b'0', 4, NULL),
+	(51, 'Pacific Elite', 'DSC00025.jpg', 1, 3, b'0', 5, NULL),
+	(52, 'Pacific Elite', 'IMG_20161005_164726.jpg', 1, 3, b'0', 2, NULL),
+	(53, 'Pacific Elite', 'IMG_20161005_171653.jpg', 1, 3, b'0', 3, NULL),
+	(54, 'Philco Alabama', '20160718_105116.jpg', 1, 4, b'0', 99, NULL),
+	(55, 'Philco Alabama', '20160718_105400.jpg', 1, 4, b'0', 99, NULL),
+	(56, 'Under Chassis 1', '20160718_105542.jpg', 1, 4, b'0', 99, NULL),
+	(57, 'Under Chassis 2', '20160718_105549.jpg', 1, 4, b'0', 99, NULL),
+	(58, 'Grey Cabinet', '20160719_143549.jpg', 1, 4, b'0', 99, NULL),
+	(59, 'Philco Alabama', 'Dads philco 401 alabama front after restoration.jpg', 1, 4, b'0', 1, NULL),
+	(60, 'Chassis Under Original', 'Dads philco 401 alabama Full_chassis_before.jpg', 1, 4, b'0', 99, NULL),
+	(61, 'Philco Alabama', 'Dads philco 401 alabama rear after restoration.jpg', 1, 4, b'0', 99, NULL),
+	(62, 'Philco Alabama', 'LaGloria_PhilcoSiesta.jpg', 1, 4, b'1', 100, NULL),
+	(63, 'Philco 401', '463396333.jpg', 1, 5, b'0', 180, NULL),
+	(64, 'Philco 401', '463396384.jpg', 1, 5, b'0', 1, NULL),
+	(65, 'Philco 401', '463396440.jpg', 1, 5, b'0', 99, NULL),
+	(66, 'Philco 401', '463396563.jpg', 1, 5, b'0', 99, NULL),
+	(67, 'Philco 401', '463396643.jpg', 1, 5, b'0', 99, NULL),
+	(68, 'Philco 401', '463396663.jpg', 1, 5, b'0', 99, NULL),
+	(69, 'Philco 401', '463396748.jpg', 1, 5, b'0', 182, NULL),
+	(70, 'Philco Nevada', '523928129.jpg', 1, 5, b'0', 200, NULL),
+	(71, 'Courtenay 5M', '20141225_164116.jpg', 1, 6, b'0', 99, NULL),
+	(72, 'Courtenay 5M', '20141225_164141.jpg', 1, 6, b'0', 99, NULL),
+	(73, 'Courtenay 5M', 'Back_nearly_finished.jpg', 1, 6, b'0', 99, NULL),
+	(74, 'Courtenay 5M', 'Chassis-underside-before.jpg', 1, 6, b'0', 99, NULL),
+	(75, 'Courtenay model 5M', 'courtenay_5m_front.jpg', 1, 6, b'0', 1, NULL),
+	(76, 'Courtenay 5M', 'Front_nearly_finished.jpg', 1, 6, b'0', 99, NULL),
+	(77, 'Courtenay 5M', 'courtenay talisman.png', 1, 6, b'0', 99, NULL),
+	(78, 'Courtenay 5M', 'Valve Lineup and Chassis Layout.png', 1, 6, b'0', 99, NULL),
+	(79, 'Philco Alabama', 'philco-alabama-401-1-281212.jpg', 1, 4, b'0', 99, NULL),
+	(80, 'Bell Colt Ivory', '1.jpg', 1, 7, b'0', 1, NULL),
+	(81, 'Bell Colt Grey', '2.jpg', 1, 7, b'0', 2, NULL),
+	(82, 'Bell Colt', '20160530_173204.jpg', 1, 7, b'0', 99, NULL),
+	(83, 'Bell Colt Green', '3.jpg', 1, 7, b'0', 3, NULL),
+	(84, 'Bell Colt Blue', '4.jpg', 1, 7, b'0', 4, NULL),
+	(85, 'Bell Colt', '463398315.jpg', 1, 7, b'0', 99, NULL),
+	(86, 'Bell Colt', '474769580.jpg', 1, 7, b'0', 99, NULL),
+	(87, 'Bell Colt', '475877334.jpg', 1, 7, b'0', 99, NULL),
+	(88, 'Bell Colt', '477166182.jpg', 1, 7, b'0', 99, NULL),
+	(89, 'Bell Colt', '481688135.jpg', 1, 7, b'0', 99, NULL),
+	(90, 'Bell Colt', '496270634.jpg', 1, 7, b'0', 99, NULL),
+	(91, 'Bell Colt Red', '5.jpg', 1, 7, b'0', 5, NULL),
+	(92, 'Bell Colt', '507080079 (1).jpg', 1, 7, b'0', 99, NULL),
+	(93, 'Bell Colt', '507227168.jpg', 1, 7, b'0', 99, NULL),
+	(94, 'Bell Colt', '507978318.jpg', 1, 7, b'0', 99, NULL),
+	(95, 'Bell Colt', '514050907.jpg', 1, 7, b'0', 99, NULL),
+	(96, 'Bell Colt', '540490991.jpg', 1, 7, b'0', 99, NULL),
+	(97, 'Bell Colt Brown', '6.jpg', 1, 7, b'0', 6, NULL),
+	(98, 'Bell Colt Black', '7.jpg', 1, 7, b'0', 7, NULL),
+	(99, 'Bell Colt Oak', '8.jpg', 1, 7, b'0', 8, NULL),
+	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, b'0', 101, NULL),
+	(101, 'Bell Colt', '5B4j.jpg', 1, 7, b'1', 102, NULL),
+	(102, 'Bell Colt', '5B60.jpg', 1, 7, b'1', 103, NULL),
+	(103, 'Bell Colt', '5B61.jpg', 1, 7, b'1', 104, NULL),
+	(104, 'Bell Colt', '5B67.jpg', 1, 7, b'1', 105, NULL),
+	(105, 'Bell Colt 3V Champ', 'three valve chassis.jpg', 1, 7, b'0', 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -175,19 +204,20 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `became` int(10) unsigned DEFAULT NULL COMMENT 'If this company merged into or renamed itself, add the id of the new company here',
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~7 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~6 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `notes`) VALUES
 	(1, 'Akrad Radio Corporation Ltd', 'akrad', 'Waihi', '1934', 0, '1982', 0, NULL, '<p>Akrad Radio was formed in Waihi by Keith M. Wrigley when he was just 18.</p><p>Notable brand names produced by Akrad include Pacific (the brand name was taken over in approximately 1940 after the demise of the original Pacific Radio Co.), Regent and Clipper.</p>'),
 	(2, 'His Master\'s Voice (N.Z.) Ltd', 'hmv', 'Wellington', '1940', 0, '1955', 0, NULL, '<p>Pre-war HMV sets were almost all imported.  After the war most sets were made in their Wellington factory with a few exceptions being made by various other manufacturers (mainly Collier and Beale)</p>'),
-	(3, 'Radio Corporation of New Zealand', 'rcnz', 'Wellington', '1932', 0, '1959', 0, 7, '<p>Originally known as <a href="/manufacturer/w_marks">W. Marks Ltd</a>, RCNZ became one of the largest radio manufacturers in NZ.  In around 1937, with the introduction of the house brand Columbus, RCNZ started moving away from producing \'private brand\' sets and within a couple of years was only manufacturing receivers under the names <a href="\r\n/brand/columbus">Columbus</a> and <a href="\r\n/brand/courtenay">Courtenay</a>.</p><p>RCNZ built a lot of their own components in-house, including capacitors and speakers.</p><p>Brands manufactured include <a href="\r\n/brand/columbus">Columbus</a>, <a href="\r\n/brand/courtenay">Courtenay</a>, <a href="\r\n/brand/stella">Stella</a>, <a href="\r\n/brand/pacific">Pacific</a>, <a href="\r\n/brand/cq">CQ</a>, <a href="\r\n/brand/acme">Acme</a>, <a href="\r\n/brand/troubador">Troubador</a> and more...</p>'),
+	(3, 'Radio Corporation of New Zealand', 'rcnz', 'Wellington', '1932', 0, '1959', 0, 7, '<p>Originally known as <a href="/manufacturer/w_marks">W. Marks Ltd</a>, RCNZ became one of the largest radio manufacturers in NZ.</p><p>In around 1937, with the introduction of the house brand Columbus, RCNZ started moving away from producing \'private brand\' sets and within a couple of years was only manufacturing receivers under the names <a href="\r\n/brand/columbus">Columbus</a> and <a href="\r\n/brand/courtenay">Courtenay</a>.</p><p>RCNZ built a lot of their own components in-house, including capacitors and speakers.</p><p>Brands manufactured include <a href="\r\n/brand/columbus">Columbus</a>, <a href="\r\n/brand/courtenay">Courtenay</a>, <a href="\r\n/brand/stella">Stella</a>, <a href="\r\n/brand/pacific">Pacific</a>, <a href="\r\n/brand/cq">CQ</a>, <a href="\r\n/brand/acme">Acme</a>, <a href="\r\n/brand/troubador">Troubador</a> and more...</p>'),
 	(4, 'Dominion Radio & Electrical Corp. Ltd', 'dreco', 'Dominion Rd, Auckland', '1939', 0, '1975', 1, NULL, '<p>DRECO was set up in 1939 as a New Zealand franchise of the Philco brand, and immediately began producing NZ versions of many Philco models.  Often these were visually similar but very different inside.</p>\r\n<p>In 1961 Philco USA was taken over by Ford Motor Co. and DRECO replaced the Philco brand with Majestic and LaGloria (which they had been using for a few years on very similar sets to the Philco models).  At one point you could buy a Philco 401 \'Alabama\', a La Gloria \'Imp\' and a Majestic set that were all very similar in both appearance and chassis.</p>\r\n<p>In the mid-70\'s Dominion Radio and Electrical merged with Bell Radio and Television to become Consolidated Electronic Industries Ltd, ending one of New Zealands longest-running radio manufacturing companies.</p>'),
 	(5, 'Wellmade Ltd', 'wellmade', 'Auckland', '1928', 0, '1956', 1, NULL, '<p>Wellmade Ltd was set up by Johns Ltd as a manufacturing factory for the various brands that Johns produced such as Ace, Altona and Well-Mayde</p>'),
 	(6, 'W. Marks Ltd', 'w_marks', 'Wellington', '1931', 0, '1932', 0, 3, '<p>The business was started in 1930 by Russian immigrant William Markoff (later changed to Willam Marks) to wind / rewind transformers and make amplifiers.  By 1931 he had formed the company that would go on to be one of the largest and most successful  New Zealand radio manufacturers of its day, and it seems this was his plan all along when in 1932 he changed the company name to <a href="/manufacturer/rcnz">Radio Corporation (N. Z.) Ltd</a></p>'),
-	(7, 'Pye (N.Z.) Ltd', 'pye', 'Waihi', '1962', 0, '1982', 0, NULL, '<p>The New Zealand branch of Pye Ltd from Cambridge, England</p>');
+	(7, 'Pye (N.Z.) Ltd', 'pye', 'Waihi', '1962', 0, '1982', 0, NULL, '<p>The New Zealand branch of Pye Ltd from Cambridge, England</p>'),
+	(8, 'Bell Radio-Television Corp.', 'bell', 'Auckland', '1950', 0, '1980', 1, NULL, '<p>Bell Radio-Television Corp sprang out of Antone Ltd after the two founding members left the company shortly after Al Bell joined.  The company ran until 1980 when it merged with <a href="/manufacturer/dreco">Dominion Radio and Electrical</a> (DRECO) to form Consolidated Industries Ltd.');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -206,18 +236,19 @@ CREATE TABLE IF NOT EXISTS `model` (
   `brand_id` int(11) unsigned NOT NULL COMMENT 'All sets must have a brand, this ties them back to a manufacturer',
   `notes` longtext COMMENT 'Information about this set',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~3 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~6 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `brand_id`, `notes`) VALUES
 	(1, NULL, '5M4', '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, 5, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p><p>There are at least two chassis variants, both using almost the same circuit and the same valve lineup.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>'),
 	(2, 'Raleigh', '6 Valve Dual Wave', '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, 3, '<p>Art deco tabletop radio from 1934</p>'),
 	(3, 'Elite', '6 Valve Dual Wave', '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, 3, '<p>Stunning art deco console from 1934</p>'),
-	(4, NULL, 'Alabama', '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, 9, '<p>A NZ-only model that appears to be based on the model 401, with a tone control added</p>'),
+	(4, NULL, 'Alabama', '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, 9, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>'),
 	(5, NULL, '401', '1954', 0, NULL, 0, 4, 'ECH42, EAF42, EL41, EZ40', 1, 9, '<p>4-valve predecessor to the well-known (if not by name) <a href="/model/philco/alabama">Philco Alabama</a>.  Known in some literature as the \'Philco Nevada\'</p>'),
-	(6, NULL, '5M', '1952', 0, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, 1, '<p>Also sold as a Columbus model, this was the last small receiver ever sold under the Courtenay label - within two years Turnbull and Jones would have pulled out of the radio receiver market and the Courtenay name would be history.  This receiver was known as the \'Talisman\', after the HMS Talisman, a Triton class submarine during WW2.</p>');
+	(6, NULL, '5M', '1952', 0, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, 1, '<p>Also sold as a Columbus model, this was the last small receiver ever sold under the Courtenay label - within two years Turnbull and Jones would have pulled out of the radio receiver market and the Courtenay name would be history.  This receiver was known as the \'Talisman\', after the HMS Talisman, a Triton class submarine during WW2.</p>'),
+	(7, NULL, 'Colt', '1951', 0, '1980', 0, NULL, 'Various (See text)', 1, 10, '<p>The Bell Colt was the biggest-selling and longest-running model of radio ever designed and built in New Zealand.  Its production spanned over 30 years and it saw several different versions including a transistorised model for the last few years leading up to the final closure of Bell Radio-Television Ltd.</p>\r\n<p>Along with different circuitry, there were several different dial layouts, cabinet colours and even cabinet styles, with 2 different solid oak cabinets being offered as well.</p>\r\n<p>Refer to the pictures for more details</p>\r\n<p><b>Valve Lineups:(chassis variants)</b><br>\r\n5B4:   ECH41 or ECH42 or ECH81, EF41, EBC41, EL41, EZ40 - 462kc/s IF<br>\r\n5B60: ECH81, EF89, EBC81, EL84, EZ80 - 455kc/s IF<br>\r\n5B61: Same as 5B60, although later variants had a solid state rectifier<br>\r\n5B67: ECH81, EF89, EBC81, EL84, BY179 Silicon Rectifier - 455kc/s IF</p>\r\n<p>Note: the chassis numbers refer to the years - 5BXX.  5B4=1954, 5B60=1960 etc<p>\r\n');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -232,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES

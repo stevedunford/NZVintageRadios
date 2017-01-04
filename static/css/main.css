@@ -383,6 +383,7 @@ a:hover {
 #logo {
     float: right;
     max-width: 320px;
+    max-height: 320px;
     border-top-right-radius: 15px;
     margin: 5px;
     box-shadow: -5px 5px 5px #752A13;

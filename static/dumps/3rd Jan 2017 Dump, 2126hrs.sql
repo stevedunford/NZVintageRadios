@@ -13,10 +13,12 @@
 
 
 -- Dumping database structure for nzvr_db
+DROP DATABASE IF EXISTS `nzvr_db`;
 CREATE DATABASE IF NOT EXISTS `nzvr_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `nzvr_db`;
 
 -- Dumping structure for table nzvr_db.adverts
+DROP TABLE IF EXISTS `adverts`;
 CREATE TABLE IF NOT EXISTS `adverts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `category` int(11) unsigned NOT NULL COMMENT '0 valves, 1 components, 2 test equipment, 3 radio kitsets, 4 radios, 5 publications, 6 courses',
@@ -34,6 +36,7 @@ DELETE FROM `adverts`;
 /*!40000 ALTER TABLE `adverts` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.brand
+DROP TABLE IF EXISTS `brand`;
 CREATE TABLE IF NOT EXISTS `brand` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -65,6 +68,7 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
+DROP TABLE IF EXISTS `distributor`;
 CREATE TABLE IF NOT EXISTS `distributor` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -85,6 +89,7 @@ INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
 /*!40000 ALTER TABLE `distributor` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.images
+DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL COMMENT 'Title of the file shown in the browser',
@@ -157,6 +162,7 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
+DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE IF NOT EXISTS `manufacturer` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -185,6 +191,7 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
+DROP TABLE IF EXISTS `model`;
 CREATE TABLE IF NOT EXISTS `model` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `variant` varchar(50) DEFAULT NULL COMMENT 'May not exist (ie: Pacific 516) - often the names can be found in old print adverts',
@@ -208,12 +215,13 @@ INSERT INTO `model` (`id`, `variant`, `code`, `start_year`, `start_year_approx`,
 	(1, NULL, '5M4', '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, 5, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p><p>There are at least two chassis variants, both using almost the same circuit and the same valve lineup.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>'),
 	(2, 'Raleigh', '6 Valve Dual Wave', '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, 3, '<p>Art deco tabletop radio from 1934</p>'),
 	(3, 'Elite', '6 Valve Dual Wave', '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, 3, '<p>Stunning art deco console from 1934</p>'),
-	(4, NULL, 'Alabama', '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, 9, '<p>A NZ-only model that appears to be based on the model 401, with a tone control added</p>'),
+	(4, NULL, 'Alabama', '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, 9, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>'),
 	(5, NULL, '401', '1954', 0, NULL, 0, 4, 'ECH42, EAF42, EL41, EZ40', 1, 9, '<p>4-valve predecessor to the well-known (if not by name) <a href="/model/philco/alabama">Philco Alabama</a>.  Known in some literature as the \'Philco Nevada\'</p>'),
 	(6, NULL, '5M', '1952', 0, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, 1, '<p>Also sold as a Columbus model, this was the last small receiver ever sold under the Courtenay label - within two years Turnbull and Jones would have pulled out of the radio receiver market and the Courtenay name would be history.  This receiver was known as the \'Talisman\', after the HMS Talisman, a Triton class submarine during WW2.</p>');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(10) NOT NULL AUTO_INCREMENT,
   `date_joined` int(11) NOT NULL DEFAULT '0',
