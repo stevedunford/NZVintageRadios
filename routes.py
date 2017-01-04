@@ -25,11 +25,11 @@ from PIL import Image
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 WTF_CSRF_ENABLED = True
-SECRET_KEY = 'uxjSShEJs}jbMSW\x80hMl\x80Yq1VFz\x82Wpg{y||GyYAXISqSJBFt\x83w}Y\x80E`AVTFQyhsKiGCVzoIROIRC\x81\x83\x82n]zCw`]ZYwZw`PO{UDPGiGH'
+SECRET_KEY = "\xd4'\x19*\x15\xfb6*\xae\xb6\xc0\xd7\x10\xb0>OX\x17\xc8!\xe6\xe1\xda\x91\x06\xbf\xb5B\xde_\xfcr"
 
 # app config
 app = Flask(__name__)
-app.secret_key = '}g\x83^jSvlazDyhxHCV^YUXw\\crxOddpw~\x83Q\x80eP|ZZqOSBcO\x80IGvlphvZkqCcv~\x7foJJHgYou|]rxvSDZN\x82OIo{Qis55N}Mo\x7fJK\x80G|Hdt'
+app.secret_key = '\x06*\xac\xd42u\x80\xcd\xaaw;\xfb\xab\x91\x1d\x9a\x13\xd4\xe5\xd0\xc7\t#\x8a\xec\xaa\x81\xe3\x96\x15t\x17a'
 
 # MySQL config
 mysql = MySQL(cursorclass=DictCursor)
@@ -40,7 +40,6 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app) 
 
 app.logger.debug('NZVRS Website Starting Up...')
-
 
 '''
 Web data entry
@@ -57,9 +56,25 @@ class Distributor(Form):
 SITE LOGIC
 '''
 @app.route("/")
+@app.route("/<id>") #simple search
 @app.route("/home")
-def index():
-    return render_template("index.html", title="Welcome")
+def index(id=None):
+    results = None
+    if id: # super simple search
+        results = query_db("SELECT brand_id, code, variant FROM model WHERE code='{0}' OR variant='{0}'".format(id))
+        if not results or len(results) == 0:
+            abort(404)
+        elif len(results) == 1:
+            brand = query_db("SELECT alias FROM brand WHERE id='{0}'".format(results[0]['brand_id']), single=True) 
+            return redirect(url_for('model', brand=brand['alias'], code=results[0]['code'], variant=results[0]['variant']))
+        else:
+            search_results = []
+            for result in results:
+                search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(results[0]['brand_id']), single=True)['alias'], result['code'], result['variant']])
+            return render_template("search.html", title='Search Results', search_results=search_results, search_term=id)
+        
+    # And if you just wanted the home page...
+    return render_template('index.html', title='Welcome')
 
 
 @app.route("/model/import_photos", methods=['GET', 'POST'])
@@ -85,7 +100,6 @@ def import_photos():
         if len(folder_names) != 4 and len(folder_names) != 5:
             flash("{0}:image folder layout problem, contact admin, cry a little bit".format(folder_names), 'error')
             abort(500)
-        print('                              {0}'.format(folder_names))
         variant = folder_names[4] if len(folder_names) == 5 else None
         code = folder_names[3]
         brand = folder_names[2]
@@ -168,6 +182,7 @@ def model(brand, code, variant=None):
     if not result: # check to make sure a model was found
         abort(404)
     model_id = result['id']
+   
     # get the variant if specified, or all matching radios
     if variant:
         models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
