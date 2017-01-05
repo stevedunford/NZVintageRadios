@@ -169,11 +169,16 @@ h4 {
   text-align: right;
 }
 
+.inset {
+    padding-left: 20px;
+}
+
 .img_right {
     padding: 2px;
     margin: 5px 2px 5px 5px;
     border: 1px solid silver;
     border-radius: 5px;
+    box-shadow: -2px 2px 5px silver;
     float: right;
     max-width: 150px;
     max-height: 150px;
@@ -184,6 +189,7 @@ h4 {
     margin: 5px 5px 5px 2px;
     border: 1px solid silver;
     border-radius: 5px;
+    box-shadow: -2px 2px 5px silver;
     float: left;
     max-width: 150px;
     max-height: 150px;
@@ -264,7 +270,7 @@ menuIcon img {
     left: -5px;
     overflow: hidden;
     float: left;
-    filter: drop-shadow(0px 0px 10px #fff)
+    filter: drop-shadow(0px 0px 10px #fff);
 }
 
 #login_wrapper {
@@ -309,6 +315,7 @@ menuIcon img {
  * Content container
  */
 #container {    /* Used to encapsulate main content */
+    position: relative;
     padding: 5px 15px 5px 15px;
     min-height: 320px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -321,11 +328,15 @@ menuIcon img {
  }
 
 #container p {
+    display: inline-block;
     line-height: 1.5;
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     border-radius: 5px;
     background-color: #fff;
+    box-shadow: -2px 2px 5px silver;
+    width: 99%;
+    border: 2px solid #fbfbfb;
 }
 
 #container li {
@@ -370,6 +381,27 @@ menuIcon img {
     object-fit: contain;
     overflow: hidden;
     border: 1px solid black;
+}
+
+.icon {
+    position: absolute;
+    background: transparent no-repeat left center;
+    width: 40px;
+    height: 35px;
+    left: 0;
+    padding-top: 35px;
+}
+
+.manufactured {
+    background-image: url(/static/icons/manufactured.png);
+}
+
+.valve {
+    background-image: url(/static/icons/valve.png);
+}
+
+.if {
+    background-image: url(/static/icons/if.png);
 }
 
 a {

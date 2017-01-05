@@ -33,8 +33,19 @@
     {% endfor %}
   </div>
   {% set model = models[0] %}
-  <p>Manufactured by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</p>
-  <p><span class="bold_left">Valve Lineup:</span> {{ model['valve_lineup'] }}</p>
+  <div class='icon manufactured'></div>
+  <p><span class='bold inset'>Manufactured by </span><a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</p>
+  
+  <div class='icon valve'></div>
+  <p><span class="bold inset">Valve Lineup:</span> {{ model['valve_lineup'] }}
+  </p>
+  
+  {% if model['if'] %}
+  <div class='icon if'></div>
+  <p><span class="bold inset">I.F. Frequency: </span>{{ model['if'] }}
+  </p>
+  {% endif %}
+  
   {{ model['notes']|safe }}
   
   {% endif %}

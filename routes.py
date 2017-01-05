@@ -206,12 +206,13 @@ def model(brand, code, variant=None):
     
     # build image and thumb paths
     # didn't use url_for for static due to stupid slashes it adds
+    # TODO: eventually have this automate the import process or at least thumbs
     for image in images:
         _variant = variant if not 'variant' in image else image['variant']
         thumbfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'thumbs', image['filename'])
         imgfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, _variant if _variant else '', image['filename'])
         image['filename'] = imgfile
-        image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else None
+        image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
         
     return render_template("model.html", models=models, title=brand+' '+code, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
 
