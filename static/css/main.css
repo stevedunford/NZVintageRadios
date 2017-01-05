@@ -485,6 +485,10 @@ a:hover {
         letter-spacing: 1px;
     }
     
+    #container p {
+        width: 96%;
+    }
+    
     #footer h3 {
         font-size: 0.8em;
     }
