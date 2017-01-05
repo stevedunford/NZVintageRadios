@@ -211,7 +211,7 @@ def model(brand, code, variant=None):
         thumbfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'thumbs', image['filename'])
         imgfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, _variant if _variant else '', image['filename'])
         image['filename'] = imgfile
-        image['thumb'] = thumbfile
+        image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else None
         
     return render_template("model.html", models=models, title=brand+' '+code, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
 
