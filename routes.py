@@ -60,7 +60,7 @@ SITE LOGIC
 @app.route("/home")
 def index(id=None):
     results = None
-    if id: # super simple search
+    if id: # super simple model search
         results = query_db("SELECT brand_id, code, variant FROM model WHERE code='{0}' OR variant='{0}'".format(id))
         if not results or len(results) == 0:
             abort(404)
@@ -70,7 +70,7 @@ def index(id=None):
         else:
             search_results = []
             for result in results:
-                search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(results[0]['brand_id']), single=True)['alias'], result['code'], result['variant']])
+                search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(result['brand_id']), single=True)['alias'], result['code'], result['variant']])
             return render_template("search.html", title='Search Results', search_results=search_results, search_term=id)
         
     # And if you just wanted the home page...
@@ -178,11 +178,11 @@ def model(brand, code, variant=None):
     if variant:
         result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND variant='{1}'".format(code, variant), single=True)
     else:
-        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}')".format(code), single=True)
+        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND LOWER(brand_id='{1}')".format(code, _brand), single=True)
     if not result: # check to make sure a model was found
         abort(404)
     model_id = result['id']
-   
+    print (model_id)
     # get the variant if specified, or all matching radios
     if variant:
         models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))

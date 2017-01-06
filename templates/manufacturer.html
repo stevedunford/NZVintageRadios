@@ -5,14 +5,16 @@
   <div id="breadcrumb">
     <a href="/manufacturers">MANUFACTURERS</a> » {{ title }}
   </div>
+  
+  {% if logo or manufacturer['year_started']|int %}
   <p class="timespan">
     {% if logo %}<img class="logo img_right" src="{{ logo }}" />{% endif %}
     {% if manufacturer['year_started']|int %}
     
     {{ manufacturer['name'] }} began manufacturing in {% if manufacturer['year_started_approx'] == 1 %}around {% endif %}{{ manufacturer['year_started'] }}{% if manufacturer['year_ended']|int %} and finished up in {% if manufacturer['year_ended_approx'] == 1 %}around {% endif %}{{ manufacturer['year_ended'] }}{% if new_co %} when they became <a href="/manufacturer/{{ new_co['alias'] }}">{{ new_co['name'] }}</a>{% endif %}{% endif %}.
-    
-  {% endif %}
+    {% endif %}
   </p>
+  {% endif %}
   
   <div id="description">
     {{ manufacturer['notes']|safe }}
