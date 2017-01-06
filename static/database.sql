@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   `year_ended_approx` tinyint(1) unsigned DEFAULT '0' COMMENT 'Is this approximate',
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table nzvr_db.brand: ~14 rows (approximately)
 DELETE FROM `brand`;
@@ -69,7 +69,8 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(11, 'General', 'general', NULL, 8, 0, '1962', 0, NULL, 0, '<p>General radios were a Bell Radio-Television Corp. brand, made in Japan by Yaou Radio Mfg. Co.  They never fully caught on in NZ despite being pushed heavily by Bell, and according to John Stokes the 7-pin Japanese valves used were unreliable by comparison to the modern noval valves being used in the <a href="/colt">colt</a> at the time.</p>'),
 	(12, 'Fountain', 'fountain', NULL, 9, 0, '1963', 1, '1983', 1, '<p>Fountain radios and radiograms were reasonably common in the transistor era, but they also produced radios prior to this, including at least one model based on the Bell Colt - the <a href="/o.a.">Fountain O.A. Marine Band</a> radio</p>'),
 	(13, 'Regent', 'regent', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Regent was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Five Star.</p>'),
-	(14, 'Five Star', 'five_star', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Five Star was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Regent.</p>\r\n<p>source: https://leanpub.com/pyeradiowaihi/read</p>');
+	(14, 'Five Star', 'five_star', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Five Star was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Regent.</p>\r\n<p>source: https://leanpub.com/pyeradiowaihi/read</p>'),
+	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and is still running today as Farmers.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -105,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
 -- Dumping data for table nzvr_db.images: ~108 rows (approximately)
 DELETE FROM `images`;
@@ -167,7 +168,7 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(79, 'Philco Alabama', 'philco-alabama-401-1-281212.jpg', 1, 4, b'0', 99, NULL),
 	(80, 'Bell Colt Ivory', '1.jpg', 1, 7, b'0', 1, NULL),
 	(81, 'Bell Colt Grey', '2.jpg', 1, 7, b'0', 2, NULL),
-	(82, 'Bell Colt', '20160530_173204.jpg', 1, 7, b'0', 99, NULL),
+	(82, 'Bell Colt', '20160530_173204.jpg', 1, 7, b'0', 110, NULL),
 	(83, 'Bell Colt Green', '3.jpg', 1, 7, b'0', 3, NULL),
 	(84, 'Bell Colt Blue', '4.jpg', 1, 7, b'0', 4, NULL),
 	(85, 'Bell Colt', '463398315.jpg', 1, 7, b'0', 99, NULL),
@@ -185,12 +186,12 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(97, 'Bell Colt Brown', '6.jpg', 1, 7, b'0', 6, NULL),
 	(98, 'Bell Colt Black', '7.jpg', 1, 7, b'0', 7, NULL),
 	(99, 'Bell Colt Oak', '8.jpg', 1, 7, b'0', 8, NULL),
-	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, b'0', 101, NULL),
-	(101, 'Bell Colt', '5B4j.jpg', 1, 7, b'1', 102, NULL),
-	(102, 'Bell Colt', '5B60.jpg', 1, 7, b'1', 103, NULL),
-	(103, 'Bell Colt', '5B61.jpg', 1, 7, b'1', 104, NULL),
-	(104, 'Bell Colt', '5B67.jpg', 1, 7, b'1', 105, NULL),
-	(105, 'Bell Colt 3V Champ', 'three valve chassis.jpg', 1, 7, b'0', 99, NULL),
+	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, b'0', 100, NULL),
+	(101, 'Bell Colt', '5B4j.jpg', 1, 7, b'1', 122, NULL),
+	(102, 'Bell Colt', '5B60.jpg', 1, 7, b'1', 123, NULL),
+	(103, 'Bell Colt', '5B61.jpg', 1, 7, b'1', 124, NULL),
+	(104, 'Bell Colt', '5B67.jpg', 1, 7, b'1', 125, NULL),
+	(105, 'Bell Colt 3V Champ', 'three valve chassis.jpg', 1, 7, b'0', 109, NULL),
 	(106, 'Bell Explorer', '1.jpg', 1, 8, b'0', 99, NULL),
 	(107, 'Bell Explorer', '2.jpg', 1, 8, b'0', 99, NULL),
 	(108, 'Bell Explorer', '3.jpg', 1, 8, b'0', 99, NULL),
@@ -218,7 +219,19 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(130, 'Columbus 12', 'columbus 12 ACDC p4.png', 1, 13, b'0', 99, NULL),
 	(131, 'Columbus 12', 'columbus 12 p1.png', 1, 13, b'1', 81, NULL),
 	(132, 'Columbus 12', 'columbus 12 p2.png', 1, 13, b'1', 82, NULL),
-	(133, 'Columbus 12', 'columbus 12 p3.png', 1, 13, b'1', 83, NULL);
+	(133, 'Columbus 12', 'columbus 12 p3.png', 1, 13, b'1', 83, NULL),
+	(134, 'Haywin Broadcaster', '1941 Haywin 5-valve.jpg', 1, 15, b'0', 99, NULL),
+	(135, 'Courtenay 12', '543735855.jpg', 1, 14, b'0', 99, NULL),
+	(136, 'Courtenay 12', '543735873.jpg', 1, 14, b'0', 99, NULL),
+	(137, 'Courtenay 12', '543735899.jpg', 1, 14, b'0', 99, NULL),
+	(138, 'Courtenay 12', '543735919.jpg', 1, 14, b'0', 99, NULL),
+	(139, 'Courtenay 12', 'columbus 12 ACDC p1.png', 1, 14, b'0', 99, NULL),
+	(140, 'Courtenay 12', 'columbus 12 ACDC p2.png', 1, 14, b'0', 99, NULL),
+	(141, 'Courtenay 12', 'columbus 12 ACDC p3.png', 1, 14, b'0', 99, NULL),
+	(142, 'Courtenay 12', 'columbus 12 ACDC p4.png', 1, 14, b'0', 99, NULL),
+	(143, 'Courtenay 12', 'columbus 12 p1.png', 1, 14, b'0', 99, NULL),
+	(144, 'Courtenay 12', 'columbus 12 p2.png', 1, 14, b'0', 99, NULL),
+	(145, 'Courtenay 12', 'columbus 12 p3.png', 1, 14, b'0', 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -227,17 +240,17 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `alias` varchar(50) NOT NULL COMMENT 'This field is for the url, logo img etc - hence unique',
-  `address` varchar(255) NOT NULL COMMENT 'Address, or town / city company was located in',
-  `year_started` year(4) NOT NULL COMMENT 'Year started manufactuing if known',
+  `address` varchar(255) DEFAULT NULL COMMENT 'Address, or town / city company was located in',
+  `year_started` year(4) DEFAULT NULL COMMENT 'Year started manufactuing if known',
   `year_started_approx` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Start year approximate',
-  `year_ended` year(4) NOT NULL COMMENT 'Year ended manufactuing if known',
+  `year_ended` year(4) DEFAULT NULL COMMENT 'Year ended manufactuing if known',
   `year_ended_approx` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'End year approximate',
   `became` int(10) unsigned DEFAULT NULL COMMENT 'If this company merged into or renamed itself, add the id of the new company here',
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~9 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~10 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `notes`) VALUES
@@ -249,7 +262,8 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(6, 'W. Marks Ltd', 'w_marks', 'Wellington', '1931', 0, '1932', 0, 3, '<p>The business was started in 1930 by Russian immigrant William Markoff (later changed to Willam Marks) to wind / rewind transformers and make amplifiers.  By 1931 he had formed the company that would go on to be one of the largest and most successful  New Zealand radio manufacturers of its day, and it seems this was his plan all along when in 1932 he changed the company name to <a href="/manufacturer/rcnz">Radio Corporation (N. Z.) Ltd</a></p>'),
 	(7, 'Pye (N.Z.) Ltd', 'pye', 'Waihi', '1962', 0, '1982', 0, NULL, '<p>The New Zealand branch of Pye Ltd from Cambridge, England</p>'),
 	(8, 'Bell Radio-Television Corp.', 'bell', 'Auckland', '1950', 0, '1980', 1, NULL, '<p>Bell Radio-Television Corp sprang out of Antone Ltd after the two founding members left the company shortly after Al Bell joined.  The company ran until 1980 when it merged with <a href="/manufacturer/dreco">Dominion Radio and Electrical</a> (DRECO) to form Consolidated Industries Ltd.'),
-	(9, 'Fountain Manufacturing Co. Ltd', 'fountain', 'Auckland', '1963', 0, '1983', 0, NULL, '<p>Roots as SOS Radio, changed to Tee Vee Radio Ltd, then to Fountain Radio Corporation, then to Chase Corporation before finally dying out in the early 90\'s');
+	(9, 'Fountain Manufacturing Co. Ltd', 'fountain', 'Auckland', '1963', 0, '1983', 0, NULL, '<p>Roots as SOS Radio, changed to Tee Vee Radio Ltd, then to Fountain Radio Corporation, then to Chase Corporation before finally dying out in the early 90\'s'),
+	(10, 'Unknown', 'unknown', NULL, NULL, 0, NULL, 0, NULL, '<p>The manufacturers of the radios below are completely unknown - maybe someone can shed some light, but until then gaze upon them and wonder...</p>');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -270,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   `if` text COMMENT 'IF transformer peak freq.',
   `similar` text COMMENT 'models using same chassis',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table nzvr_db.model: ~14 rows (approximately)
 DELETE FROM `model`;
@@ -282,14 +296,16 @@ INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_y
 	(4, NULL, 'Alabama', 9, '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>', '465kc/s', NULL),
 	(5, NULL, '401', 9, '1954', 0, NULL, 0, 4, 'ECH42, EAF42, EL41, EZ40', 1, '<p>4-valve predecessor to the well-known (if not by name) <a href="/model/philco/alabama">Philco Alabama</a>.  Known in some literature as the \'Philco Nevada\'</p>', NULL, NULL),
 	(6, NULL, '5M', 1, '1952', 0, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, '<p>Also sold as a Columbus model, this was the last small receiver ever sold under the Courtenay label - within two years Turnbull and Jones would have pulled out of the radio receiver market and the Courtenay name would be history.  This receiver was known as the \'Talisman\', after the HMS Talisman, a Triton class submarine during WW2.</p>', NULL, NULL),
-	(7, NULL, 'Colt', 10, '1951', 0, '1980', 0, NULL, 'Various<br>\r\n5B4:   ECH41 or ECH42 or ECH81, EF41, EBC41, EL41, EZ40<br>\r\n5B60: ECH81, EF89, EBC81, EL84, EZ80<br>\r\n5B61: Same as 5B60, although later variants had a solid state rectifier<br>\r\n5B67: ECH81, EF89, EBC81, EL84, BY179 Silicon Rectifier<br><br>\r\nNote: the chassis numbers hint at the model year:  5B<b>4</b>=195<b>4</b>, 5B<b>60</b>=19<b>60</b> etc - however these chassis codes are not found on the chassis so some detective work is required to find the model you\'re working with.', 1, '<p>The Bell Colt was the biggest-selling, longest-running and arguably the best known model of valve radio ever designed and built in New Zealand.  The ubiquitous Colt spanned almost 30 years and saw several different chassis versions with 3, 4 and 5 valves, and two different versions of a transistorised model for the last few years of production.</p>\r\n<p>Along with different circuitry, there were many different dial layouts, 7 cabinet colours and even some different cabinet styles including two different-toned solid oak cabinets being offered.<br><a class=\'non_gallery\' title="Airzone Cub (Aus.)" href="/static/images/model/bell/colt/img/airzone.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/airzone.jpg" title="Airzone Cub (Aus.)"/></a>The plastic cabinet dies came from Australia where they were used for the Airzone Cub, just as the previous Bell mantle, the 5E, had used the fragile Airzone 458 cabinet.<br>\r\nYou can see the mold marks for the Airzone logo mounting area on the early cabinets, but the dies must have been modified at some stage because these marks are not visible on later models</p>\r\n<p><a class=\'non_gallery\' title="Push-On Plastic Knobs" href="/static/images/model/bell/colt/img/pushon.jpg"><img class="img_left" src="/static/images/model/bell/colt/img/pushon.jpg" title="Push-On Plastic Knobs"/></a>There are also two different control versions - one has recessed shafts with push-on plastic knobs, and these can be an absolute nightmare to remove if there is <b>any</b> hint of corrosion on the shaft (sometimes needing to be broken off).  <a class=\'non_gallery\' title="Cracked Bell Colt Knobs" href="/static/images/model/bell/colt/img/molded.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/molded.jpg" title="Cracked Bell Colt Knobs"/></a>The other has shafts that pass through the cabinet and these models generally use a grub-screw mounted molded knob more reminiscent of the early-style bakelite knobs.  Its common for these knobs to crack, most likely due to overtightening as they have no metallic sleeve.<br> These are not the only knobs fitted to Colts, and while many arguments arise as to what knobs a Colt SHOULD have, so many of these were produced over the years (more than 6500 in 1961 alone, that\'s around 20,000 knobs not counting the world-wave models which needed one extra!) that it seems reasonable that the factory would use whatever it had (or could get) if-and-when it ran out of one type.</p>\r\n<p><b>OTHER \'COLT\' MODELS</b><br>\r\n<a href="/explorer">EXPLORER</a>: A dual-wave model with a shortwave band.<br>\r\n<a href="/champ">CHAMP</a>: A three-valve set.<br>\r\n<a href="/planet">PLANET</a>: The oak-cabinet models<br>\r\n<a href="/solid state colt">SOLID STATE COLT</a>: The Solid State (Transistorised) model from 1973 onward</p>\r\n<p><a class=\'non_gallery\' title="B&B Skymaster Colt" href="/static/images/model/bell/colt/img/skymaster.jpg"><img class="img_left" src="/static/images/model/bell/colt/img/skymaster.jpg" title="B&B Skymaster Colt"/></a>The Bell Colt was also produced as a Skymaster model for Bond and Bond, and a \'marine\' version of the dual wave chassis without tone control was seen in a Fountain model.<a class=\'non_gallery\' title="Fountain Marine Band" href="/static/images/model/bell/colt/img/fountain.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/fountain.jpg" title="Fountain Marine Band"/></a>  In 1962 when Bell dropped the Colt in favour of its new \'General Radio\' line, Tee Vee  Radio Ltd took over production as the \'Tee-Rad Colt\' for a couple of years, however they were not successful and production went back to Bell.</p>\r\n', 'Various<br>\r\n5B4:   462kc/s<br>\r\n5B60: 455kc/s<br>\r\n5B61: 455kc/s<br>\r\n5B67: 455kc/s', NULL),
+	(7, NULL, 'Colt', 10, '1951', 0, '1980', 0, NULL, 'Various<br>\r\n5B4:   ECH41 or ECH42 or ECH81, EF41, EBC41, EL41, EZ40<br>\r\n5B60: ECH81, EF89, EBC81, EL84, EZ80<br>\r\n5B61: Same as 5B60, although later variants had a solid state rectifier<br>\r\n5B67: ECH81, EF89, EBC81, EL84, BY179 Silicon Rectifier<br><br>\r\nNote: the chassis numbers hint at the model year:  5B<b>4</b>=195<b>4</b>, 5B<b>60</b>=19<b>60</b> etc - however these chassis codes are not found on the chassis so some detective work is required to find the model you\'re working with.', 1, '<p><b>The Bell Colt</b> was the biggest-selling, longest-running and arguably the best known model of valve radio ever designed and built in New Zealand.  The ubiquitous Colt spanned almost 30 years and saw several different chassis versions with 3, 4 and 5 valves, and two different versions of a transistorised model for the last few years of production.</p>\r\n<p>Along with different circuitry, there were many different dial layouts, at least 7 cabinet colours (with various tones of colours as well) and even some different cabinet styles including a light- and a dark-toned solid oak cabinet being offered.<br><a class=\'non_gallery\' title="Airzone Cub (Aus.)" href="/static/images/model/bell/colt/img/airzone.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/airzone.jpg" title="Airzone Cub (Aus.)"/></a>The plastic cabinet dies came from Australia where they were used for the Airzone Cub, just as the previous Bell mantle, the 5E, had used the fragile Airzone 458 cabinet.<br>\r\nYou can see the mold marks for the Airzone logo mounting area on the early cabinets, but the dies must have been modified at some stage because these marks are not visible on later models</p>\r\n<p><a class=\'non_gallery\' title="Push-On Plastic Knobs" href="/static/images/model/bell/colt/img/pushon.jpg"><img class="img_left" src="/static/images/model/bell/colt/img/pushon.jpg" title="Push-On Plastic Knobs"/></a>There are also two different control versions - one has recessed shafts with push-on plastic knobs, and these can be an absolute nightmare to remove if there is <b>any</b> hint of corrosion on the shaft (sometimes needing to be broken off).  <a class=\'non_gallery\' title="Cracked Bell Colt Knobs" href="/static/images/model/bell/colt/img/molded.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/molded.jpg" title="Cracked Bell Colt Knobs"/></a>The other has shafts that pass through the cabinet and these models generally use a grub-screw mounted molded knob more reminiscent of the early-style bakelite knobs.  Its common for these knobs to crack, most likely due to overtightening as they have no metallic sleeve.<br> These are not the only knobs fitted to Colts, and while many arguments arise as to what knobs a Colt SHOULD have, so many of these were produced over the years (more than 6500 in 1961 alone, that\'s around 20,000 knobs not counting the world-wave models which needed one extra!) that it seems reasonable that the factory would use whatever it had (or could get) if-and-when it ran out of one type.</p>\r\n<p><b>OTHER \'COLT\' MODELS</b><br>\r\n<a href="/explorer">EXPLORER</a>: A dual-wave model with a shortwave band.<br>\r\n<a href="/champ">CHAMP</a>: A three-valve set.<br>\r\n<a href="/planet">PLANET</a>: The oak-cabinet models<br>\r\n<a href="/solid state colt">SOLID STATE COLT</a>: The Solid State (Transistorised) model from 1973 onward</p>\r\n<p><a class=\'non_gallery\' title="B&B Skymaster Colt" href="/static/images/model/bell/colt/img/skymaster.jpg"><img class="img_left" src="/static/images/model/bell/colt/img/skymaster.jpg" title="B&B Skymaster Colt"/></a>The Bell Colt was also produced as a Skymaster model for Bond and Bond, and a \'marine\' version of the dual wave chassis without tone control was seen in a Fountain model.<a class=\'non_gallery\' title="Fountain Marine Band" href="/static/images/model/bell/colt/img/fountain.jpg"><img class="img_right" src="/static/images/model/bell/colt/img/fountain.jpg" title="Fountain Marine Band"/></a>  In 1962 when Bell dropped the Colt in favour of its new \'General Radio\' line, Tee Vee  Radio Ltd took over production as the \'Tee-Rad Colt\' for a couple of years, however they were not successful and production went back to Bell.</p>\r\n', 'Various<br>\r\n5B4:   462kc/s<br>\r\n5B60: 455kc/s<br>\r\n5B61: 455kc/s<br>\r\n5B67: 455kc/s', NULL),
 	(8, NULL, 'Explorer', 10, '1960', 1, NULL, 0, 5, 'ECH81, EF89, EBC81, EL84, EZ80', 2, '<p>The Bell Colt \'Explorer\' was a dual-wave model with a shortwave band. To make room for the band switch, the tone control was moved to the back of the chassis, and the band switch was fitted in the middle control position on the front.</p>\r\n<p>See the <a href="/colt">Bell Colt</a> for more information on this model.</p>\r\n', NULL, NULL),
 	(9, NULL, 'Champ', 10, '1960', 1, NULL, 0, 5, 'Unknown', 1, '<p>The Bell Colt \'Champ\' was the budget model, sporting just 3 valves and having an unusual tuning arrangement that appears to have been sliding slugs inside coils rather than tuning gangs.</p>\r\n<p>See the <a href="/colt">Bell Colt</a> for more information.</p>\r\n', NULL, NULL),
 	(10, NULL, 'Planet', 10, '1958', 1, '1960', 1, 5, 'ECH81, EF89, EBC81, EL84, EZ80', 1, '<p>The Bell Colt \'Planet\' may have been a dual-wave set although its unclear from the sales literature at hand.  JWS states it was, yet on the opposite page in More Golden Age of Radio he has a brochure that does not refer to it as being \'world-wave\', just \'Australasian reception\', same as the Colt.  Its likely that both were produced, given the lifespan of the model.</p>\r\n<p>See the <a href="/colt">Bell Colt</a> for more information.</p>\r\n', NULL, NULL),
 	(11, NULL, 'O.A.', 12, NULL, 0, NULL, 0, 5, 'ECH81, EF89, EBC81, EL84, EZ80', 2, '<p>Formica finish, appears to be based on the <a href="/colt">Bell Colt</a> World-Wave chassis minus the tone control</p>', 'Most likely 455kc/s', NULL),
 	(12, NULL, 'Solid State Colt', 10, '1973', 0, '1980', 0, 0, 'Transistor lineup unknown', 1, '<p>The Solid State Colt was the final version, and the end of an era.</p>', NULL, NULL),
-	(13, NULL, '12', 2, '1941', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', NULL, '<p>The tiny Model 12, mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as Courtenay \'Tiki\'</p>', '455kc/s', '14'),
-	(14, NULL, '12', 1, '1941', 1, '2017', 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', NULL, '<p>The tiny Model 12, mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as the Columbus model 12</p>', '455kc/s', '13');
+	(13, NULL, '12', 2, '1941', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, '<p>The tiny Model 12, mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as the <a href="/model/courtenay/12">Courtenay \'Tiki\'</a></p>', '455kc/s', '14'),
+	(14, NULL, '12', 1, '1941', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, '<p>The tiny Model 12, known as the Courtenay \'Tiki\'.  Mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as the <a href="/model/columbus/12">Columbus model 12</p>', '455kc/s', '13'),
+	(15, NULL, 'Broadcaster', 15, '1936', 1, NULL, 0, 5, NULL, 1, '<p>The awesome-looking Haywin Broadcaster was built for Hay\'s Dept Store in Christchurch.</p>', NULL, NULL),
+	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL, NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -304,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
