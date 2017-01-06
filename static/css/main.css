@@ -21,7 +21,7 @@ body {
     font-size: 1.1em;
     letter-spacing: 0.03em;
     background-color: #122337;
-    background-image: url("img/bg_bp.jpg");
+    background-image: url("img/bg_bp_2.png");
     margin: 0 5px 5px 0;
 }
 
@@ -333,8 +333,8 @@ menuIcon img {
 }
 
 #container img {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 200px;
+    max-height: 200px;
     padding: 2px;
     margin: 5px;
     background: white;
@@ -368,7 +368,7 @@ menuIcon img {
     padding: 3px 2px 10px 2px;
     overflow-y: hidden;
     overflow-x: scroll;
-    max-height: 166px;
+    max-height: 225px;
     white-space: nowrap;
     border-radius: 5px;
     border: 2px solid #f0f0f0;

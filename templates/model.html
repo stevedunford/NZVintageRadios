@@ -4,7 +4,7 @@
 
 <div id="container">
   <div id="breadcrumb">
-    <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{code}}">{{ code }}</a>{% else %}{{ code }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
+    <a href="/manufacturer/{{manufacturer_alias}}">{{manufacturer}}</a> » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{code}}">{{ code }}</a>{% else %}{{ code }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
   </div>
   
   <!-- No radio found matching the URL-->

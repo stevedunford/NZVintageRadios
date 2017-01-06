@@ -113,9 +113,9 @@ def import_photos():
         
         for image_file in files:
             img = Image.open(image_file)
-            img.thumbnail((150,150))
+            img.thumbnail((200,200), Image.ANTIALIAS)
             _, filename = os.path.split(image_file)
-            img.save(os.path.join(thumbs, filename))
+            img.save(os.path.join(thumbs, filename), quality=95)
             
             # insert into images db if not already there
             check_existing = query_db("SELECT id FROM images WHERE filename='{0}' AND type=1 AND type_id={1}".format(filename, model['id']), single=True)
