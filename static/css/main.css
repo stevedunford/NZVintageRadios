@@ -9,14 +9,14 @@
 */
 
 /* Title font (Limelight) and main site font */
-@import url('https://fonts.googleapis.com/css?family=Limelight|Pacifico');
-
+@import url('https://fonts.googleapis.com/css?family=Limelight');
+@import url(https://fonts.googleapis.com/css?family=Arima+Madurai);
 
 /*
  * Main CSS setup for the site .
  */
 body {
-	font-family: 'Arial', sans-serif;
+	font-family: 'Arima Madurai', cursive;
 	max-width: 960px;
     font-size: 1.1em;
     letter-spacing: 0.03em;
@@ -122,10 +122,13 @@ h4 {
     margin-top: 23px;
     margin-bottom: 3px;
     padding-left: 5px;
+    border-radius: 5px;
+    border: 2px solid #333;
+    box-shadow: -2px 2px 5px silver;
+    width: 97%;
 }
 
 .subheading {
-    font-family: 'Pacifico', sans-serif;
     font-style: italic;
     font-weight: bold;
     text-align: center;
@@ -173,27 +176,6 @@ h4 {
     padding-left: 20px;
 }
 
-.img_right {
-    padding: 2px;
-    margin: 5px 2px 5px 5px;
-    border: 1px solid silver;
-    border-radius: 5px;
-    box-shadow: -2px 2px 5px silver;
-    float: right;
-    max-width: 150px;
-    max-height: 150px;
-}
-
-.img_left {
-    padding: 2px;
-    margin: 5px 5px 5px 2px;
-    border: 1px solid silver;
-    border-radius: 5px;
-    box-shadow: -2px 2px 5px silver;
-    float: left;
-    max-width: 150px;
-    max-height: 150px;
-}
 
 
 /*
@@ -255,10 +237,9 @@ menuIcon img {
 
 
 /*
- * Site header block 
+ * Site header block - Logo and "NZ Vintage Radios"
  */
 #header {
-    width: 60%;
 	margin: 0;
 	padding: 10px;
 }
@@ -281,7 +262,7 @@ menuIcon img {
 
 
 /*
- * Page title bar
+ * Page title bar: Welcome, Bell Colt, Radio Corp. NZ, etc
  */
 #pageTitleTop {
     height: 8px;
@@ -351,6 +332,27 @@ menuIcon img {
     color: #666;
 }
 
+#container img {
+    max-width: 150px;
+    max-height: 150px;
+    padding: 2px;
+    margin: 5px;
+    background: white;
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: -3px 3px 8px silver;
+}
+
+.img_right {
+    float: right;
+    margin-right: 2px;
+}
+
+.img_left {
+    float: left;
+    margin-left: 2px;
+}
+
 #breadcrumb {
     font-size: 0.8em;
     color: black;
@@ -358,10 +360,6 @@ menuIcon img {
     text-transform: uppercase;
     letter-spacing: 2px;
     padding-bottom: 3px;
-}
-
-.inline_image {
-    border: 1px solid black;
 }
 
 #radio_images {
@@ -380,11 +378,6 @@ menuIcon img {
 #radio_images img {
     object-fit: contain;
     overflow: hidden;
-    padding: 2px;
-    background: white;
-    border: 1px solid silver;
-    border-radius: 5px;
-    box-shadow: -3px 3px 8px silver;
     vertical-align: middle;
 }
 
@@ -422,23 +415,16 @@ a:hover {
 /*
  * Radio Brands
  */
-#logo {
+.logo {
+    max-width: 200px;
+    max-height: 200px;
     float: right;
-    max-width: 320px;
-    max-height: 320px;
-    border-top-right-radius: 15px;
-    margin: 5px;
-    box-shadow: -5px 5px 5px #752A13;
 }
 
-.brand_image {
-    max-width: 320px;
-    max-height: 320px;
-}
-
-#timespan {
+.timespan {
     font-weight: 700;
     font-style: italic;
+    margin-top: 5px;
 }
 
 #description {

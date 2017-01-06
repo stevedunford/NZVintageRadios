@@ -14,13 +14,13 @@
   
   <!-- Multiple radios found, this is a variant landing page -->
   {% elif models|length > 1 and not variant %}
-  <p>There are currently {{ models|length }} variants of this model here:</p>
+  <h4>There are currently {{ models|length }} variants of this model here:</h4>
   <ul>
     {% for model in models %}
 
-    <li>
-      <a href="/model/{{brand}}/{{code}}/{{model['variant']}}"><img src="{{ images[loop.index0]['thumb'] }}" /> {{ model['variant'] }}</a>
-    </li>
+    <p>
+      <a href="/model/{{brand}}/{{code}}/{{model['variant']}}"><img class="img_left" src="{{ images[loop.index0]['thumb'] }}" /> {{ model['variant'] }}</a>
+    </p>
     {% endfor %}
   </ul>
   {% else %}

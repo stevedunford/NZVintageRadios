@@ -241,18 +241,25 @@ def brand(alias=None):
     _brand = query_db("SELECT * FROM brand WHERE alias='{0}'".format(alias), single=True)
     if not _brand:
         abort(404) # Not found
+    
+    # strip enclosing <p> tag if in notes, so that the logo can be
+    # encapsulated in the main notes paragraph
+    if _brand['notes'][:3] == '<p>':
+        _brand['notes'] = _brand['notes'][3:]
+    if _brand['notes'][-4:] == '</p>':
+        _brand['notes'] = _brand['notes'][:-4]
         
-    # find the brand id
-    brand_id = (query_db("SELECT id FROM brand WHERE alias='{0}'".format(alias), single=True))['id']
-
+    # find the manufacturer
+    _manufacturer = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_brand['manufacturer_id']), single=True)
+    
     # find all models for this brand
-    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}' ORDER BY start_year ASC".format(brand_id)))
+    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}' ORDER BY start_year ASC".format(_brand['id'])))
     
     _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))     
     if not os.path.isfile(APP_ROOT + _logo):
         _logo = None 
         
-    return render_template("brand.html", title=_brand['name'], brand=_brand, logo=_logo, models=_models)
+    return render_template("brand.html", title=_brand['name'], brand=_brand, manufacturer=_manufacturer, logo=_logo, models=_models)
   
 
 @app.route('/new_distributor', methods=['GET', 'POST'])
