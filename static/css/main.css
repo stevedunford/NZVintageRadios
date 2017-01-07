@@ -25,6 +25,10 @@ body {
     margin: 0 5px 5px 0;
 }
 
+table, td, tr {
+    border: 1px solid black;
+}
+
 /*
  * flash is the Flask built-in messaging bar at the top of the page 
  */

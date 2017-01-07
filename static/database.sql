@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~14 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -70,7 +70,7 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(12, 'Fountain', 'fountain', NULL, 9, 0, '1963', 1, '1983', 1, '<p>Fountain radios and radiograms were reasonably common in the transistor era, but they also produced radios prior to this, including at least one model based on the Bell Colt - the <a href="/o.a.">Fountain O.A. Marine Band</a> radio</p>'),
 	(13, 'Regent', 'regent', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Regent was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Five Star.</p>'),
 	(14, 'Five Star', 'five_star', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Five Star was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Regent.</p>\r\n<p>source: https://leanpub.com/pyeradiowaihi/read</p>'),
-	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and is still running today as Farmers.</p>');
+	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and was aquired in 1982 by Farmers.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -242,28 +242,29 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `alias` varchar(50) NOT NULL COMMENT 'This field is for the url, logo img etc - hence unique',
   `address` varchar(255) DEFAULT NULL COMMENT 'Address, or town / city company was located in',
   `year_started` year(4) DEFAULT NULL COMMENT 'Year started manufactuing if known',
-  `year_started_approx` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Start year approximate',
+  `year_started_approx` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Start year approximate',
   `year_ended` year(4) DEFAULT NULL COMMENT 'Year ended manufactuing if known',
-  `year_ended_approx` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'End year approximate',
+  `year_ended_approx` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'End year approximate',
   `became` int(10) unsigned DEFAULT NULL COMMENT 'If this company merged into or renamed itself, add the id of the new company here',
+  `became_how` tinytext COMMENT 'merged, taken over, sold to, or rebranded',
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~10 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~11 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
-INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `notes`) VALUES
-	(1, 'Akrad Radio Corporation Ltd', 'akrad', 'Waihi', '1934', 0, '1982', 0, NULL, '<p>Akrad Radio was formed in Waihi by Keith M. Wrigley when he was just 18.</p><p>Notable brand names produced by Akrad include Pacific (the brand name was taken over in approximately 1940 after the demise of the original Pacific Radio Co.), Regent and Clipper.</p>'),
-	(2, 'His Master\'s Voice (N.Z.) Ltd', 'hmv', 'Wellington', '1940', 0, '1955', 0, NULL, '<p>Pre-war HMV sets were almost all imported.  After the war most sets were made in their Wellington factory with a few exceptions being made by various other manufacturers (mainly Collier and Beale)</p>'),
-	(3, 'Radio Corporation of New Zealand', 'rcnz', 'Wellington', '1932', 0, '1959', 0, 7, '<p>Originally known as <a href="/manufacturer/w_marks">W. Marks Ltd</a>, RCNZ became one of the largest radio manufacturers in NZ.</p><p>In around 1937, with the introduction of the house brand Columbus, RCNZ started moving away from producing \'private brand\' sets and within a couple of years was only manufacturing receivers under the names <a href="\r\n/brand/columbus">Columbus</a> and <a href="\r\n/brand/courtenay">Courtenay</a>.</p><p>RCNZ built a lot of their own components in-house, including capacitors and speakers.</p><p>Brands manufactured include <a href="\r\n/brand/columbus">Columbus</a>, <a href="\r\n/brand/courtenay">Courtenay</a>, <a href="\r\n/brand/stella">Stella</a>, <a href="\r\n/brand/pacific">Pacific</a>, <a href="\r\n/brand/cq">CQ</a>, <a href="\r\n/brand/acme">Acme</a>, <a href="\r\n/brand/troubador">Troubador</a> and more...</p>'),
-	(4, 'Dominion Radio & Electrical Corp. Ltd', 'dreco', 'Dominion Rd, Auckland', '1939', 0, '1975', 1, NULL, '<p>DRECO was set up in 1939 as a New Zealand franchise of the Philco brand, and immediately began producing NZ versions of many Philco models.  Often these were visually similar but very different inside.</p>\r\n<p>In 1961 Philco USA was taken over by Ford Motor Co. and DRECO replaced the Philco brand with Majestic and LaGloria (which they had been using for a few years on very similar sets to the Philco models).  At one point you could buy a Philco 401 \'Alabama\', a La Gloria \'Imp\' and a Majestic set that were all very similar in both appearance and chassis.</p>\r\n<p>In the mid-70\'s Dominion Radio and Electrical merged with Bell Radio and Television to become Consolidated Electronic Industries Ltd, ending one of New Zealands longest-running radio manufacturing companies.</p>'),
-	(5, 'Wellmade Ltd', 'wellmade', 'Auckland', '1928', 0, '1956', 1, NULL, '<p>Wellmade Ltd was set up by Johns Ltd as a manufacturing factory for the various brands that Johns produced such as Ace, Altona and Well-Mayde</p>'),
-	(6, 'W. Marks Ltd', 'w_marks', 'Wellington', '1931', 0, '1932', 0, 3, '<p>The business was started in 1930 by Russian immigrant William Markoff (later changed to Willam Marks) to wind / rewind transformers and make amplifiers.  By 1931 he had formed the company that would go on to be one of the largest and most successful  New Zealand radio manufacturers of its day, and it seems this was his plan all along when in 1932 he changed the company name to <a href="/manufacturer/rcnz">Radio Corporation (N. Z.) Ltd</a></p>'),
-	(7, 'Pye (N.Z.) Ltd', 'pye', 'Waihi', '1962', 0, '1982', 0, NULL, '<p>The New Zealand branch of Pye Ltd from Cambridge, England</p>'),
-	(8, 'Bell Radio-Television Corp.', 'bell', 'Auckland', '1950', 0, '1980', 1, NULL, '<p>Bell Radio-Television Corp sprang out of Antone Ltd after the two founding members left the company shortly after Al Bell joined.  The company ran until 1980 when it merged with <a href="/manufacturer/dreco">Dominion Radio and Electrical</a> (DRECO) to form Consolidated Industries Ltd.'),
-	(9, 'Fountain Manufacturing Co. Ltd', 'fountain', 'Auckland', '1963', 0, '1983', 0, NULL, '<p>Roots as SOS Radio, changed to Tee Vee Radio Ltd, then to Fountain Radio Corporation, then to Chase Corporation before finally dying out in the early 90\'s'),
-	(10, 'Unknown', 'unknown', NULL, NULL, 0, NULL, 0, NULL, '<p>The manufacturers of the radios below are completely unknown - maybe someone can shed some light, but until then gaze upon them and wonder...</p>');
+INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
+	(1, 'Akrad Radio Corporation Ltd', 'akrad', 'Waihi', '1934', 0, '1982', 0, NULL, NULL, '<p>Akrad Radio was formed in Waihi by Keith M. Wrigley when he was just 18.</p><p>Notable brand names produced by Akrad include Pacific (the brand name was taken over in approximately 1940 after the demise of the original Pacific Radio Co.), Regent and Clipper.</p>'),
+	(2, 'His Master\'s Voice (N.Z.) Ltd', 'hmv', 'Wellington', '1940', 0, '1955', 0, NULL, NULL, '<p>Pre-war HMV sets were almost all imported.  After the war most sets were made in their Wellington factory with a few exceptions being made by various other manufacturers (mainly Collier and Beale)</p>'),
+	(3, 'Radio Corporation of New Zealand', 'rcnz', 'Wellington', '1932', 0, '1959', 0, 7, 'rebranded', '<p>Originally known as <a href="/manufacturer/w_marks">W. Marks Ltd</a>, RCNZ became one of the largest radio manufacturers in NZ.</p><p>In around 1937, with the introduction of the house brand Columbus, RCNZ started moving away from producing \'private brand\' sets and within a couple of years was only manufacturing receivers under the names <a href="\r\n/brand/columbus">Columbus</a> and <a href="\r\n/brand/courtenay">Courtenay</a>.</p><p>RCNZ built a lot of their own components in-house, including capacitors and speakers.</p><p>Brands manufactured include <a href="\r\n/brand/columbus">Columbus</a>, <a href="\r\n/brand/courtenay">Courtenay</a>, <a href="\r\n/brand/stella">Stella</a>, <a href="\r\n/brand/pacific">Pacific</a>, <a href="\r\n/brand/cq">CQ</a>, <a href="\r\n/brand/acme">Acme</a>, <a href="\r\n/brand/troubador">Troubador</a> and more...</p>'),
+	(4, 'Dominion Radio & Electrical Corp. Ltd', 'dreco', 'Dominion Rd, Auckland', '1939', 0, '1975', 1, NULL, NULL, '<p>DRECO was set up in 1939 as a New Zealand franchise of the Philco brand, and immediately began producing NZ versions of many Philco models.  Often these were visually similar but very different inside.</p>\r\n<p>In 1961 Philco USA was taken over by Ford Motor Co. and DRECO replaced the Philco brand with Majestic and LaGloria (which they had been using for a few years on very similar sets to the Philco models).  At one point you could buy a Philco 401 \'Alabama\', a La Gloria \'Imp\' and a Majestic set that were all very similar in both appearance and chassis.</p>\r\n<p>In the mid-70\'s Dominion Radio and Electrical merged with Bell Radio and Television to become Consolidated Electronic Industries Ltd, ending one of New Zealands longest-running radio manufacturing companies.</p>'),
+	(5, 'Wellmade Ltd', 'wellmade', 'Auckland', '1928', 0, '1956', 1, NULL, NULL, '<p>Wellmade Ltd was set up by Johns Ltd as a manufacturing factory for the various brands that Johns produced such as Ace, Altona and Well-Mayde</p>'),
+	(6, 'W. Marks Ltd', 'w_marks', 'Wellington', '1931', 0, '1932', 0, 3, 'sold out', '<p>The business was started in 1930 by Russian immigrant William Markoff (later changed to Willam Marks) to wind / rewind transformers and make amplifiers.  By 1931 he had formed the company that would go on to be one of the largest and most successful  New Zealand radio manufacturers of its day, and it seems this was his plan all along when in 1932 he changed the company name to <a href="/manufacturer/rcnz">Radio Corporation (N. Z.) Ltd</a></p>'),
+	(7, 'Pye (N.Z.) Ltd', 'pye', 'Waihi', '1962', 0, '1982', 0, NULL, NULL, '<p>The New Zealand branch of Pye Ltd from Cambridge, England</p>'),
+	(8, 'Bell Radio-Television Corp.', 'bell', 'Auckland', '1950', 0, '1980', 1, NULL, NULL, '<p>Bell Radio-Television Corp sprang out of Antone Ltd after the two founding members left the company shortly after Al Bell joined.  The company ran until 1980 when it merged with <a href="/manufacturer/dreco">Dominion Radio and Electrical</a> (DRECO) to form Consolidated Industries Ltd.'),
+	(9, 'Fountain Manufacturing Co. Ltd', 'fountain', 'Auckland', '1963', 0, '1983', 0, NULL, NULL, '<p>Roots as SOS Radio, changed to Tee Vee Radio Ltd, then to Fountain Radio Corporation, then to Chase Corporation before finally dying out in the early 90\'s'),
+	(10, 'Unknown', 'unknown', NULL, NULL, 0, NULL, 0, NULL, NULL, '<p>The manufacturers of the radios below are completely unknown - maybe someone can shed some light, but until then gaze upon them and wonder...</p>');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model

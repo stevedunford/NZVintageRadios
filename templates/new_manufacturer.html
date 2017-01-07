@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="container">
+  {{form}}
+  <form action="" method="post" name="new/manufacturer">
+    {{ form.hidden_tag() }}
+    <table>
+      <tr>
+        <td width="200px">Name<span class='reqd'>*</span>:{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.name(size=60) }}</td>
+        <td></td>
+      </tr>
+      <tr class='odd'>
+        <td>Alias<span class='reqd'>*</span>: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.alias(size=60) }}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Year Started: {{form.year_started.errors}}</td><td>{{ form.year_started(size=60) }}</td><td>{{ form.year_started_approx }} Approx</td>
+      </tr>
+      <tr{% if form.year_ended.errors|length > 0 %} class='error'{% endif %}>
+        <td>Year Ended: {{form.year_ended.errors}}</td><td>{{ form.year_ended(size=60) }}</td><td>{{ form.year_ended_approx }} Approx</td>
+      </tr>
+      <tr>
+        <td>Became: </td><td>{{ form.became }}</td><td>How: {{ form.became_how }}</td>
+      </tr>
+      <tr>
+        <td>City/Town: </td><td>{{ form.address(size=60) }}</td>
+        <td></td>
+      </tr>
+      <tr class='odd'>
+        <td>Notes<span class='reqd'>*</span>: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.notes }}</td>
+        <td></td>
+      </tr>       
+    </table>
+    name: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    alias: {% for error in form.alias.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    start: {% for error in form.year_started.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    start appr: {% for error in form.year_started_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    end: {% for error in form.year_ended.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    end appr: {% for error in form.year_ended_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    because: {% for error in form.became.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    how: {% for error in form.became_how.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    address: {% for error in form.address.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    notes: {% for error in form.notes.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    
+    <p>
+      <input type="submit" value="Add Manufacturer">
+    </p>
+  </form>
+</div>
+{% endblock %}
+
+

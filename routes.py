@@ -18,8 +18,8 @@ from flask import Flask, flash, session, request, render_template_string, render
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask_wtf import Form
-from wtforms import StringField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired
+from wtforms import StringField, IntegerField, BooleanField, TextAreaField, SelectField
+from wtforms.validators import ValidationError, DataRequired, NumberRange, Optional
 from PIL import Image
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -51,7 +51,6 @@ class Distributor(Form):
     nz_wide = BooleanField('nz_wide', default=False)
     notes = TextAreaField('notes', validators=[DataRequired()])
     
-
 '''
 SITE LOGIC
 '''
@@ -261,15 +260,84 @@ def brand(alias=None):
         
     return render_template("brand.html", title=_brand['name'], brand=_brand, manufacturer=_manufacturer, logo=_logo, models=_models)
   
-
+class Manufacturer(Form):
+    def check_year_range(form, field):
+        print(field.name)
+        if field.data:
+            if field.data < form.year_started.data:
+                raise ValidationError('A manufacturer can not end manufacturing before it starts...')
+    
+    def check_existing(form, field):
+        query = query_db("SELECT id FROM manufacturer WHERE {0}='{1}'".format(field.name, field.data), single=True)
+        print('-------')
+        print("SELECT id FROM manufacturer WHERE {0}='{1}'".format(field.name, field.data))
+        print(query)
+        print('-------')
+        if query:
+            raise ValidationError('{0}: {1} already exists in the database'.format(field.name, field.data))
+    
+    name = StringField('name', validators=[DataRequired(), check_existing])
+    alias = StringField('alias', validators=[DataRequired(), check_existing])
+    year_started = IntegerField('start', validators=[Optional(), NumberRange(min=1800, max=2017)], default=None)
+    year_started_approx = BooleanField('start_appr', default=False)
+    year_ended = IntegerField('end', validators=[Optional(), NumberRange(min=1800, max=2017), check_year_range], default=None)
+    year_ended_approx = BooleanField('end_appr', default=False)
+    address = StringField('address', validators=[Optional()], filters=[lambda x: x or None])
+    became = SelectField('became', validators=[Optional()], default=None, coerce=int)
+    became_how = SelectField('how', validators=[Optional()], choices=[('', ''), ('merged with', 'Merged'), ('were taken over by', 'Taken Over'), ('sold out to', 'Sold to'), ('rebranded as', 'Rebranded')], default=None)
+    notes = TextAreaField('notes', validators=[DataRequired()])
+    
+@app.route('/new') # only here for help
+@app.route('/new/<what>', methods=['GET', 'POST'])
+@app.route('/edit/<what>/<alias>', methods=['GET', 'POST'])
+def edit(what=None, alias=None):
+    if what == alias == None: # help
+        flash('New what?  Use /new/manufacturer, /new/model etc...', 'error')
+        abort(404)
+        
+    if what != 'manufacturer':
+        flash('Only manufacturers thus far...', 'error')
+        abort(404)
+    
+    # Set up the form with a list of manufacturers for 'became'
+    manufacturers = query_db("SELECT id, name FROM manufacturer ORDER BY name ASC")
+    form = Manufacturer(request.form)
+    form.became.choices = [(man['id'], man['name']) for man in manufacturers]
+    form.became.choices.insert(0, (0, ''))
+        
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            form.year_started_approx.data = 1 if form.year_started_approx.data else 0
+            form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            query = "INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ('{name}', '{alias}', {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', '{notes}')".format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
+            print(query)
+            try:
+                cursor.execute(query)
+                print("************* I GOT HERE ************")
+                conn.commit()
+                flash('added {0} successfully'.format(form.name.data))
+                return redirect('manufacturer\{0}'.format(form.alias.data))
+            except Exception as e:
+                flash(e, 'error')
+            
+        else:
+            flash("All required (*) fields need to be filled in", 'error')
+    
+    return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form)
+            
+        
 @app.route('/new_distributor', methods=['GET', 'POST'])
 def new_distributor():
     form = Distributor()
     if form.validate_on_submit():
+        address = 'Nationwide' if form.nz_wide.data else form.address.data
+        
         conn = mysql.connect()
         cursor = conn.cursor()
         flash('name = {0}'.format(form.name.data))
-        query = "INSERT INTO distributor (name, alias, address, notes) VALUES ('{0}', '{1}', '{2}', '{3}')".format(form.name.data, form.alias.data, form.address.data, form.notes.data)
+        query = "INSERT INTO distributor (name, alias, address, notes) VALUES ('{0}', '{1}', '{2}', '{3}')".format(form.name.data, form.alias.data, address, form.notes.data)
         cursor.execute(query)
         conn.commit()
         return redirect('/home')
