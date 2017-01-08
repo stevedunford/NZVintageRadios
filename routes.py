@@ -17,19 +17,28 @@ import errno
 from flask import Flask, flash, session, request, render_template_string, render_template, redirect, url_for, g, abort
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
-from flask_wtf import Form
-from wtforms import StringField, IntegerField, BooleanField, TextAreaField, SelectField
-from wtforms.validators import ValidationError, DataRequired, NumberRange, Optional
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField, BooleanField, TextAreaField, SelectField, FileField
+from wtforms.validators import ValidationError, DataRequired, NumberRange, Optional, Regexp
+from werkzeug.utils import secure_filename
 from PIL import Image
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# TODO: change this and app key to something secure that wasn't
+# used during development :)
 WTF_CSRF_ENABLED = True
-SECRET_KEY = "\xd4'\x19*\x15\xfb6*\xae\xb6\xc0\xd7\x10\xb0>OX\x17\xc8!\xe6\xe1\xda\x91\x06\xbf\xb5B\xde_\xfcr"
+WTF_CSRF_SECRET_KEY = "saycheese"
 
 # app config
 app = Flask(__name__)
-app.secret_key = '\x06*\xac\xd42u\x80\xcd\xaaw;\xfb\xab\x91\x1d\x9a\x13\xd4\xe5\xd0\xc7\t#\x8a\xec\xaa\x81\xe3\x96\x15t\x17a'
+# TODO: change this to something secure
+app.secret_key = "smile"
+
+# site config
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024 # 8Mb upload limit
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'images')
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 # MySQL config
 mysql = MySQL(cursorclass=DictCursor)
@@ -41,10 +50,16 @@ mysql.init_app(app)
 
 app.logger.debug('NZVRS Website Starting Up...')
 
+
+# check upload is a file and has an allowed extension
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 '''
 Web data entry
 '''
-class Distributor(Form):
+class Distributor(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     alias = StringField('alias', validators=[DataRequired()])
     address = StringField('address', validators=[DataRequired()])
@@ -241,12 +256,7 @@ def brand(alias=None):
     if not _brand:
         abort(404) # Not found
     
-    # strip enclosing <p> tag if in notes, so that the logo can be
-    # encapsulated in the main notes paragraph
-    if _brand['notes'][:3] == '<p>':
-        _brand['notes'] = _brand['notes'][3:]
-    if _brand['notes'][-4:] == '</p>':
-        _brand['notes'] = _brand['notes'][:-4]
+    _brand['notes'] = strip_outer_p_tags(_brand['notes'])
         
     # find the manufacturer
     _manufacturer = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_brand['manufacturer_id']), single=True)
@@ -260,7 +270,7 @@ def brand(alias=None):
         
     return render_template("brand.html", title=_brand['name'], brand=_brand, manufacturer=_manufacturer, logo=_logo, models=_models)
   
-class Manufacturer(Form):
+class Manufacturer(FlaskForm):
     def check_year_range(form, field):
         print(field.name)
         if field.data:
@@ -269,10 +279,6 @@ class Manufacturer(Form):
     
     def check_existing(form, field):
         query = query_db("SELECT id FROM manufacturer WHERE {0}='{1}'".format(field.name, field.data), single=True)
-        print('-------')
-        print("SELECT id FROM manufacturer WHERE {0}='{1}'".format(field.name, field.data))
-        print(query)
-        print('-------')
         if query:
             raise ValidationError('{0}: {1} already exists in the database'.format(field.name, field.data))
     
@@ -286,6 +292,7 @@ class Manufacturer(Form):
     became = SelectField('became', validators=[Optional()], default=None, coerce=int)
     became_how = SelectField('how', validators=[Optional()], choices=[('', ''), ('merged with', 'Merged'), ('were taken over by', 'Taken Over'), ('sold out to', 'Sold to'), ('rebranded as', 'Rebranded')], default=None)
     notes = TextAreaField('notes', validators=[DataRequired()])
+    logo = FileField('logo') #, default=None, validators=[Regexp(r"(^[^/\\]+(\.(?i)(jpg|png|gif))$)")]
     
 @app.route('/new') # only here for help
 @app.route('/new/<what>', methods=['GET', 'POST'])
@@ -301,31 +308,52 @@ def edit(what=None, alias=None):
     
     # Set up the form with a list of manufacturers for 'became'
     manufacturers = query_db("SELECT id, name FROM manufacturer ORDER BY name ASC")
-    form = Manufacturer(request.form)
+    form = Manufacturer()
     form.became.choices = [(man['id'], man['name']) for man in manufacturers]
     form.became.choices.insert(0, (0, ''))
         
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            form.year_started_approx.data = 1 if form.year_started_approx.data else 0
-            form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            query = "INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ('{name}', '{alias}', {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', '{notes}')".format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
-            print(query)
-            try:
-                cursor.execute(query)
-                print("************* I GOT HERE ************")
-                conn.commit()
-                flash('added {0} successfully'.format(form.name.data))
-                return redirect('manufacturer\{0}'.format(form.alias.data))
-            except Exception as e:
-                flash(e, 'error')
+    if form.validate_on_submit():
+        print("+++++++++++")
+        print(form.logo.data)
+        logo = secure_filename(form.logo.data.filename)
+        if len(logo) > 0:
+            # rename the file as the alias so it can be found
+            logo = form.alias.data + logo[logo.rfind('.'):]
+            #put it in the right place
+            logo_path = os.path.join(APP_ROOT, 'static', 'images', 'manufacturers', logo)
+            form.logo.data.save(logo_path)
+            # now resize to 360x360 
+            # TODO: make this more dynamic
+            img = Image.open(logo_path)
+            img.thumbnail((360,360), Image.ANTIALIAS)
+            img.save(logo_path, quality=95)
             
+
         else:
-            flash("All required (*) fields need to be filled in", 'error')
+            flash("Filename Failed to Format Functionally, Fek!", 'error')
+            raise Exception("BUGGER!")
+
+        form.year_started_approx.data = 1 if form.year_started_approx.data else 0
+        form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        query = '''INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ("{name}", "{alias}", {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', "{notes}")'''.format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
+        print(query)
+        try:
+            cursor.execute(query)
+            print("************* I GOT HERE ************")
+            conn.commit()
+            flash('added {0} successfully'.format(form.name.data))
+            return redirect('manufacturer\{0}'.format(form.alias.data))
+        except Exception as e:
+            flash(e, 'error')
+            filename = None
+
+    else:
+        print("DID NOT COMPUTE!")
+        filename = None
     
-    return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form)
+    return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form, filename=filename)
             
         
 @app.route('/new_distributor', methods=['GET', 'POST'])
@@ -365,6 +393,7 @@ def distributor(alias=None):
     if not _distributor:
         abort(404) # Not found
 
+    _distributor['notes'] = strip_outer_p_tags(_distributor['notes'])
     # find all models currently sold by this distributor
     _distributor_id = (query_db("SELECT id FROM distributor WHERE alias='{0}'".format(alias), single=True))['id']
     _brands = query_db("SELECT alias, name FROM brand WHERE distributor_id='{0}'".format(_distributor_id))
@@ -396,15 +425,20 @@ def manufacturer(alias=None):
     if not _manufacturer:
         abort(404) # Not found
         
+    _manufacturer['notes'] = strip_outer_p_tags(_manufacturer['notes'])
     _new_co = None
     if _manufacturer['became']:
         _new_co = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_manufacturer['became']), single=True)
     # find all models currently held for this manufacturer
     _brands = query_db("SELECT * FROM brand WHERE manufacturer_id='{0}'".format(_manufacturer['id']))
 
-    _logo = url_for('static', filename='images/manufacturers/{0}.jpg'.format(_manufacturer['alias']))
-    if not os.path.isfile(APP_ROOT + _logo):
-        _logo = None     
+    img_types=['jpg', 'jpeg', 'png', 'gif']
+    for img_type in img_types:
+        _logo = url_for('static', filename='images/manufacturers/{0}.{1}'.format(_manufacturer['alias'], img_type))
+        if os.path.isfile(APP_ROOT + _logo):
+            break
+        else:
+            _logo = None
 
     if _manufacturer is None:
         return "NONE!"
@@ -475,6 +509,14 @@ def query_db(query, single=False):
     result = cursor.fetchone() if single else cursor.fetchall()
     return result
     
+# strip enclosing <p> tag if in notes, so that the logo can be
+# encapsulated in the main notes paragraph
+def strip_outer_p_tags(text): 
+    if text[:3] == '<p>':
+        text = text[3:]
+    if text[-4:] == '</p>':
+        text = text[:-4]
+    return text
 
 
 if __name__ == "__main__":

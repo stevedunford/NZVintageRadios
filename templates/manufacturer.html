@@ -6,19 +6,20 @@
     <a href="/manufacturers">MANUFACTURERS</a> » {{ title }}
   </div>
   
-  {% if logo or manufacturer['year_started']|int %}
+  {% if (logo and manufacturer['year_started']) or manufacturer['year_started'] %}
   <p class="timespan">
     {% if logo %}<img class="logo img_right" src="{{ logo }}" />{% endif %}
     {% if manufacturer['year_started']|int %}
     
-    {{ manufacturer['name'] }} began manufacturing in {% if manufacturer['year_started_approx'] == 1 %}around {% endif %}{{ manufacturer['year_started'] }}{% if manufacturer['year_ended']|int %} and finished up in {% if manufacturer['year_ended_approx'] == 1 %}around {% endif %}{{ manufacturer['year_ended'] }}{% if new_co %} when they became <a href="/manufacturer/{{ new_co['alias'] }}">{{ new_co['name'] }}</a>{% endif %}{% endif %}.
+    {{ manufacturer['name'] }} began manufacturing in {% if manufacturer['year_started_approx'] == 1 %}around {% endif %}{{ manufacturer['year_started'] }}{% if manufacturer['year_ended']|int %} and finished up in {% if manufacturer['year_ended_approx'] == 1 %}around {% endif %}{{ manufacturer['year_ended'] }}{% if new_co %} when they {% if manufacturer['became_how'] %}{{ manufacturer['became_how'] }} {% else %}became{% endif %} <a href="/manufacturer/{{ new_co['alias'] }}">{{ new_co['name'] }}</a>{% endif %}{% endif %}.
     {% endif %}
   </p>
   {% endif %}
   
-  <div id="description">
+  <p>
+    {% if logo and not manufacturer['year_started'] %}<img class="logo img_right" src="{{ logo }}" />{% endif %}
     {{ manufacturer['notes']|safe }}
-  </div>
+  </p>
   
   {% if brands|length > 0 %}
   <h4>

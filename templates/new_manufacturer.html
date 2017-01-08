@@ -2,9 +2,8 @@
 
 {% block content %}
 <div id="container">
-  {{form}}
-  <form action="" method="post" name="new/manufacturer">
-    {{ form.hidden_tag() }}
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <table>
       <tr>
         <td width="200px">Name<span class='reqd'>*</span>:{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.name(size=60) }}</td>
@@ -30,7 +29,11 @@
       <tr class='odd'>
         <td>Notes<span class='reqd'>*</span>: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.notes }}</td>
         <td></td>
-      </tr>       
+      </tr>
+      <tr>
+        <td>Manufacturer Logo: {% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.logo }}</td>
+        <td></td>
+      </tr>
     </table>
     name: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
     alias: {% for error in form.alias.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
@@ -42,6 +45,7 @@
     how: {% for error in form.became_how.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
     address: {% for error in form.address.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
     notes: {% for error in form.notes.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    logo: {% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
     
     <p>
       <input type="submit" value="Add Manufacturer">
