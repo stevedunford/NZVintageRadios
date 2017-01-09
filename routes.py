@@ -228,7 +228,9 @@ def model(brand, code, variant=None):
         image['filename'] = imgfile
         image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
         
-    return render_template("model.html", models=models, title=brand+' '+code, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
+    title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
+    
+    return render_template("model.html", models=models, title=title, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
 
 
     
