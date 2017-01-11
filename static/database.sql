@@ -58,7 +58,7 @@ DELETE FROM `brand`;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
 	(1, 'Courtenay', 'courtenay', 'Known For Tone', 3, 1, '1930', 0, '1956', 0, '<p>Coutenay was the original brand name of Radio Corp N.Z. (then known as W. Marks Ltd), and was distributed through Stewart Hardware in Courtenay Place (Wellington) - most likely where the name came from.</p><p>After Stewart Hardware shut its doors, Courtenay Radio Ltd was formed in 1933 to distribute the receivers, and then in 1934 Turnbull and Jones Ltd took over distribution, which they held until they pulled out of the radio market in 1956.</p>'),
 	(2, 'Columbus', 'columbus', NULL, 3, 2, '1937', 0, '1960', 0, 'Columbus was the house-brand for Radio Corp. of NZ.'),
-	(3, 'Pacific', 'pacific', 'In A Sphere Of Its Own', 3, 0, '1933', 0, '1937', 1, '<p>Pacific sets were built initially as special runs for Pacific Radio Co. Ltd by Radio Corp. N.Z., and then as standard RCNZ chassis models from around 1935/36.</p><p>Pacific sets from the early-mid 30\'s were known for their art-deco styling - in particular the 1934/35 \'Elite\' console, which is considered very rare and the envy of most collectors.</p><table><tbody><tr><td> <a class="gallery" title="The Pacific Elite Console" href="/static/images/model/pacific/6 valve dual wave/elite/elite.jpg"><img class="inline_image" src="/static/images/model/pacific/6 valve dual wave/elite/thumbs/elite.jpg" alt="Pacific Elite Console 1934/35" /></a></td></tr><tr><td>The world-famous \'Elite\' console</td></tr></tbody></table><p>There are later (post WWII) sets branded Pacific, however these were built by Akrad who took over the name and branding after the demise of the owner of the original brand.</p>'),
+	(3, 'Pacific', 'pacific', 'In A Sphere Of Its Own', 3, 6, '1933', 0, '1937', 1, '<p>Pacific sets were built initially as special runs for Pacific Radio Co. Ltd by Radio Corp. N.Z., and then as standard RCNZ chassis models from around 1935/36.</p><p>Pacific sets from the early-mid 30\'s were known for their art-deco styling - in particular the 1934/35 \'Elite\' console, which is considered very rare and the envy of most collectors.</p><table><tbody><tr><td> <a class="gallery" title="The Pacific Elite Console" href="/static/images/model/pacific/6 valve dual wave/elite/elite.jpg"><img class="inline_image" src="/static/images/model/pacific/6 valve dual wave/elite/thumbs/elite.jpg" alt="Pacific Elite Console 1934/35" /></a></td></tr><tr><td>The world-famous \'Elite\' console</td></tr></tbody></table><p>There are later (post WWII) sets branded Pacific, however these were built by Akrad who took over the name and branding after the demise of the owner of the original brand.</p>'),
 	(4, 'Pacific (post-WWII)', 'pacific_new', 'In A Sphere Of Its Own', 1, 3, '1947', 1, NULL, 1, '<p>Pacific Radio Co. Ltd ceased trading due to the demise of the owner, and the brand and signature line were taken over by Akrad Radio Ltd in Waihi when radio production resumed after WWII.</p><p>Many Pacific models from Akrad were also released under the Regent brand name.</p>'),
 	(5, 'Clipper', 'clipper', NULL, 1, 0, '1954', 1, NULL, 0, '<p>Clipper was one of the brands in the Akrad stable, found on both car and home radios, and even radiograms</p>'),
 	(6, 'Well-Mayde', 'well_mayde', NULL, 5, 5, '1929', 0, NULL, 0, '<p>The brand name Well-Mayde was established by Johns Ltd in Auckland, and products were manufactured by their factory, Wellmade Ltd.</p>'),
@@ -82,16 +82,17 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   `address` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'Address, or town / city company was located in',
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~5 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
 	(1, 'Turnbull and Jones Ltd', 'turnbull_and_jones', 'Wellington', 'Turnbull and Jones were tied up with RCNZ, supplying high quality radio manufacturing parts to them.'),
-	(2, 'Radio Centre Ltd', 'radio_centre', 'Nationwide', 'Set up by RCNZ to distribute their house brand, Columbus'),
+	(2, 'Columbus Radio Centre Ltd', 'radio_centre', 'Nationwide', 'Set up by RCNZ to distribute their house brand, Columbus'),
 	(3, 'A. H. Nathan Ltd', 'a_h_nathan', 'Auckland', '<p>Arthur H Nathan Ltd was an importer and distributor in Auckland.  They appear to have been one of the HMV distributors, but also sold later model Pacific sets from Akrad</p><img class="brand_image" src="/static/images/distributors/ahnathan.jpg" /><p>If you have any more details to share, please contact the admin with them.</p>'),
-	(5, 'Johns Ltd', 'johns', 'Auckland', 'Set up in 1920, slogan -Aucklands Oldest Radio Firm-.  Set up by Clive and Victor Johns, returned soldiers from WW1.  Started by importing and selling radio components, then kitsets.  Had distributorship for U.S. made Hammarlund coils and tuning condensers.  They started manufacturing radios - Altona, Ace and Meniwave.  Formed a new manufacturing co called Wellmayde Ltd making radios under the Well Mayde name. In 1930 1ZJ came on the air - Johns Ltds own radio station. More to come...');
+	(5, 'Johns Ltd', 'johns', 'Auckland', 'Set up in 1920, slogan -Aucklands Oldest Radio Firm-.  Set up by Clive and Victor Johns, returned soldiers from WW1.  Started by importing and selling radio components, then kitsets.  Had distributorship for U.S. made Hammarlund coils and tuning condensers.  They started manufacturing radios - Altona, Ace and Meniwave.  Formed a new manufacturing co called Wellmayde Ltd making radios under the Well Mayde name. In 1930 1ZJ came on the air - Johns Ltds own radio station. More to come...'),
+	(6, 'Pacific Radio Co. Ltd', 'pacific', 'Wellington', 'The parent company for Pacific radios, based in Wellington but distributed nationwide through various retailers.  Interestingly started on the same day with the same capital and the same number of shares as Courtenay Radio Ltd.  Different shareholders, but the wording in the adverts is basically identical.');
 /*!40000 ALTER TABLE `distributor` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.images
@@ -106,25 +107,25 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~108 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~111 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
-	(1, 'Clipper 5M4 Front', 'clipper_5m4_front.jpg', 1, 1, b'0', 1, NULL),
-	(2, 'Clipper 5M4 Side', 'clipper_5m4_lside.jpg', 1, 1, b'0', 2, NULL),
-	(3, 'Clipper 5M4 Dial', 'clipper_5m4_dial.jpg', 1, 1, b'0', 3, NULL),
-	(4, 'Clipper 5M4 Rear', 'clipper_5m4_rear.jpg', 1, 1, b'0', 4, NULL),
-	(5, 'Clipper 5M4 Rear 2', 'clipper_5m4_rear_label.jpg', 1, 1, b'0', 5, NULL),
+	(1, 'Clipper 5M4 Front', 'clipper_5m4_front.jpg', 1, 1, b'0', 12, NULL),
+	(2, 'Clipper 5M4 Side', 'clipper_5m4_lside.jpg', 1, 1, b'0', 13, NULL),
+	(3, 'Clipper 5M4 Dial', 'clipper_5m4_dial.jpg', 1, 1, b'0', 14, NULL),
+	(4, 'Clipper 5M4 Rear', 'clipper_5m4_rear.jpg', 1, 1, b'0', 15, NULL),
+	(5, 'Clipper 5M4 Rear 2', 'clipper_5m4_rear_label.jpg', 1, 1, b'0', 20, NULL),
 	(7, 'Clipper 5M4 Schematic (early)', 'clipper_5m4_schematic.png', 1, 1, b'1', 30, NULL),
 	(8, 'Clipper 5M4 Label', 'clipper_5m4_label.png', 1, 1, b'0', 29, NULL),
-	(9, 'Clipper 5M4 Red', 'clipper_5m4_red.jpg', 1, 1, b'0', 9, NULL),
-	(10, 'Clipper 5M4 Blue', 'clipper_5m4_blue.jpg', 1, 1, b'0', 8, NULL),
-	(11, 'Clipper 5M4 Green', 'clipper_5m4_green.jpg', 1, 1, b'0', 7, NULL),
-	(12, 'Clipper 5M4 Brown', 'clipper_5m4_brown.jpg', 1, 1, b'0', 10, NULL),
-	(13, 'Clipper 5M4 Ivory', 'clipper_5m4_ivory.jpg', 1, 1, b'0', 6, NULL),
-	(14, 'Clipper 5M4 Black (RARE)', 'clipper_5m4_black.jpg', 1, 1, b'0', 11, NULL),
+	(9, 'Clipper 5M4 Red', 'clipper_5m4_red.jpg', 1, 1, b'0', 4, NULL),
+	(10, 'Clipper 5M4 Blue', 'clipper_5m4_blue.jpg', 1, 1, b'0', 3, NULL),
+	(11, 'Clipper 5M4 Green', 'clipper_5m4_green.jpg', 1, 1, b'0', 2, NULL),
+	(12, 'Clipper 5M4 Brown', 'clipper_5m4_brown.jpg', 1, 1, b'0', 5, NULL),
+	(13, 'Clipper 5M4 Ivory', 'clipper_5m4_ivory.jpg', 1, 1, b'0', 1, NULL),
+	(14, 'Clipper 5M4 Black (RARE)', 'clipper_5m4_black.jpg', 1, 1, b'0', 6, NULL),
 	(15, 'Pacific Raleigh ', '20160320_144502.jpg', 1, 2, b'0', 2, NULL),
 	(16, 'Pacific Raleigh Dial', '20160322_104320.jpg', 1, 2, b'0', 3, NULL),
 	(17, 'Pacific Raleigh Valve Card', '20160322_104136.jpg', 1, 2, b'0', 4, NULL),
@@ -231,7 +232,11 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(142, 'Courtenay 12', 'columbus 12 ACDC p4.png', 1, 14, b'0', 99, NULL),
 	(143, 'Courtenay 12', 'columbus 12 p1.png', 1, 14, b'0', 99, NULL),
 	(144, 'Courtenay 12', 'columbus 12 p2.png', 1, 14, b'0', 99, NULL),
-	(145, 'Courtenay 12', 'columbus 12 p3.png', 1, 14, b'0', 99, NULL);
+	(145, 'Courtenay 12', 'columbus 12 p3.png', 1, 14, b'0', 99, NULL),
+	(146, 'Columbus 84 in a sorry state', 'IMG_20170110_231813595.jpg', 1, 17, b'0', 1, NULL),
+	(147, 'Columbus 84 rear', 'IMG_20170110_231832925.jpg', 1, 17, b'0', 2, NULL),
+	(148, 'Columbus 84 label', 'IMG_20170110_231842648.jpg', 1, 17, b'0', 3, NULL),
+	(149, 'Columbus 84', 'rcnz model 84 schematic.png', 1, 17, b'0', 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -249,9 +254,9 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `became_how` tinytext COMMENT 'merged, taken over, sold to, or rebranded',
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~12 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~13 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -288,13 +293,13 @@ CREATE TABLE IF NOT EXISTS `model` (
   `if` text COMMENT 'IF transformer peak freq.',
   `similar` text COMMENT 'models using same chassis',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~14 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~15 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
-	(1, NULL, '5M4', 5, '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p><p>There are at least two chassis variants, both using almost the same circuit and the same valve lineup.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>', NULL, NULL),
+	(1, NULL, '5M4', 5, '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p>\r\n<p><a class=\'non_gallery\' title="2 Chassis Variants - Bottom Side" href="/static/images/model/clipper/5m4/5m4oldnewbottom.jpg"><img class="img_left" src="/static/images/model/clipper/5m4/5m4oldnewbottom.jpg" title="2 Chassis Variants - Bottom Side"/></a><a class=\'non_gallery\' title="2 Chassis Variants - Top Side" href="/static/images/model/clipper/5m4/5m4oldnewtop.jpg"><img class="img_left" src="/static/images/model/clipper/5m4/5m4oldnewtop.jpg" title="2 Chassis Variants - Top Side"/></a>\r\nThere are at least two chassis variants, both using almost the same circuit and the same valve lineup, and can be seen here with the older variant at the bottom.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>', NULL, NULL),
 	(2, 'Raleigh', '6 Valve Dual Wave', 3, '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, '<p>Art deco tabletop radio from 1934</p>', '256kc/s', '3'),
 	(3, 'Elite', '6 Valve Dual Wave', 3, '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, '<p>Stunning art deco console from 1934</p>', '256kc/s', '2'),
 	(4, NULL, 'Alabama', 9, '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>', '465kc/s', NULL),
@@ -309,7 +314,9 @@ INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_y
 	(13, NULL, '12', 2, '1941', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, '<p>The tiny Model 12, mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as the <a href="/model/courtenay/12">Courtenay \'Tiki\'</a></p>', '455kc/s', '14'),
 	(14, NULL, '12', 1, '1941', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, '<p>The tiny Model 12, known as the Courtenay \'Tiki\'.  Mains and AC/DC operation with modifications (see service bulletin images)</p><p>Also released as the <a href="/model/columbus/12">Columbus model 12</p>', '455kc/s', '13'),
 	(15, NULL, 'Broadcaster', 15, '1936', 1, NULL, 0, 5, NULL, 1, '<p>The awesome-looking Haywin Broadcaster was built for Hay\'s Dept Store in Christchurch.</p>', NULL, NULL),
-	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL, NULL);
+	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL, NULL),
+	(17, NULL, '84', 2, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well which was sighted without the magic eye', '456kc/s', NULL),
+	(18, NULL, '84', 1, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Columbus version as well', '456kc/s', NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -330,6 +337,86 @@ DELETE FROM `user`;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
 	(1, 1481185199, 'admin', 'nzvr_admin@essentialtech.co.nz', '13601bda4ea78e55a07b98866d2be6be0744e3866f13c00c811cab608a28f322');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+-- Dumping structure for table nzvr_db.valve
+DROP TABLE IF EXISTS `valve`;
+CREATE TABLE IF NOT EXISTS `valve` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `filename` tinytext NOT NULL,
+  `type` tinytext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table nzvr_db.valve: ~15 rows (approximately)
+DELETE FROM `valve`;
+/*!40000 ALTER TABLE `valve` DISABLE KEYS */;
+INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
+	(1, '42', '42.jpg', 'Output Pentode'),
+	(2, '2A5', '42.jpg', 'Output Pentode'),
+	(3, '6F6', '42.jpg', 'Output Pentode'),
+	(4, '6F6G', '42.jpg', 'Output Pentode'),
+	(5, '6F6GT', '42.jpg', 'Output Pentode'),
+	(6, '6D6', '6D6.jpg', 'RF / IF Amp'),
+	(7, '6A7', '6A7.jpg', 'Mixer / Osc'),
+	(8, '6A8', '6A8.jpg', 'Mixer / Osc'),
+	(9, '6A8G', '6A8.jpg', 'Mixer / Osc'),
+	(10, '6A8GT', '6A8.jpg', 'Mixer / Osc'),
+	(11, '2B7', '6B7.jpg', 'First Audio / Detector'),
+	(12, '6B7', '6B7.jpg', 'First Audio / Detector'),
+	(13, '6B8G', '6B7.jpg', 'First Audio / Detector'),
+	(15, '6B8', '6B8.jpg', 'First Audio / Detector'),
+	(17, '6E5', '6E5.jpg', 'Magic Eye'),
+	(18, '2A7', '6A7.jpg', 'Mixer / Osc'),
+	(19, '6K6', '6K6.jpg', 'Output Pentode AC/DC'),
+	(20, '6K7', '6K7.jpg', 'RF / IF Amp'),
+	(21, '6K7G', '6K7.jpg', 'RF / IF Amp'),
+	(22, '6K8', '6K8.jpg', 'Mixer / Osc'),
+	(23, '6K8G', '6K8.jpg', 'Mixer / Osc'),
+	(24, '6K8GT', '6K8.jpg', 'Mixer / Osc'),
+	(25, '6F6GT/G', '42.jpg', 'Output Pentode'),
+	(26, '80', '80.jpg', 'Rectifier - Full Wave AC/DC'),
+	(27, '84', '84.jpg', 'Rectifier - Full Wave AC'),
+	(28, 'ECH42', 'ECH42.jpg', 'Mixer / Osc'),
+	(29, 'EF41', 'EF41.jpg', 'RF Pentode'),
+	(30, 'ECH41', 'ECH41.jpg', 'Mixer / Osc'),
+	(32, 'ECH81', 'ECH81.jpg', 'Mixer / Osc'),
+	(33, '6AJ8', 'ECH81.jpg', 'Mixer / Osc'),
+	(34, '6CU7', 'ECH42.jpg', 'Mixer / Osc'),
+	(35, '6CJ5', 'EF41.jpg', 'RF Pentode'),
+	(36, 'EBC41', 'EBC41.jpg', 'First Audio / Detector'),
+	(37, '6CV7', 'EBC41.jpg', 'First Audio / Detector'),
+	(38, 'EL41', 'EL41.jpg', 'Output Pentode'),
+	(39, '6CK5', 'EL41.jpg', 'Output Pentode'),
+	(40, 'EZ40', 'EZ40.jpg', 'Rectifier - Full Wave AC'),
+	(41, 'EZ80', 'EZ80.jpg', 'Rectifier - Full Wave AC'),
+	(42, '6V4', 'EZ80.jpg', 'Rectifier - Full Wave AC'),
+	(43, 'EL84', 'EL84.jpg', 'Output Pentode'),
+	(44, '6BQ5', 'EL84.jpg', 'Output Pentode'),
+	(45, 'EBC81', 'EBC81.jpg', 'First Audio / Detector'),
+	(46, '6BD7', 'EBC81.jpg', 'First Audio / Detector'),
+	(47, 'EF89', 'EF89.jpg', 'RF Pentode'),
+	(48, '6DA6', 'EF89.jpg', 'RF Pentode'),
+	(49, '6X4', '6X4.jpg', 'Rectifier - Full Wave AC'),
+	(50, 'EZ90', '6X4.jpg', 'Rectifier - Full Wave AC'),
+	(51, '6BE6', '6BE6.jpg', 'Mixer / Osc'),
+	(52, 'EK90', '6BE6.jpg', 'Mixer / Osc'),
+	(54, '6BA6', '6BA6.jpg', 'RF / IF Pentode'),
+	(55, 'EF93', '6BA6.jpg', 'RF / IF Pentode'),
+	(56, '6AV6', '6AV6.jpg', 'First Audio / Detector'),
+	(57, 'EBC91', '6AV6.jpg', 'First Audio / Detector'),
+	(58, '6AQ5', '6AQ5.jpg', 'Output Beam Tetrode'),
+	(59, 'EL90', '6AQ5.jpg', 'Output Beam Tetrode'),
+	(60, 'N78', 'N78.jpg', 'Output Pentode'),
+	(61, '6BJ5', 'N78.jpg', 'Output Pentode'),
+	(62, '6X5', '6X5.jpg', 'Rectifier - Full Wave AC/DC'),
+	(63, '6X5GT/G', '6X5.jpg', 'Rectifier - Full Wave AC/DC'),
+	(65, 'EAF42', 'EAF42.jpg', 'RF / IF Pentode'),
+	(66, '6CT7', 'EAF42.jpg', 'RF / IF Pentode'),
+	(67, '6K6G', '6K6G.jpg', 'Output Pentode'),
+	(68, '6K6GT', '6K6G.jpg', 'Output Pentode');
+/*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
