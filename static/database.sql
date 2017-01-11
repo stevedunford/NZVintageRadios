@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~15 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~111 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~124 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -295,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~18 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -349,73 +349,73 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~63 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
-	(1, '42', '42.jpg', 'Output Pentode'),
-	(2, '2A5', '42.jpg', 'Output Pentode'),
-	(3, '6F6', '42.jpg', 'Output Pentode'),
-	(4, '6F6G', '42.jpg', 'Output Pentode'),
-	(5, '6F6GT', '42.jpg', 'Output Pentode'),
-	(6, '6D6', '6D6.jpg', 'RF / IF Amp'),
-	(7, '6A7', '6A7.jpg', 'Mixer / Osc'),
-	(8, '6A8', '6A8.jpg', 'Mixer / Osc'),
-	(9, '6A8G', '6A8.jpg', 'Mixer / Osc'),
-	(10, '6A8GT', '6A8.jpg', 'Mixer / Osc'),
-	(11, '2B7', '6B7.jpg', 'First Audio / Detector'),
-	(12, '6B7', '6B7.jpg', 'First Audio / Detector'),
-	(13, '6B8G', '6B7.jpg', 'First Audio / Detector'),
-	(15, '6B8', '6B8.jpg', 'First Audio / Detector'),
-	(17, '6E5', '6E5.jpg', 'Magic Eye'),
-	(18, '2A7', '6A7.jpg', 'Mixer / Osc'),
-	(19, '6K6', '6K6.jpg', 'Output Pentode AC/DC'),
-	(20, '6K7', '6K7.jpg', 'RF / IF Amp'),
-	(21, '6K7G', '6K7.jpg', 'RF / IF Amp'),
-	(22, '6K8', '6K8.jpg', 'Mixer / Osc'),
-	(23, '6K8G', '6K8.jpg', 'Mixer / Osc'),
-	(24, '6K8GT', '6K8.jpg', 'Mixer / Osc'),
-	(25, '6F6GT/G', '42.jpg', 'Output Pentode'),
-	(26, '80', '80.jpg', 'Rectifier - Full Wave AC/DC'),
-	(27, '84', '84.jpg', 'Rectifier - Full Wave AC'),
-	(28, 'ECH42', 'ECH42.jpg', 'Mixer / Osc'),
-	(29, 'EF41', 'EF41.jpg', 'RF Pentode'),
-	(30, 'ECH41', 'ECH41.jpg', 'Mixer / Osc'),
-	(32, 'ECH81', 'ECH81.jpg', 'Mixer / Osc'),
-	(33, '6AJ8', 'ECH81.jpg', 'Mixer / Osc'),
-	(34, '6CU7', 'ECH42.jpg', 'Mixer / Osc'),
-	(35, '6CJ5', 'EF41.jpg', 'RF Pentode'),
-	(36, 'EBC41', 'EBC41.jpg', 'First Audio / Detector'),
-	(37, '6CV7', 'EBC41.jpg', 'First Audio / Detector'),
-	(38, 'EL41', 'EL41.jpg', 'Output Pentode'),
-	(39, '6CK5', 'EL41.jpg', 'Output Pentode'),
-	(40, 'EZ40', 'EZ40.jpg', 'Rectifier - Full Wave AC'),
-	(41, 'EZ80', 'EZ80.jpg', 'Rectifier - Full Wave AC'),
-	(42, '6V4', 'EZ80.jpg', 'Rectifier - Full Wave AC'),
-	(43, 'EL84', 'EL84.jpg', 'Output Pentode'),
-	(44, '6BQ5', 'EL84.jpg', 'Output Pentode'),
-	(45, 'EBC81', 'EBC81.jpg', 'First Audio / Detector'),
-	(46, '6BD7', 'EBC81.jpg', 'First Audio / Detector'),
-	(47, 'EF89', 'EF89.jpg', 'RF Pentode'),
-	(48, '6DA6', 'EF89.jpg', 'RF Pentode'),
-	(49, '6X4', '6X4.jpg', 'Rectifier - Full Wave AC'),
-	(50, 'EZ90', '6X4.jpg', 'Rectifier - Full Wave AC'),
-	(51, '6BE6', '6BE6.jpg', 'Mixer / Osc'),
-	(52, 'EK90', '6BE6.jpg', 'Mixer / Osc'),
-	(54, '6BA6', '6BA6.jpg', 'RF / IF Pentode'),
-	(55, 'EF93', '6BA6.jpg', 'RF / IF Pentode'),
-	(56, '6AV6', '6AV6.jpg', 'First Audio / Detector'),
-	(57, 'EBC91', '6AV6.jpg', 'First Audio / Detector'),
-	(58, '6AQ5', '6AQ5.jpg', 'Output Beam Tetrode'),
-	(59, 'EL90', '6AQ5.jpg', 'Output Beam Tetrode'),
-	(60, 'N78', 'N78.jpg', 'Output Pentode'),
-	(61, '6BJ5', 'N78.jpg', 'Output Pentode'),
-	(62, '6X5', '6X5.jpg', 'Rectifier - Full Wave AC/DC'),
-	(63, '6X5GT/G', '6X5.jpg', 'Rectifier - Full Wave AC/DC'),
-	(65, 'EAF42', 'EAF42.jpg', 'RF / IF Pentode'),
-	(66, '6CT7', 'EAF42.jpg', 'RF / IF Pentode'),
-	(67, '6K6G', '6K6G.jpg', 'Output Pentode'),
-	(68, '6K6GT', '6K6G.jpg', 'Output Pentode');
+	(1, '42', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(2, '2A5', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(3, '6F6', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(4, '6F6G', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(5, '6F6GT', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(6, '6D6', '6D6.jpg', '6D6 RF / IF Amp'),
+	(7, '6A7', '6A7.jpg', '2A7 / 6A7 Mixer / Osc'),
+	(8, '6A8', '6A8.jpg', '6A8 Mixer / Osc'),
+	(9, '6A8G', '6A8.jpg', '6A8 Mixer / Osc'),
+	(10, '6A8GT', '6A8.jpg', '6A8 Mixer / Osc'),
+	(11, '2B7', '6B7.jpg', '2B7 / 6B7 First Audio / Detector'),
+	(12, '6B7', '6B7.jpg', '2B7 / 6B7 First Audio / Detector'),
+	(13, '6B8G', '6B8.jpg', '6B8 First Audio / Detector'),
+	(15, '6B8', '6B8.jpg', '6B8 First Audio / Detector'),
+	(17, '6E5', '6E5.jpg', '6E5 Magic Eye'),
+	(18, '2A7', '6A7.jpg', '2A7 / 6A7 Mixer / Osc'),
+	(19, '6K6', '6K6.jpg', '6K6 Output Pentode AC/DC'),
+	(20, '6K7', '6K7.jpg', '6K7 RF / IF Amp'),
+	(21, '6K7G', '6K7.jpg', '6K7 RF / IF Amp'),
+	(22, '6K8', '6K8.jpg', '6K8 Mixer / Osc'),
+	(23, '6K8G', '6K8.jpg', '6K8 Mixer / Osc'),
+	(24, '6K8GT', '6K8.jpg', '6K8 Mixer / Osc'),
+	(25, '6F6GT/G', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
+	(26, '80', '80.jpg', 'Type 80 Rectifier - Full Wave AC/DC'),
+	(27, '84', '84.jpg', 'Type 84 Rectifier - Full Wave AC'),
+	(28, 'ECH42', 'ECH42.jpg', 'ECH42 / 6CU7 Mixer / Osc'),
+	(29, 'EF41', 'EF41.jpg', 'EF41 / 6CJ5 RF Pentode'),
+	(30, 'ECH41', 'ECH41.jpg', 'ECH41 Mixer / Osc'),
+	(32, 'ECH81', 'ECH81.jpg', 'ECH81 / 6AJ8 Mixer / Osc'),
+	(33, '6AJ8', 'ECH81.jpg', 'ECH81 / 6AJ8 Mixer / Osc'),
+	(34, '6CU7', 'ECH42.jpg', 'ECH42 / 6CU7 Mixer / Osc'),
+	(35, '6CJ5', 'EF41.jpg', 'EF41 / 6CJ5 RF Pentode'),
+	(36, 'EBC41', 'EBC41.jpg', 'EBC41 / 6CV7 First Audio / Detector'),
+	(37, '6CV7', 'EBC41.jpg', 'EBC41 / 6CV7 First Audio / Detector'),
+	(38, 'EL41', 'EL41.jpg', 'EL41 / 6CK5 Output Pentode'),
+	(39, '6CK5', 'EL41.jpg', 'EL41 / 6CK5 Output Pentode'),
+	(40, 'EZ40', 'EZ40.jpg', 'EZ40 Rectifier - Full Wave AC'),
+	(41, 'EZ80', 'EZ80.jpg', 'EZ80 / 6V4 Rectifier - Full Wave AC'),
+	(42, '6V4', 'EZ80.jpg', 'EZ80 / 6V4 Rectifier - Full Wave AC'),
+	(43, 'EL84', 'EL84.jpg', 'EL84 / 6BQ5 Output Pentode'),
+	(44, '6BQ5', 'EL84.jpg', 'EL84 / 6BQ5 Output Pentode'),
+	(45, 'EBC81', 'EBC81.jpg', 'EBC81 / 6BD7 First Audio / Detector'),
+	(46, '6BD7', 'EBC81.jpg', 'EBC81 / 6BD7 First Audio / Detector'),
+	(47, 'EF89', 'EF89.jpg', 'EF89 / 6DA6 RF Pentode'),
+	(48, '6DA6', 'EF89.jpg', 'EF89 / 6DA6 RF Pentode'),
+	(49, '6X4', '6X4.jpg', 'EZ90 / 6X4 Rectifier - Full Wave AC'),
+	(50, 'EZ90', '6X4.jpg', 'EZ90 / 6X4 Rectifier - Full Wave AC'),
+	(51, '6BE6', '6BE6.jpg', 'EK90 / 6BE6 Mixer / Osc'),
+	(52, 'EK90', '6BE6.jpg', 'EK90 / 6BE6 Mixer / Osc'),
+	(54, '6BA6', '6BA6.jpg', 'EF93 / 6BA6 RF / IF Pentode'),
+	(55, 'EF93', '6BA6.jpg', 'EF93 / 6BA6 RF / IF Pentode'),
+	(56, '6AV6', '6AV6.jpg', 'EBC91 / 6AV6 First Audio / Detector'),
+	(57, 'EBC91', '6AV6.jpg', 'EBC91 / 6AV6 First Audio / Detector'),
+	(58, '6AQ5', '6AQ5.jpg', 'EL90 / 6AQ5 Output Beam Tetrode'),
+	(59, 'EL90', '6AQ5.jpg', 'EL90 / 6AQ5 Output Beam Tetrode'),
+	(60, 'N78', 'N78.jpg', 'N78 / 6BJ5 Output Pentode'),
+	(61, '6BJ5', 'N78.jpg', 'N78 / 6BJ5 Output Pentode'),
+	(62, '6X5', '6X5.jpg', '6X5 Rectifier - Full Wave AC/DC'),
+	(63, '6X5GT/G', '6X5.jpg', '6X5 Rectifier - Full Wave AC/DC'),
+	(65, 'EAF42', 'EAF42.jpg', 'EAF42 / 6CT7 RF / IF Pentode'),
+	(66, '6CT7', 'EAF42.jpg', 'EAF42 / 6CT7 RF / IF Pentode'),
+	(67, '6K6G', '6K6G.jpg', '6K6 Output Pentode'),
+	(68, '6K6GT', '6K6G.jpg', '6K6 Output Pentode');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
