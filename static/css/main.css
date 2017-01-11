@@ -181,11 +181,27 @@ h4 {
   text-align: right;
 }
 
+.green {
+    color: green;
+}
+
+.green-background {
+    background-color: green;
+    color: white;
+}
+
+.smaller {
+    font-size: smaller;
+    line-height: .8;
+}
+
 .inset {
     padding-left: 20px;
 }
 
-
+.rounded {
+    border-radius: 5px;
+}
 
 /*
  * Navigation Bar 
