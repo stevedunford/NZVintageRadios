@@ -34,7 +34,7 @@
   </div>
   {% set model = models[0] %}
   <div class='icon manufactured'></div>
-  <p><span class='bold inset'>Manufactured by </span><a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</p>
+  <p><span class='bold inset'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</span></p>
   
   <div class='icon valve'></div>
   <p><span class="bold inset">Valve Lineup:</span> {% if model['valve_lineup'] %}{{ model['valve_lineup']|safe }}{% else %}Not currently known{% endif %}
@@ -52,5 +52,12 @@
   
 </div>
 
-
+<!-- debug -->
+  {{models}}<br><br>
+  {{brand}}<br><br>
+  {{distributor}}<br><br>
+  {{manufacturer}}<br><br>
+  {{manufacturer_alias}}<br><br>
+  {{code}}<br><br>
+  {{variant}}
 {% endblock %}

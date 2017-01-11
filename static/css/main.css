@@ -489,6 +489,11 @@ a:hover {
         width: 96%;
     }
     
+    #container img {
+        max-width: 120px;
+        max-height: 120px;
+    }
+    
     #footer h3 {
         font-size: 0.8em;
     }

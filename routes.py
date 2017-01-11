@@ -59,7 +59,7 @@ def allowed_file(filename):
 '''
 Web data entry
 '''
-class Distributor(FlaskForm):
+class DistributorForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     alias = StringField('alias', validators=[DataRequired()])
     address = StringField('address', validators=[DataRequired()])
@@ -184,9 +184,10 @@ def model(brand, code, variant=None):
     variant = variant.replace('_', ' ').strip().lower() if variant else None
     
     # find the db's id for the brand name
-    result = query_db("SELECT id, manufacturer_id FROM brand WHERE alias='{0}'".format(brand), single=True)
+    result = query_db("SELECT id, manufacturer_id, distributor_id FROM brand WHERE alias='{0}'".format(brand), single=True)
     _brand = result['id']
     _manufacturer = result['manufacturer_id']
+    _distributor = result['distributor_id']
     
     # find the db's id for the radio model number
     if variant:
@@ -207,6 +208,9 @@ def model(brand, code, variant=None):
     result = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer), single=True)
     manufacturer = result['name']
     manufacturer_alias = result['alias']
+    
+    # get the distributor and alias (for link)
+    distributor = query_db("SELECT name, alias FROM distributor WHERE id='{0}'".format(_distributor), single=True)
     
     # get the images related to the radio (or primary image for each variant). type=1 means model images
     if len(models) > 1:
@@ -230,7 +234,22 @@ def model(brand, code, variant=None):
         
     title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
     
-    return render_template("model.html", models=models, title=title, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, code=code, variant=variant, images=images)
+    # highlight the valves in the lineup
+    # TODO: make this more efficient, its hideous on long valve lineup lines
+    # and also appears to try matching blank lines
+    lineup = models[0]['valve_lineup']
+    pos = len(lineup) -1
+    while pos >= 0:
+        end = pos
+        while lineup[pos].isalnum(): 
+            pos -= 1
+        valve = query_db("SELECT name, filename, type FROM valve WHERE name='{0}'".format(lineup[pos+1:end+1].strip()), single=True)
+        if valve and valve['name'] in lineup[pos+1:end+1]:
+            lineup = lineup[:pos+1] + '<a class="valves" title="' + valve['type'] + '" href="/static/images/valves/' + valve['filename'] + '">' + valve['name'] + '</a>' + lineup[end+1:]
+        pos -= 1
+    models[0]['valve_lineup'] = lineup
+    
+    return render_template("model.html", models=models, title=title, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, distributor=distributor, code=code, variant=variant, images=images)
 
 
     
@@ -272,7 +291,7 @@ def brand(alias=None):
         
     return render_template("brand.html", title=_brand['name'], brand=_brand, manufacturer=_manufacturer, logo=_logo, models=_models)
   
-class Manufacturer(FlaskForm):
+class ManufacturerForm(FlaskForm):
     def check_year_range(form, field):
         print(field.name)
         if field.data:
@@ -310,39 +329,44 @@ def edit(what=None, alias=None):
     
     # Set up the form with a list of manufacturers for 'became'
     manufacturers = query_db("SELECT id, name FROM manufacturer ORDER BY name ASC")
-    form = Manufacturer()
+    form = ManufacturerForm()
     form.became.choices = [(man['id'], man['name']) for man in manufacturers]
     form.became.choices.insert(0, (0, ''))
         
     if form.validate_on_submit():
         print("+++++++++++")
         print(form.logo.data)
-        logo = secure_filename(form.logo.data.filename)
-        if len(logo) > 0:
-            # rename the file as the alias so it can be found
-            logo = form.alias.data + logo[logo.rfind('.'):]
-            #put it in the right place
-            logo_path = os.path.join(APP_ROOT, 'static', 'images', 'manufacturers', logo)
-            form.logo.data.save(logo_path)
-            # now resize to 360x360 
-            # TODO: make this more dynamic
-            img = Image.open(logo_path)
-            img.thumbnail((360,360), Image.ANTIALIAS)
-            img.save(logo_path, quality=95)
-            
+        if len(form.logo.data.filename) > 0: # is there a logo submitted
+            logo = secure_filename(form.logo.data.filename)
+            # is the filename safe?
+            if len(logo) > 0:
+                # rename the file as the alias so it can be found
+                logo = form.alias.data + logo[logo.rfind('.'):]
+                #put it in the right place
+                logo_path = os.path.join(APP_ROOT, 'static', 'images', 'manufacturers', logo)
+                form.logo.data.save(logo_path)
+                # now resize to 360x360 
+                # TODO: make this more dynamic
+                img = Image.open(logo_path)
+                img.thumbnail((360,360), Image.ANTIALIAS)
+                img.save(logo_path, quality=95)
 
-        else:
-            flash("Filename Failed to Format Functionally, Fek!", 'error')
-            raise Exception("BUGGER!")
+
+            else:
+                flash("Filename Failed to Format Functionally, Fek!", 'error')
+                raise Exception("BUGGER!")
 
         form.year_started_approx.data = 1 if form.year_started_approx.data else 0
         form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
+        #form.notes.data = Markup(form.notes.data)
         conn = mysql.connect()
         cursor = conn.cursor()
-        query = '''INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ("{name}", "{alias}", {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', "{notes}")'''.format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
-        print(query)
+        #query = '''INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ("{name}", "{alias}", {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', "{notes}")'''.format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
+        query = ("INSERT INTO {0} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(what))
+        query_data = (form.name.data, form.alias.data, form.address.data, form.year_started.data, form.year_started_approx.data, form.year_ended.data, form.year_ended_approx.data, form.became.data, form.became_how.data, form.notes.data)
+        print(query, query_data)
         try:
-            cursor.execute(query)
+            cursor.execute(query, query_data)
             print("************* I GOT HERE ************")
             conn.commit()
             flash('added {0} successfully'.format(form.name.data))
@@ -355,12 +379,12 @@ def edit(what=None, alias=None):
         print("DID NOT COMPUTE!")
         filename = None
     
-    return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form, filename=filename)
+    return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form, filename=filename, edit=True)
             
         
 @app.route('/new_distributor', methods=['GET', 'POST'])
 def new_distributor():
-    form = Distributor()
+    form = DistributorForm()
     if form.validate_on_submit():
         address = 'Nationwide' if form.nz_wide.data else form.address.data
         
@@ -376,7 +400,7 @@ def new_distributor():
     return render_template('new_distributor.html', title='Add New Distributor', form=form)
 
 @app.route("/distributors", methods=['GET', 'POST'])
-def distributors():
+def view_distributors():
     if request.method == "POST":
         return redirect(url_for('distributor', alias=request.form.get('id')))
     else:
@@ -389,7 +413,7 @@ def distributors():
         return render_template("distributors.html", distributors=out, title='Distributors')
                 
 @app.route("/distributor/<alias>")
-def distributor(alias=None):
+def view_distributor(alias=None):
     # find the distributors details
     _distributor=query_db("SELECT * FROM distributor WHERE alias='{0}'".format(alias), single=True)
     if not _distributor:
