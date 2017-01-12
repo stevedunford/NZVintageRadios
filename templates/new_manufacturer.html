@@ -18,14 +18,15 @@ bkLib.onDomLoaded(function() {
       
       <p {% if form.year_started.errors %} class="error"{% endif %}>Year Started<br>{{ form.year_started(size=30) }} {% for error in form.year_started.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they start manufacturing (if known) and is this year approximate</span><br></p>
       
-      <p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they cease manufacturing (if known) and is this year approximate</span><br></p>
+      <p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_ended_approx }}<br><span class="smaller blue italic">What year did they cease manufacturing (if known) and is this year approximate</span><br></p>
       
-      <p {% if form.name.errors %} class="error"{% endif %}>Became: <span class="smaller blue italic">Did they change to another name / company?</span><br>{{ form.became }}<br>How: <span class="smaller blue italic">And if so, how did that happen?</span>{{ form.became_how }}</p>
+      <p {% if form.name.errors %} class="error"{% endif %}>Became {{ form.became }}<br>Why {{ form.became_how }}<br><span class="smaller blue italic">Did they change to another name / company?  And if so, why or how did that happen?</span></p>
       
-      <p {% if form.name.errors %} class="error"{% endif %}>City/Town: <span class="smaller blue italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></td><br>{{ form.address(size=60) }}</p>
+      <p {% if form.name.errors %} class="error"{% endif %}>City/Town {{ form.address(size=60) }}<br><span class="smaller blue italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></p>
       
-      <p {% if form.notes.errors %} class="error"{% endif %}>Notes<span class='reqd'>*</span>: <span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br>
-      <p {% if form.logo.errors %} class="error"{% endif %}>Manufacturer Logo: <span class="smaller blue italic">If you have one</span>{% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br>{{ form.logo }}</p>
+      <p {% if form.notes.errors %} class="error"{% endif %}>Notes <span class='reqd'>*</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br><span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span><br>
+        
+      <p {% if form.logo.errors %} class="error"{% endif %}>Manufacturer Logo: {% for error in form.logo.errors %}<span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.logo }}<br><span class="smaller blue italic">If you have one</span></p>
  
     <p>
       <input class="bold blue-background rounded" type="submit" value="Add Manufacturer"> <span class="blue italic"><=== Check your details then click here to add the manufacturer...</span>
