@@ -2,58 +2,33 @@
 
 {% block content %}
 
+<!-- NicEdit configuration - simple HTML editor -->
 <script type="text/javascript">
-tinymce.init({
-  selector: 'textarea',
-  height: 500,
-  menubar: false,
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste code'
-  ],
-  toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-  content_css: '//www.tinymce.com/css/codepen.min.css',
-  entity_encoding: 'raw'
+bkLib.onDomLoaded(function() {
+	new nicEditor({iconsPath : '/static/js/nicEditorIcons.gif', buttonList : ['bold','italic','underline','removeformat','subscript','superscript','html','image','upload','link','unlink']}).panelInstance('notes');
 });
 </script>
 
 <div id="container">
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
-    <table>
-      <tr>
-        <td width="200px">Name<span class='reqd'>*</span>: <span class="smaller green italic">The full name, ie: <b>Radio Corporation of New Zealand</b></span>{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.name(size=60) }}</td>
-        <td></td>
-      </tr>
-      <tr class='odd'>
-        <td>Alias<span class='reqd'>*</span>: <span class="smaller green italic">all lower case, with underscores for spaces if needed (preferably one word though) used by the site for links. eg: Radio Corps alias is <b>rcnz</b>.  Akrads is <b>akrad</b>.  Cash Radio's is <b>cash_radio</b></span>{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.alias(size=60) }}</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Year Started: <span class="smaller green italic">What year did they start manufacturing (if know, or leave blank)</span>{{form.year_started.errors}}</td><td>{{ form.year_started(size=60) }}</td><td>{{ form.year_started_approx }} Approx <span class="smaller green italic">Is this an approximate year?</span></td>
-      </tr>
-      <tr{% if form.year_ended.errors|length > 0 %} class='error'{% endif %}>
-        <td>Year Ended: <span class="smaller green italic">What year did they stop manufacturing (if know, or leave blank)</span>{{form.year_ended.errors}}</td><td>{{ form.year_ended(size=60) }}</td><td>{{ form.year_ended_approx }} Approx <span class="smaller green italic">Is this an approximate year?</span></td>
-      </tr>
-      <tr>
-        <td>Became:  <span class="smaller green italic">Did they change to another name / company?</span></td><td>{{ form.became }}</td><td>How: <span class="smaller green italic">And if so, how did that happen?</span>{{ form.became_how }}</td>
-      </tr>
-      <tr>
-        <td>City/Town: <span class="smaller green italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></td><td>{{ form.address(size=60) }}</td>
-        <td></td>
-      </tr>
-      <tr class='odd'>
-        <td>Notes<span class='reqd'>*</span>: <span class="smaller green italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span>{% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.notes }}</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Manufacturer Logo: <span class="smaller green italic">If you have one</span>{% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}</td><td>{{ form.logo }}</td>
-        <td></td>
-      </tr>
-    </table>
+      <p {% if form.name.errors %} class="error"{% endif %}>Name <span class='reqd'>*</span><br>{{ form.name(size=60) }} {% for error in form.name.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">The full name, ie: <b>Radio Corporation of New Zealand</b></span></p>
+        
+      <p {% if form.alias.errors %} class="error"{% endif %}>Alias <span class='reqd'>*</span><br>{{ form.alias(size=60) }} {% for error in form.alias.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">all lower case, with underscores for spaces if needed (preferably one word though) used by the site for links. eg: Radio Corps alias is <b>rcnz</b>.  Akrads is <b>akrad</b>.  Cash Radio's is <b>cash_radio</b></span></p>
+      
+      <p {% if form.year_started.errors %} class="error"{% endif %}>Year Started<br>{{ form.year_started(size=30) }} {% for error in form.year_started.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they start manufacturing (if known) and is this year approximate</span><br></p>
+      
+      <p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they cease manufacturing (if known) and is this year approximate</span><br></p>
+      
+      <p {% if form.name.errors %} class="error"{% endif %}>Became: <span class="smaller blue italic">Did they change to another name / company?</span><br>{{ form.became }}<br>How: <span class="smaller blue italic">And if so, how did that happen?</span>{{ form.became_how }}</p>
+      
+      <p {% if form.name.errors %} class="error"{% endif %}>City/Town: <span class="smaller blue italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></td><br>{{ form.address(size=60) }}</p>
+      
+      <p {% if form.notes.errors %} class="error"{% endif %}>Notes<span class='reqd'>*</span>: <span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br>
+      <p {% if form.logo.errors %} class="error"{% endif %}>Manufacturer Logo: <span class="smaller blue italic">If you have one</span>{% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br>{{ form.logo }}</p>
+ 
     <p>
-      <input class="bold green-background rounded" type="submit" value="Add Manufacturer"> <span class="green italic"><=== Check your details then click here to add the manufacturer...</span>
+      <input class="bold blue-background rounded" type="submit" value="Add Manufacturer"> <span class="blue italic"><=== Check your details then click here to add the manufacturer...</span>
     </p>
     <br><br>
     <b>ERROR CHART - FOR DEVELOPMENT USE</b><br>

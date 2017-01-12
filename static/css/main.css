@@ -29,6 +29,7 @@ table, td, tr {
     border: 1px solid black;
 }
 
+
 /*
  * flash is the Flask built-in messaging bar at the top of the page 
  */
@@ -79,8 +80,9 @@ table, td, tr {
 }
 
 .error {
-    background-color: red;
-    border: 2px solid darkred;
+    color: red;
+    font-weight: bolder;
+    font-style: italic;
 }
 
 
@@ -185,13 +187,22 @@ h4 {
     color: green;
 }
 
+.blue {
+    color: darkblue;
+}
+
 .green-background {
     background-color: green;
     color: white;
 }
 
+.blue-background {
+    background-color: darkblue;
+    color: white;
+}
+
 .smaller {
-    font-size: smaller;
+    font-size: 0.75em;
     line-height: .8;
 }
 

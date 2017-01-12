@@ -238,16 +238,17 @@ def model(brand, code, variant=None):
     # TODO: make this more efficient, its hideous on long valve lineup lines
     # and also appears to try matching blank lines
     lineup = models[0]['valve_lineup']
-    pos = len(lineup) -1
-    while pos >= 0:
-        end = pos
-        while lineup[pos].isalnum(): 
+    if lineup:
+        pos = len(lineup) -1
+        while pos >= 0:
+            end = pos
+            while pos >= 0 and lineup[pos].isalnum(): 
+                pos -= 1
+            valve = query_db("SELECT name, filename, type FROM valve WHERE name='{0}'".format(lineup[pos+1:end+1].strip()), single=True)
+            if valve and valve['name'] in lineup[pos+1:end+1]:
+                lineup = lineup[:pos+1] + '<a class="valves" title="' + valve['type'] + '" href="/static/images/valves/' + valve['filename'] + '">' + valve['name'] + '</a>' + lineup[end+1:]
             pos -= 1
-        valve = query_db("SELECT name, filename, type FROM valve WHERE name='{0}'".format(lineup[pos+1:end+1].strip()), single=True)
-        if valve and valve['name'] in lineup[pos+1:end+1]:
-            lineup = lineup[:pos+1] + '<a class="valves" title="' + valve['type'] + '" href="/static/images/valves/' + valve['filename'] + '">' + valve['name'] + '</a>' + lineup[end+1:]
-        pos -= 1
-    models[0]['valve_lineup'] = lineup
+        models[0]['valve_lineup'] = lineup
     
     return render_template("model.html", models=models, title=title, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, distributor=distributor, code=code, variant=variant, images=images)
 
@@ -358,16 +359,12 @@ def edit(what=None, alias=None):
 
         form.year_started_approx.data = 1 if form.year_started_approx.data else 0
         form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
-        #form.notes.data = Markup(form.notes.data)
         conn = mysql.connect()
         cursor = conn.cursor()
-        #query = '''INSERT INTO {table} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES ("{name}", "{alias}", {addr}, {start}, {start_appr}, {end}, {end_appr}, {became}, '{how}', "{notes}")'''.format(table=what, name=form.name.data, alias=form.alias.data, addr="'"+form.address.data+"'" if form.address.data else 'NULL', start=form.year_started.data if form.year_started.data else 'NULL', start_appr=form.year_started_approx.data, end=form.year_ended.data if form.year_ended.data else 'NULL', end_appr=form.year_ended_approx.data, became=form.became.data, how=form.became_how.data, notes=form.notes.data)
         query = ("INSERT INTO {0} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(what))
         query_data = (form.name.data, form.alias.data, form.address.data, form.year_started.data, form.year_started_approx.data, form.year_ended.data, form.year_ended_approx.data, form.became.data, form.became_how.data, form.notes.data)
-        print(query, query_data)
         try:
             cursor.execute(query, query_data)
-            print("************* I GOT HERE ************")
             conn.commit()
             flash('added {0} successfully'.format(form.name.data))
             return redirect('manufacturer\{0}'.format(form.alias.data))
@@ -396,7 +393,7 @@ def new_distributor():
         conn.commit()
         return redirect('/home')
     else:
-        flash("All required (*) fields need to be filled in")
+        flash("All required sections of the form (marked with an asterisk*) need to be filled in")
     return render_template('new_distributor.html', title='Add New Distributor', form=form)
 
 @app.route("/distributors", methods=['GET', 'POST'])

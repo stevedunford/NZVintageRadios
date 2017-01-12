@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -81,10 +81,11 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   `alias` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT 'This field is for the url, logo img etc - hence unique',
   `address` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'Address, or town / city company was located in',
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~5 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -107,9 +108,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~124 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~108 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -236,7 +237,11 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(146, 'Columbus 84 in a sorry state', 'IMG_20170110_231813595.jpg', 1, 17, b'0', 1, NULL),
 	(147, 'Columbus 84 rear', 'IMG_20170110_231832925.jpg', 1, 17, b'0', 2, NULL),
 	(148, 'Columbus 84 label', 'IMG_20170110_231842648.jpg', 1, 17, b'0', 3, NULL),
-	(149, 'Columbus 84', 'rcnz model 84 schematic.png', 1, 17, b'0', 99, NULL);
+	(149, 'Columbus 84', 'rcnz model 84 schematic.png', 1, 17, b'0', 99, NULL),
+	(150, 'Columbus 65', 'IMG_20170109_182454914_HDR.jpg', 1, 19, b'0', 99, NULL),
+	(151, 'Columbus 65 Chassis', 'IMG_20170110_231710965.jpg', 1, 19, b'0', 99, NULL),
+	(152, 'Columbus 65 Label', 'IMG_20170110_231731176.jpg', 1, 19, b'0', 99, NULL),
+	(153, 'p14 New Zealand Herald 14 Feb 1940', 'Page 14 Advertisements Column 3,New Zealand Herald, Volume LXXVII, Issue 23580, 14 February 1940.png', 1, 19, b'0', 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -253,10 +258,11 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `became` int(10) unsigned DEFAULT NULL COMMENT 'If this company merged into or renamed itself, add the id of the new company here',
   `became_how` tinytext COMMENT 'merged, taken over, sold to, or rebranded',
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~13 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~15 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -272,7 +278,9 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(10, 'Unknown', 'unknown', NULL, NULL, 0, NULL, 0, NULL, NULL, '<p>The manufacturers of the radios below are completely unknown - maybe someone can shed some light, but until then gaze upon them and wonder...</p>'),
 	(11, 'Collier & Beale Ltd', 'collier_and_beale', 'Wellington', '1926', 0, '1973', 0, 0, 'were taken over by', 'To Come'),
 	(12, 'Cash Radio Co.', 'cash_radio', NULL, NULL, 0, NULL, 0, 0, '', 'Cash Radio Co. operated in Chirstchurch from the mid-30\'s'),
-	(13, 'Radio Warehouse Co.', 'radio_warehouse', NULL, NULL, 0, NULL, 0, 0, '', 'Produced Austin Radio\'s from their shop opposite the Civic Theatre');
+	(13, 'Radio Warehouse Co.', 'radio_warehouse', NULL, NULL, 0, NULL, 0, 0, '', 'Produced Austin Radio\'s from their shop opposite the Civic Theatre'),
+	(19, 'Westonhouse Radio Ltd', 'westonhouse', 'Auckland', '1937', 0, '1947', 0, 0, '', '<p><img class="img_right" src="/static/images/manufacturers/westco/logo.jpg">The company started off as <em>Westonhouse&nbsp; Air Gas Co. Ltd</em>, and appears to have dealt in kerosine / oil / gas burners and lighting systems in the 20\'s. By 1932/33 there were radio repair adverts starting to appear in Auckland newspapers including some for Yale receviers, one of the known Westonhouse brands.&nbsp;</p>\r\n<p>In 1937 there a notice in the Auckland Star (AUCKLAND STAR, VOLUME LXVIII, ISSUE 268, 11 NOVEMBER 1937) advised that <strong>Westonhouse Radio Ltd</strong> had been formed with three shareholders - with one Mr A. Chadwick being the pricipal with 498 of the 500 shares.&nbsp; The company description reads "...suppliers and importers of, and dealers in radio and electrical appliances."</p>\r\n<p>In 1942 there is note of a Military appeal from Westonhouse Radio on behalf of reservist David Leonard Rhodes who presumably had been called up... (one of) their service engineer(s) presumably?&nbsp; (AUCKLAND STAR, VOLUME LXXIII, ISSUE 237, 7 OCTOBER 1942).&nbsp; Also Edward Mark Fort (Radio Designing Engineer) (AUCKLAND STAR, VOLUME LXXIII, ISSUE 186, 8 AUGUST 1942).&nbsp; No notice of what became of either appeal, but it must have been difficult to replace experienced engineers during war time.</p>\r\n<p>By the late 30\'s they were advertising for \'smart\' or \'good\' boys for the workshop, these adverts persisted through the 40\'s as well... what did they do with all these boys?</p>'),
+	(21, 'Radio (1936) Ltd', 'radio_ltd', 'Auckland', '1922', 0, '1955', 0, NULL, NULL, 'To come...');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -293,9 +301,9 @@ CREATE TABLE IF NOT EXISTS `model` (
   `if` text COMMENT 'IF transformer peak freq.',
   `similar` text COMMENT 'models using same chassis',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~18 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~14 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
@@ -316,7 +324,8 @@ INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_y
 	(15, NULL, 'Broadcaster', 15, '1936', 1, NULL, 0, 5, NULL, 1, '<p>The awesome-looking Haywin Broadcaster was built for Hay\'s Dept Store in Christchurch.</p>', NULL, NULL),
 	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL, NULL),
 	(17, NULL, '84', 2, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well which was sighted without the magic eye', '456kc/s', NULL),
-	(18, NULL, '84', 1, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Columbus version as well', '456kc/s', NULL);
+	(18, NULL, '84', 1, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Columbus version as well', '456kc/s', NULL),
+	(19, NULL, '65', 2, '1940', 0, NULL, 0, 6, NULL, 2, '<p>All-world reception, spin tuning dial, automatic 6-station push button station selector</p>', NULL, NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -331,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -410,12 +419,13 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(59, 'EL90', '6AQ5.jpg', 'EL90 / 6AQ5 Output Beam Tetrode'),
 	(60, 'N78', 'N78.jpg', 'N78 / 6BJ5 Output Pentode'),
 	(61, '6BJ5', 'N78.jpg', 'N78 / 6BJ5 Output Pentode'),
-	(62, '6X5', '6X5.jpg', '6X5 Rectifier - Full Wave AC/DC'),
-	(63, '6X5GT/G', '6X5.jpg', '6X5 Rectifier - Full Wave AC/DC'),
+	(62, '6X5', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC'),
+	(63, '6X5GT/G', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC'),
 	(65, 'EAF42', 'EAF42.jpg', 'EAF42 / 6CT7 RF / IF Pentode'),
 	(66, '6CT7', 'EAF42.jpg', 'EAF42 / 6CT7 RF / IF Pentode'),
 	(67, '6K6G', '6K6G.jpg', '6K6 Output Pentode'),
-	(68, '6K6GT', '6K6G.jpg', '6K6 Output Pentode');
+	(68, '6K6GT', '6K6G.jpg', '6K6 Output Pentode'),
+	(69, 'EZ35', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
