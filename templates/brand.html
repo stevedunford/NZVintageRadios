@@ -4,7 +4,10 @@
 
 <div id="container">
   <div id="breadcrumb">
-    <a href="/brands">BRAND</a> » <a href="/manufacturer/{{ manufacturer['alias'] }}">{{ manufacturer['name'] }}</a> » {{ title }}
+    <a href="/brands">BRAND</a>
+    {% if manufacturer['alias'] %}
+      » <a href="/manufacturer/{{ manufacturer['alias'] }}">{{ manufacturer['name'] }}</a>
+    {% endif %} » {{ title }}
   </div>
   {% if brand['tagline'] %}<h2 class="subheading">'{{ brand['tagline'] }}'</h2>{% endif %}
 
@@ -14,10 +17,9 @@
     {{ brand['name'] }} was introduced in
       {% if brand['year_started_approx'] != 0 %} around {% endif %}
       {{ brand['year_started'] }}
-    {% if brand['year_ended_approx']|int %} and lasted until
+    {% if brand['year_ended']|int %} and lasted until
       {% if brand['year_ended_approx'] != 0 %} around {% endif %}
-      {{ brand['year_ended'] }}.
-    {% endif %}
+      {{ brand['year_ended'] }}{% endif %}.
     {% endif %}
   </p>
   

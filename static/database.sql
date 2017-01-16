@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~15 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~5 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~108 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~128 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -278,7 +278,7 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(10, 'Unknown', 'unknown', NULL, NULL, 0, NULL, 0, NULL, NULL, '<p>The manufacturers of the radios below are completely unknown - maybe someone can shed some light, but until then gaze upon them and wonder...</p>'),
 	(11, 'Collier & Beale Ltd', 'collier_and_beale', 'Wellington', '1926', 0, '1973', 0, 0, 'were taken over by', 'To Come'),
 	(12, 'Cash Radio Co.', 'cash_radio', NULL, NULL, 0, NULL, 0, 0, '', 'Cash Radio Co. operated in Chirstchurch from the mid-30\'s'),
-	(13, 'Radio Warehouse Co.', 'radio_warehouse', NULL, NULL, 0, NULL, 0, 0, '', 'Produced Austin Radio\'s from their shop opposite the Civic Theatre'),
+	(13, 'Radio Warehouse Co.', 'radio_warehouse', 'Christchurch', NULL, 0, NULL, 0, 0, '', '<p>Produced \'Austin\' brand radios from their shop opposite the Civic Theatre in Christchurch'),
 	(19, 'Westonhouse Radio Ltd', 'westonhouse', 'Auckland', '1937', 0, '1947', 0, 0, '', '<p><img class="img_right" src="/static/images/manufacturers/westco/logo.jpg">The company started off as <em>Westonhouse&nbsp; Air Gas Co. Ltd</em>, and appears to have dealt in kerosine / oil / gas burners and lighting systems in the 20\'s. By 1932/33 there were radio repair adverts starting to appear in Auckland newspapers including some for Yale receviers, one of the known Westonhouse brands.&nbsp;</p>\r\n<p>In 1937 there a notice in the Auckland Star (AUCKLAND STAR, VOLUME LXVIII, ISSUE 268, 11 NOVEMBER 1937) advised that <strong>Westonhouse Radio Ltd</strong> had been formed with three shareholders - with one Mr A. Chadwick being the pricipal with 498 of the 500 shares.&nbsp; The company description reads "...suppliers and importers of, and dealers in radio and electrical appliances."</p>\r\n<p>In 1942 there is note of a Military appeal from Westonhouse Radio on behalf of reservist David Leonard Rhodes who presumably had been called up... (one of) their service engineer(s) presumably?&nbsp; (AUCKLAND STAR, VOLUME LXXIII, ISSUE 237, 7 OCTOBER 1942).&nbsp; Also Edward Mark Fort (Radio Designing Engineer) (AUCKLAND STAR, VOLUME LXXIII, ISSUE 186, 8 AUGUST 1942).&nbsp; No notice of what became of either appeal, but it must have been difficult to replace experienced engineers during war time.</p>\r\n<p>By the late 30\'s they were advertising for \'smart\' or \'good\' boys for the workshop, these adverts persisted through the 40\'s as well... what did they do with all these boys?</p>'),
 	(21, 'Radio (1936) Ltd', 'radio_ltd', 'Auckland', '1922', 0, '1955', 0, NULL, NULL, 'To come...');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~14 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~19 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~63 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~64 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES

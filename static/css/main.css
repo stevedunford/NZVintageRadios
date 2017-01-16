@@ -82,7 +82,8 @@ table, td, tr {
 .error {
     color: red;
     font-weight: bolder;
-    font-style: italic;
+    background-color: white;
+    border: 2px solid darkred;
 }
 
 
