@@ -359,6 +359,7 @@ def edit(what=None, alias=None):
 
         form.year_started_approx.data = 1 if form.year_started_approx.data else 0
         form.year_ended_approx.data = 1 if form.year_ended_approx.data else 0
+        print(form.notes.data)
         conn = mysql.connect()
         cursor = conn.cursor()
         query = ("INSERT INTO {0} (name, alias, address, year_started, year_started_approx, year_ended, year_ended_approx, became, became_how, notes) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(what))
@@ -373,7 +374,7 @@ def edit(what=None, alias=None):
             filename = None
 
     else:
-        print("DID NOT COMPUTE!")
+        flash("Form failed validation, see the errors posted in red", "error")
         filename = None
     
     return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form, filename=filename, edit=True)
@@ -399,7 +400,8 @@ def new_distributor():
 @app.route("/distributors", methods=['GET', 'POST'])
 def view_distributors():
     if request.method == "POST":
-        return redirect(url_for('distributor', alias=request.form.get('id')))
+        print(request.form)
+        return redirect(url_for('view_distributor', alias=request.form.get('id')))
     else:
         distributors = query_db("SELECT alias, name FROM distributor ORDER BY name ASC")
         if distributors is None:

@@ -50,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `brand` (
   `year_ended_approx` tinyint(1) unsigned DEFAULT '0' COMMENT 'Is this approximate',
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -70,7 +70,9 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(12, 'Fountain', 'fountain', NULL, 9, 0, '1963', 1, '1983', 1, '<p>Fountain radios and radiograms were reasonably common in the transistor era, but they also produced radios prior to this, including at least one model based on the Bell Colt - the <a href="/o.a.">Fountain O.A. Marine Band</a> radio</p>'),
 	(13, 'Regent', 'regent', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Regent was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Five Star.</p>'),
 	(14, 'Five Star', 'five_star', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Five Star was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Regent.</p>\r\n<p>source: https://leanpub.com/pyeradiowaihi/read</p>'),
-	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and was aquired in 1982 by Farmers.</p>');
+	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and was aquired in 1982 by Farmers.</p>'),
+	(16, 'Gulbransen', 'gulbransen', NULL, 11, 0, '1929', 0, '1958', 0, '<p>Originally imported by H. W. Clarke who had the Gulbransen Piano importation business - but as the demand for pianos declined with the onset of radio, Gulbransen in the US started into the radio business - a short-lived venture there. However, after import restrictions came into force in 1936, H. W. Clarke  had Collier & Beale begin manufacturing sets under licence from Gulbransen in the US.</p>\r\n<p>Model numbering in the 40\'s appears to have been three digit, with the first indicating the number of valves, the second the number of bands and the third the year.  For example, the model <span style="color:red">6</span>2<b>8</b> was a <span style="color:red">6</span>-valve dual wave set manufactured in 194<b>8</b>.  This continued into the 50\'s with a 4-digit scheme that was essentially the same but with 2 digits for the year.  The model <span style="color:red">5</span>1<b>51</b> was a <span style="color:red">5</span>-valve, broadcast-band only set manufactured in 19<b>51</b>.</p>\r\n<p>The name dropped out of use after 1958 along with another long-running brand manufactured by Collier & Beale: Cromwell.</p>'),
+	(17, 'HMV', 'hmv', 'His Masters Voice', 0, 0, '1926', 0, '1972', 0, '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by Messrs E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).\r\n</p>\r\n<p><span style="bold">Sources:</span><br>http://www.audioculture.co.nz/scenes/emi-new-zealand-the-first-50-years</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -83,17 +85,18 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~5 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
 	(1, 'Turnbull and Jones Ltd', 'turnbull_and_jones', 'Wellington', 'Turnbull and Jones were tied up with RCNZ, supplying high quality radio manufacturing parts to them.'),
 	(2, 'Columbus Radio Centre Ltd', 'radio_centre', 'Nationwide', 'Set up by RCNZ to distribute their house brand, Columbus'),
-	(3, 'A. H. Nathan Ltd', 'a_h_nathan', 'Auckland', '<p>Arthur H Nathan Ltd was an importer and distributor in Auckland.  They appear to have been one of the HMV distributors, but also sold later model Pacific sets from Akrad</p><img class="brand_image" src="/static/images/distributors/ahnathan.jpg" /><p>If you have any more details to share, please contact the admin with them.</p>'),
+	(3, 'A. H. Nathan Ltd', 'a_h_nathan', 'Auckland', '<p>Arthur H Nathan Ltd were importers / merchants in Auckland City.  They sold HMV and later model Pacific sets (from Akrad)<img class="brand_image" src="/static/images/distributors/ahnathan.jpg" /></p><p>If you have any more details to share, please contact the admin with them.</p>'),
 	(5, 'Johns Ltd', 'johns', 'Auckland', 'Set up in 1920, slogan -Aucklands Oldest Radio Firm-.  Set up by Clive and Victor Johns, returned soldiers from WW1.  Started by importing and selling radio components, then kitsets.  Had distributorship for U.S. made Hammarlund coils and tuning condensers.  They started manufacturing radios - Altona, Ace and Meniwave.  Formed a new manufacturing co called Wellmayde Ltd making radios under the Well Mayde name. In 1930 1ZJ came on the air - Johns Ltds own radio station. More to come...'),
-	(6, 'Pacific Radio Co. Ltd', 'pacific', 'Wellington', 'The parent company for Pacific radios, based in Wellington but distributed nationwide through various retailers.  Interestingly started on the same day with the same capital and the same number of shares as Courtenay Radio Ltd.  Different shareholders, but the wording in the adverts is basically identical.');
+	(6, 'Pacific Radio Co. Ltd', 'pacific', 'Wellington', 'The parent company for Pacific radios, based in Wellington but distributed nationwide through various retailers.  Interestingly started on the same day with the same capital and the same number of shares as Courtenay Radio Ltd.  Different shareholders, but the wording in the adverts is basically identical.'),
+	(7, 'His Masters Voice (New Zealand) Ltd', 'hmv', 'Auckland', '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by Messrs E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).');
 /*!40000 ALTER TABLE `distributor` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.images
@@ -108,9 +111,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~128 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~112 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -170,24 +173,22 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(79, 'Philco Alabama', 'philco-alabama-401-1-281212.jpg', 1, 4, b'0', 99, NULL),
 	(80, 'Bell Colt Ivory', '1.jpg', 1, 7, b'0', 1, NULL),
 	(81, 'Bell Colt Grey', '2.jpg', 1, 7, b'0', 2, NULL),
-	(82, 'Bell Colt', '20160530_173204.jpg', 1, 7, b'0', 110, NULL),
-	(83, 'Bell Colt Green', '3.jpg', 1, 7, b'0', 3, NULL),
-	(84, 'Bell Colt Blue', '4.jpg', 1, 7, b'0', 4, NULL),
-	(85, 'Bell Colt', '463398315.jpg', 1, 7, b'0', 99, NULL),
-	(86, 'Bell Colt', '474769580.jpg', 1, 7, b'0', 99, NULL),
-	(87, 'Bell Colt', '475877334.jpg', 1, 7, b'0', 99, NULL),
-	(88, 'Bell Colt', '477166182.jpg', 1, 7, b'0', 99, NULL),
-	(89, 'Bell Colt', '481688135.jpg', 1, 7, b'0', 99, NULL),
-	(90, 'Bell Colt', '496270634.jpg', 1, 7, b'0', 99, NULL),
+	(82, 'Bell Colt early 5V chassis', '20160530_173204.jpg', 1, 7, b'0', 110, NULL),
+	(83, 'Bell Colt Green', '3.jpg', 1, 7, b'0', 4, NULL),
+	(84, 'Bell Colt Blue', '4.jpg', 1, 7, b'0', 3, NULL),
+	(85, 'Bell Colt', '463398315.jpg', 1, 7, b'0', 26, NULL),
+	(86, 'Bell Colt', '474769580.jpg', 1, 7, b'0', 36, NULL),
+	(87, 'Bell Colt', '475877334.jpg', 1, 7, b'0', 40, NULL),
+	(88, 'Bell Colt', '477166182.jpg', 1, 7, b'0', 30, NULL),
+	(89, 'Bell Colt', '481688135.jpg', 1, 7, b'0', 33, NULL),
+	(90, 'Bell Colt', '496270634.jpg', 1, 7, b'0', 20, NULL),
 	(91, 'Bell Colt Red', '5.jpg', 1, 7, b'0', 5, NULL),
-	(92, 'Bell Colt', '507080079 (1).jpg', 1, 7, b'0', 99, NULL),
-	(93, 'Bell Colt', '507227168.jpg', 1, 7, b'0', 99, NULL),
-	(94, 'Bell Colt', '507978318.jpg', 1, 7, b'0', 99, NULL),
-	(95, 'Bell Colt', '514050907.jpg', 1, 7, b'0', 99, NULL),
-	(96, 'Bell Colt', '540490991.jpg', 1, 7, b'0', 99, NULL),
+	(92, 'Bell Colt', '507080079 (1).jpg', 1, 7, b'0', 46, NULL),
+	(93, 'Bell Colt', '507227168.jpg', 1, 7, b'0', 53, NULL),
+	(94, 'Bell Colt', '507978318.jpg', 1, 7, b'0', 50, NULL),
+	(95, 'Bell Colt', '514050907.jpg', 1, 7, b'0', 23, NULL),
+	(96, 'Bell Colt', '540490991.jpg', 1, 7, b'0', 43, NULL),
 	(97, 'Bell Colt Brown', '6.jpg', 1, 7, b'0', 6, NULL),
-	(98, 'Bell Colt Black', '7.jpg', 1, 7, b'0', 7, NULL),
-	(99, 'Bell Colt Oak', '8.jpg', 1, 7, b'0', 8, NULL),
 	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, b'0', 100, NULL),
 	(101, 'Bell Colt', '5B4j.jpg', 1, 7, b'1', 122, NULL),
 	(102, 'Bell Colt', '5B60.jpg', 1, 7, b'1', 123, NULL),
@@ -238,10 +239,30 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(147, 'Columbus 84 rear', 'IMG_20170110_231832925.jpg', 1, 17, b'0', 2, NULL),
 	(148, 'Columbus 84 label', 'IMG_20170110_231842648.jpg', 1, 17, b'0', 3, NULL),
 	(149, 'Columbus 84', 'rcnz model 84 schematic.png', 1, 17, b'0', 99, NULL),
-	(150, 'Columbus 65', 'IMG_20170109_182454914_HDR.jpg', 1, 19, b'0', 99, NULL),
-	(151, 'Columbus 65 Chassis', 'IMG_20170110_231710965.jpg', 1, 19, b'0', 99, NULL),
-	(152, 'Columbus 65 Label', 'IMG_20170110_231731176.jpg', 1, 19, b'0', 99, NULL),
-	(153, 'p14 New Zealand Herald 14 Feb 1940', 'Page 14 Advertisements Column 3,New Zealand Herald, Volume LXXVII, Issue 23580, 14 February 1940.png', 1, 19, b'0', 99, NULL);
+	(150, 'Columbus 65', 'IMG_20170109_182454914_HDR.jpg', 1, 19, b'0', 1, NULL),
+	(151, 'Columbus 65 Chassis', 'IMG_20170110_231710965.jpg', 1, 19, b'0', 10, NULL),
+	(152, 'Columbus 65 Label', 'IMG_20170110_231731176.jpg', 1, 19, b'0', 15, NULL),
+	(153, 'p14 New Zealand Herald 14 Feb 1940', 'Page 14 Advertisements Column 3,New Zealand Herald, Volume LXXVII, Issue 23580, 14 February 1940.png', 1, 19, b'0', 99, NULL),
+	(154, 'Gulbransen 5151', '470003630.jpg', 1, 20, b'0', 99, NULL),
+	(155, 'Gulbransen 5151', '470003681.jpg', 1, 20, b'0', 99, NULL),
+	(156, 'Gulbransen 5151', '470003693.jpg', 1, 20, b'0', 99, NULL),
+	(157, 'Gulbransen 617', '530346093.jpg', 1, 22, b'0', 99, NULL),
+	(158, 'Gulbransen 617', '530346797.jpg', 1, 22, b'0', 99, NULL),
+	(159, 'Gulbransen 617', '530346996.jpg', 1, 22, b'0', 99, NULL),
+	(160, 'Gulbransen 617', '530347299.jpg', 1, 22, b'0', 99, NULL),
+	(161, 'Gulbransen 756', '528528340.jpg', 1, 21, b'0', 99, NULL),
+	(162, 'Gulbransen 756', '528528423.jpg', 1, 21, b'0', 99, NULL),
+	(163, 'Columbus 65', 'rcnz_65_schematic.jpg', 1, 19, b'1', 99, NULL),
+	(164, 'Columbus 65', 'Copy_of_Columbus_65_before.jpg', 1, 19, b'0', 5, NULL),
+	(165, 'Columbus 75', '506972638.jpg', 1, 23, b'0', 99, NULL),
+	(166, 'Columbus 75', '506972652.jpg', 1, 23, b'0', 99, NULL),
+	(167, 'Columbus 75', 'victory.jpg', 1, 23, b'0', 99, NULL),
+	(168, 'Bell Colt 5V chassis', '5-valve chassis.jpg', 1, 7, b'0', 111, NULL),
+	(169, 'Philco \'Majestic\' Alabama', '547438533.jpg', 1, 4, b'0', 199, NULL),
+	(170, 'Bell Colt', '9.jpg', 1, 7, b'0', 9, NULL),
+	(171, 'Bell Colt', 'dial.jpg', 1, 7, b'0', 27, NULL),
+	(172, 'Bell Colt', '7.jpg', 1, 7, b'0', 7, NULL),
+	(173, 'Bell Colt', '8.jpg', 1, 7, b'0', 8, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -260,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table nzvr_db.manufacturer: ~15 rows (approximately)
 DELETE FROM `manufacturer`;
@@ -279,8 +300,8 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(11, 'Collier & Beale Ltd', 'collier_and_beale', 'Wellington', '1926', 0, '1973', 0, 0, 'were taken over by', 'To Come'),
 	(12, 'Cash Radio Co.', 'cash_radio', NULL, NULL, 0, NULL, 0, 0, '', 'Cash Radio Co. operated in Chirstchurch from the mid-30\'s'),
 	(13, 'Radio Warehouse Co.', 'radio_warehouse', 'Christchurch', NULL, 0, NULL, 0, 0, '', '<p>Produced \'Austin\' brand radios from their shop opposite the Civic Theatre in Christchurch'),
-	(19, 'Westonhouse Radio Ltd', 'westonhouse', 'Auckland', '1937', 0, '1947', 0, 0, '', '<p><img class="img_right" src="/static/images/manufacturers/westco/logo.jpg">The company started off as <em>Westonhouse&nbsp; Air Gas Co. Ltd</em>, and appears to have dealt in kerosine / oil / gas burners and lighting systems in the 20\'s. By 1932/33 there were radio repair adverts starting to appear in Auckland newspapers including some for Yale receviers, one of the known Westonhouse brands.&nbsp;</p>\r\n<p>In 1937 there a notice in the Auckland Star (AUCKLAND STAR, VOLUME LXVIII, ISSUE 268, 11 NOVEMBER 1937) advised that <strong>Westonhouse Radio Ltd</strong> had been formed with three shareholders - with one Mr A. Chadwick being the pricipal with 498 of the 500 shares.&nbsp; The company description reads "...suppliers and importers of, and dealers in radio and electrical appliances."</p>\r\n<p>In 1942 there is note of a Military appeal from Westonhouse Radio on behalf of reservist David Leonard Rhodes who presumably had been called up... (one of) their service engineer(s) presumably?&nbsp; (AUCKLAND STAR, VOLUME LXXIII, ISSUE 237, 7 OCTOBER 1942).&nbsp; Also Edward Mark Fort (Radio Designing Engineer) (AUCKLAND STAR, VOLUME LXXIII, ISSUE 186, 8 AUGUST 1942).&nbsp; No notice of what became of either appeal, but it must have been difficult to replace experienced engineers during war time.</p>\r\n<p>By the late 30\'s they were advertising for \'smart\' or \'good\' boys for the workshop, these adverts persisted through the 40\'s as well... what did they do with all these boys?</p>'),
-	(21, 'Radio (1936) Ltd', 'radio_ltd', 'Auckland', '1922', 0, '1955', 0, NULL, NULL, 'To come...');
+	(14, 'Westonhouse Radio Ltd', 'westonhouse', 'Auckland', '1937', 0, '1947', 0, 0, '', '<p><img class="img_right" src="/static/images/manufacturers/westco/logo.jpg">The company started off as <em>Westonhouse&nbsp; Air Gas Co. Ltd</em>, and appears to have dealt in kerosine / oil / gas burners and lighting systems in the 20\'s. By 1932/33 there were radio repair adverts starting to appear in Auckland newspapers including some for Yale receviers, one of the known Westonhouse brands.&nbsp;</p>\r\n<p>In 1937 there a notice in the Auckland Star (AUCKLAND STAR, VOLUME LXVIII, ISSUE 268, 11 NOVEMBER 1937) advised that <strong>Westonhouse Radio Ltd</strong> had been formed with three shareholders - with one Mr A. Chadwick being the pricipal with 498 of the 500 shares.&nbsp; The company description reads "...suppliers and importers of, and dealers in radio and electrical appliances."</p>\r\n<p>In 1942 there is note of a Military appeal from Westonhouse Radio on behalf of reservist David Leonard Rhodes who presumably had been called up... (one of) their service engineer(s) presumably?&nbsp; (AUCKLAND STAR, VOLUME LXXIII, ISSUE 237, 7 OCTOBER 1942).&nbsp; Also Edward Mark Fort (Radio Designing Engineer) (AUCKLAND STAR, VOLUME LXXIII, ISSUE 186, 8 AUGUST 1942).&nbsp; No notice of what became of either appeal, but it must have been difficult to replace experienced engineers during war time.</p>\r\n<p>By the late 30\'s they were advertising for \'smart\' or \'good\' boys for the workshop, these adverts persisted through the 40\'s as well... what did they do with all these boys?</p>'),
+	(15, 'Radio (1936) Ltd', 'radio_ltd', 'Auckland', '1922', 0, '1955', 0, NULL, NULL, 'To come...');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -301,9 +322,9 @@ CREATE TABLE IF NOT EXISTS `model` (
   `if` text COMMENT 'IF transformer peak freq.',
   `similar` text COMMENT 'models using same chassis',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~19 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~15 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
@@ -325,7 +346,11 @@ INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_y
 	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL, NULL),
 	(17, NULL, '84', 2, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well which was sighted without the magic eye', '456kc/s', NULL),
 	(18, NULL, '84', 1, NULL, 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Columbus version as well', '456kc/s', NULL),
-	(19, NULL, '65', 2, '1940', 0, NULL, 0, 6, NULL, 2, '<p>All-world reception, spin tuning dial, automatic 6-station push button station selector</p>', NULL, NULL);
+	(19, NULL, '65', 2, '1940', 0, NULL, 0, 6, '6K7G, 6K8G, 6K7G, 6B8G, 6F6G, 5Y3G and 6E5 magic eye', 2, '<p>All-world reception, spin tuning dial, automatic 6-station push button station selector.  Table model photo courtesy of Keith Annabell of radio-restoration.com</p>', '464kc/s, 4kc wide flat-top to improve high frequency response (see RCNZ Service Supplement S39/1 I.F. Channels in Models 60 and 65, 17th March 1939)', NULL),
+	(20, NULL, '5151', 16, '1951', 0, NULL, 0, 5, NULL, 1, '<p>Bakelite cabinet, distinctive sweep in from each top corner.  Also produced in 1952 as a 5152.</p>', NULL, NULL),
+	(21, NULL, '756', 16, '1946', 0, NULL, 0, 7, NULL, 5, '<p>7-valve, bandspread, 1946</p>', NULL, NULL),
+	(22, NULL, '617', 16, '1947', 0, NULL, 0, 6, NULL, 1, '<p>6-valve, AM only, 1947</p>', NULL, NULL),
+	(23, NULL, '75', 2, '1940', 0, NULL, 0, 6, NULL, 5, '<p>6-valve + eye, bandspread', NULL, NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -340,7 +365,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -356,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   `type` tinytext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table nzvr_db.valve: ~64 rows (approximately)
 DELETE FROM `valve`;
@@ -425,7 +450,9 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(66, '6CT7', 'EAF42.jpg', 'EAF42 / 6CT7 RF / IF Pentode'),
 	(67, '6K6G', '6K6G.jpg', '6K6 Output Pentode'),
 	(68, '6K6GT', '6K6G.jpg', '6K6 Output Pentode'),
-	(69, 'EZ35', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC');
+	(69, 'EZ35', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC'),
+	(70, '5Y3G', '5Y3.jpg', 'Type 5Y3G / 5Y3GT Rectifier - Full Wave AC/DC'),
+	(71, '5Y3GT', '5Y3.jpg', 'Type 5Y3G / 5Y3GT Rectifier - Full Wave AC/DC');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
