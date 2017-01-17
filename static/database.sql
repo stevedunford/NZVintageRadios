@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~13 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~17 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~6 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~112 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~146 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -262,7 +262,19 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(170, 'Bell Colt', '9.jpg', 1, 7, b'0', 9, NULL),
 	(171, 'Bell Colt', 'dial.jpg', 1, 7, b'0', 27, NULL),
 	(172, 'Bell Colt', '7.jpg', 1, 7, b'0', 7, NULL),
-	(173, 'Bell Colt', '8.jpg', 1, 7, b'0', 8, NULL);
+	(173, 'Bell Colt', '8.jpg', 1, 7, b'0', 8, NULL),
+	(174, 'Courtenay 24', '467259000 (1).jpg', 1, 24, b'0', 99, NULL),
+	(175, 'Courtenay 24', '467259310a.jpg', 1, 24, b'0', 99, NULL),
+	(176, 'Courtenay 24', '467259374a.jpg', 1, 24, b'0', 99, NULL),
+	(177, 'Bell 6P7', '457300467.jpg', 1, 26, b'0', 1, NULL),
+	(179, 'Bell 1', '541663709.jpg', 1, 25, b'0', 100, NULL),
+	(180, 'Bell 1', '541663810.jpg', 1, 25, b'0', 1, NULL),
+	(181, 'Bell 1', '541663859.jpg', 1, 25, b'0', 5, NULL),
+	(182, 'Bell 1', '541663924.jpg', 1, 25, b'0', 8, NULL),
+	(183, 'Bell 1', '541663931.jpg', 1, 25, b'0', 12, NULL),
+	(184, 'Bell 1', 'P1090916-001.JPG', 1, 25, b'0', 2, NULL),
+	(185, 'Bell 1', 'P1090917-001.JPG', 1, 25, b'0', 16, NULL),
+	(186, 'Bell 6P7', '457300468.jpg', 1, 26, b'0', 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -324,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~23 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`, `similar`) VALUES
@@ -350,7 +362,10 @@ INSERT INTO `model` (`id`, `variant`, `code`, `brand_id`, `start_year`, `start_y
 	(20, NULL, '5151', 16, '1951', 0, NULL, 0, 5, NULL, 1, '<p>Bakelite cabinet, distinctive sweep in from each top corner.  Also produced in 1952 as a 5152.</p>', NULL, NULL),
 	(21, NULL, '756', 16, '1946', 0, NULL, 0, 7, NULL, 5, '<p>7-valve, bandspread, 1946</p>', NULL, NULL),
 	(22, NULL, '617', 16, '1947', 0, NULL, 0, 6, NULL, 1, '<p>6-valve, AM only, 1947</p>', NULL, NULL),
-	(23, NULL, '75', 2, '1940', 0, NULL, 0, 6, NULL, 5, '<p>6-valve + eye, bandspread', NULL, NULL);
+	(23, NULL, '75', 2, '1940', 0, NULL, 0, 6, NULL, 5, '<p>6-valve + eye, bandspread', NULL, NULL),
+	(24, NULL, '24', 1, '1937', 0, NULL, 0, 5, NULL, NULL, '<p>Unusual 5-valve + eye set with NZ stations on the dial and a list of Australian stations / frequencies in the right-hand window</p>', NULL, NULL),
+	(25, NULL, '1', 10, '1952', 0, NULL, 0, NULL, NULL, 1, '<p>The Model 1 was the first portable under the Bell brand.</p>', NULL, NULL),
+	(26, NULL, '6P7', 10, '1955', 0, NULL, 0, NULL, NULL, 1, '<p>The6P7 was a 3-way portable (AC / DC / Battery), and is noted as being one of several \'Hot-Boxes\' available from various manufacturers at the time by John Stokes.  The tranformerless design made them lighter, but less reliable.</p>', NULL, NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -365,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -383,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~64 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~66 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES

@@ -4,12 +4,12 @@
 
 <div id="container">
   <div id="breadcrumb">
-    <a href="/manufacturer/{{manufacturer_alias}}">{{manufacturer}}</a> » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{code}}">{{ code }}</a>{% else %}{{ code }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
+    MODEL » <a href="/brand/{{brand}}">{{ brand|title }}</a> » {% if variant %}<a href="/model/{{brand}}/{{code}}">{{ code }}</a>{% else %}{{ code }}{% endif %}{% if variant %} » {{ variant }}{% endif %}
   </div>
   
-  <!-- No radio found matching the URL-->
   {% if models|length == 0 %}
-  <p>Sorry, you're looking for a radio that just isn't there...</p>
+  <!-- No radio found matching the URL-->
+  <p>Sorry, you're looking for a radio that just isn't there... If you have photos, dates, specs or information for this model, please get in contact.</p>
   <img src="/static/images/missing/missing.jpg">
   
   <!-- Multiple radios found, this is a variant landing page -->
@@ -27,11 +27,12 @@
   
   <!-- Main section for showing a radio / variant -->
   <div id="radio_images">
-    {% for image in images %}
-      <!-- Using resized main image if no thumbnail path provided -->
-      <a class="gallery" title="{{ image['title'] }}" href="{{ image['filename'] }}"><img src="{{ image['thumb'] }}"></a>
+    <!-- Using resized main images if no thumbnail path provided - slow page loads could mean broken code - let someone know... -->
+    {% for image in images %}<a class="gallery" title="{{ image['title'] }}" href="{{ image['filename'] }}">
+      <img src="{{ image['thumb'] }}"></a>
     {% endfor %}
   </div>
+  
   {% set model = models[0] %}
   <div class='icon manufactured'></div>
   <p><span class='bold inset'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer_alias}}">{{ manufacturer }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</span></p>
@@ -45,7 +46,7 @@
   <p><span class="bold inset">I.F. Frequency: </span>{{ model['if']|safe }}
   </p>
   {% endif %}
-  
+  <!-- Model notes -->
   {{ model['notes']|safe }}
   
   {% endif %}
