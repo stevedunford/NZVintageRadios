@@ -50,11 +50,16 @@ mysql.init_app(app)
 
 app.logger.debug('NZVRS Website Starting Up...')
 
-
 # check upload is a file and has an allowed extension
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# so debug is available in templates as a 'flag' to show debug info
+@app.context_processor
+def inject_debug():
+    return dict(debug=app.debug)
+
 
 '''
 Web data entry
@@ -88,20 +93,29 @@ def index(id=None):
             return render_template("search.html", title='Search Results', search_results=search_results, search_term=id)
         
     # And if you just wanted the home page...
+    print(get_fullres())
     return render_template('index.html', title='Welcome')
 
 
+def make_dir(path):
+    try:
+        os.mkdir(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            return False
+    return True
+        
 @app.route("/model/import_photos", methods=['GET', 'POST'])
 def import_photos():
     if request.method == 'POST':
         path = request.form.get('path')
         files=[photo for photo in os.listdir(path) if photo[-4:].lower() == ".jpg" or photo[-4:].lower() == ".png"]
         thumbs = os.path.join(path, 'thumbs')
-        try:
-            os.mkdir(thumbs)
-        except OSError as exception:
-            if exception.errno != errno.EEXIST:
-                abort(500)
+        lowres  = os.path.join(path, 'lowres')
+        if not make_dir(thumbs):
+            abort(500)
+        if not make_dir(lowres):
+            abort(500)
         
         # get all the allowed image types (jpg and png) and make thumbnails
         files = glob.glob(os.path.join(path, '*.jpg'))
@@ -126,10 +140,14 @@ def import_photos():
             abort(500)
         
         for image_file in files:
-            img = Image.open(image_file)
-            img.thumbnail((200,200), Image.ANTIALIAS)
+            thumb = Image.open(image_file)
+            thumb.thumbnail((200,200), Image.ANTIALIAS)
             _, filename = os.path.split(image_file)
-            img.save(os.path.join(thumbs, filename), quality=95)
+            thumb.save(os.path.join(thumbs, filename), quality=95)
+            small = Image.open(image_file)
+            small.thumbnail((800,800), Image.ANTIALIAS)
+            _, filename = os.path.split(image_file)
+            small.save(os.path.join(lowres, filename), quality=75)
             
             # insert into images db if not already there
             check_existing = query_db("SELECT id FROM images WHERE filename='{0}' AND type=1 AND type_id={1}".format(filename, model['id']), single=True)
@@ -216,11 +234,11 @@ def model(brand, code, variant=None):
     if len(models) > 1:
         images = []
         for model in models:
-            images.append(query_db("SELECT filename FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(model['id']))[0])
+            images.append(query_db("SELECT filename, is_schematic FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(model['id']))[0])
             images[-1]['variant'] = model['variant'].lower()
         
     else: # get all the images for the single model
-        images = query_db("SELECT title, filename, rank FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
+        images = query_db("SELECT title, filename, rank, is_schematic FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
     
     # build image and thumb paths
     # didn't use url_for for static due to stupid slashes it adds
@@ -228,9 +246,18 @@ def model(brand, code, variant=None):
     for image in images:
         _variant = variant if not 'variant' in image else image['variant']
         thumbfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'thumbs', image['filename'])
+        smallimage = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'lowres', image['filename'])
         imgfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, _variant if _variant else '', image['filename'])
-        image['filename'] = imgfile
+        # If low-bandwidth mode is set, use lowres images not full unless its a schematic
+        print(bool(image['is_schematic']))
+        if get_fullres() or image['is_schematic']:
+            image['filename'] = imgfile
+        else: # but only use them if they're there
+            image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
         image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
+        print(image['filename'])
+        print(image['thumb'])
+        print()
         
     title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
     
@@ -374,7 +401,8 @@ def edit(what=None, alias=None):
             filename = None
 
     else:
-        flash("Form failed validation, see the errors posted in red", "error")
+        if request.method == "POST":
+            flash("Form failed validation, see the errors posted in red", "error")
         filename = None
     
     return render_template('new_manufacturer.html', title='Add New Manufacturer', form=form, filename=filename, edit=True)
@@ -413,6 +441,7 @@ def view_distributors():
                 
 @app.route("/distributor/<alias>")
 def view_distributor(alias=None):
+    session['fullres']=False
     # find the distributors details
     _distributor=query_db("SELECT * FROM distributor WHERE alias='{0}'".format(alias), single=True)
     if not _distributor:
@@ -518,6 +547,34 @@ def uploads():
 
         return render_template("index.html", logged_in=logged_in)
 
+    
+@app.route("/help")
+def help():
+    return render_template("help.html", title="Site Help")
+
+
+#return the session setting for full resolution photos
+def get_fullres():
+    if not 'fullres' in session:
+        session['fullres'] = True
+    return session['fullres']
+    
+def set_fullres(on):
+    session['fullres'] = on
+    return session['fullres']
+    
+@app.route("/fullres")
+def hires_on():
+    set_fullres(True)
+    flash("High-res photos in use")
+    return redirect("home")
+
+@app.route("/lowres")
+def hires_off():
+    set_fullres(False)
+    flash("Low bandwidth photos in use")
+    return redirect("home")
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', title="404"), 404
@@ -545,4 +602,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

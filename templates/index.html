@@ -13,6 +13,6 @@
   <p><span class="bold">Finally a quick note on images:</span><br><a class="non_gallery" title="1941 Haywin Broadcaster" href="/static/images/1941%20Haywin%205-valve.jpg"><img class="img_right" src="/static/images/1941%20Haywin%205-valve.jpg"></a>
     Many of our vintage radios are becoming hard to find let alone photograph.  The images on this site have been assembled from various sources including private and public collections, the web, and online auction sites.  It is believed that the images used on this site are in the public domain - however if you find a photo that belongs to you then please contact the <a href="mailto:admin@essentialtech.co.nz">site admin</a> for attribution, modification or removal.
   </p>
-    <form action="/echo" method="POST"><input name="text"><input type="submit" value="Test flash messages"></form>
+    {% if debug %}<form action="/echo" method="POST"><input name="text"><input type="submit" value="Test flash messages"></form>{% endif %}
 </div>
 {% endblock %}

@@ -53,7 +53,9 @@
   
 </div>
 
+{% if debug %}
 <!-- debug -->
+  {{images}}
   {{models}}<br><br>
   {{brand}}<br><br>
   {{distributor}}<br><br>
@@ -61,4 +63,6 @@
   {{manufacturer_alias}}<br><br>
   {{code}}<br><br>
   {{variant}}
+{% endif %}
+
 {% endblock %}
