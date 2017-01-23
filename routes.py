@@ -186,10 +186,9 @@ def model(brand, code):
         _code = code.replace(' ', '_').strip().lower()
         return redirect(request.url.replace('/model/{0}/{1}'.format(brand, code), '/model/{0}/{1}'.format(_brand, _code)))
     
-    # TODO: remove when sure, but this should never be needed
-    # for the purpose of db queries, convert '_' back to ' '
-    #brand = brand.replace('_', ' ').strip().lower()
-    #code = code.replace('_', ' ').strip().lower()
+    # for the purpose of image paths, lower case and convert '_' back to ' '
+    brand = brand.replace('_', ' ').strip().lower()
+    code = code.replace('_', ' ').strip().lower()
     
     # find the brand name id
     result = query_db("SELECT id, manufacturer_id, distributor_id FROM brand WHERE alias='{0}'".format(brand), single=True)
@@ -586,4 +585,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
