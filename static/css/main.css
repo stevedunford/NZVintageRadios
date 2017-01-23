@@ -439,6 +439,14 @@ menuIcon img {
     background-image: url(/static/icons/if.png);
 }
 
+.chassis {
+    background-image: url(/static/icons/chassis.png);
+}
+
+.notes {
+    background-image: url(/static/icons/notes.png);
+}
+
 a {
 	text-decoration: none;
 	color: #ddd;

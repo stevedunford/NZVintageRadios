@@ -70,7 +70,21 @@ class DistributorForm(FlaskForm):
     address = StringField('address', validators=[DataRequired()])
     nz_wide = BooleanField('nz_wide', default=False)
     notes = TextAreaField('notes', validators=[DataRequired()])
+
     
+def search_results(id):
+    search = query_db("SELECT brand_id, code, chassis FROM model WHERE code='{0}' AND chassis!=0".format(id))
+    if not search or len(search) == 0:
+        abort(404)
+    elif len(search) == 1:
+        search_results = query_db("SELECT alias FROM brand WHERE id='{0}'".format(search[0]['brand_id']), single=True)
+    else:
+        search_results = []
+        for result in search:
+            search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(result['brand_id']), single=True)['alias'], result['code']])
+    return search_results
+        
+        
 '''
 SITE LOGIC
 '''
@@ -78,22 +92,14 @@ SITE LOGIC
 @app.route("/<id>") #simple search
 @app.route("/home")
 def index(id=None):
-    results = None
     if id: # super simple model search
-        results = query_db("SELECT brand_id, code, variant FROM model WHERE code='{0}' OR variant='{0}'".format(id))
-        if not results or len(results) == 0:
-            abort(404)
-        elif len(results) == 1:
-            brand = query_db("SELECT alias FROM brand WHERE id='{0}'".format(results[0]['brand_id']), single=True) 
-            return redirect(url_for('model', brand=brand['alias'], code=results[0]['code'], variant=results[0]['variant']))
-        else:
-            search_results = []
-            for result in results:
-                search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(result['brand_id']), single=True)['alias'], result['code'], result['variant']])
-            return render_template("search.html", title='Search Results', search_results=search_results, search_term=id)
-        
+        results = search_results(id)
+        if type(results) == list: # several results matching
+            return render_template("search.html", title='Search Results', search_results=results, search_term=id)
+        else: # one result, go straight there
+            return redirect(url_for('model', brand=results['alias'], code=id))
+
     # And if you just wanted the home page...
-    print(get_fullres())
     return render_template('index.html', title='Welcome')
 
 
@@ -122,21 +128,18 @@ def import_photos():
         files.extend(glob.glob(os.path.join(path, '*.png')))
         # find the db-ready path to the images, strip any trailing slash
         image_root = os.path.relpath(path, APP_ROOT + url_for("static", filename = ''))
-        # this should be ['images','model', brand, code, <variant?>]
-        # so the indexes are: 0       1       2      3        4?  (len 4 or 5)
+        # this should be ['images','model', brand, code>]
+        # so the indexes are: 0       1       2      3  (len 4)
         folder_names = image_root.split(os.sep)
-        if len(folder_names) != 4 and len(folder_names) != 5:
+        if len(folder_names) != 4:
             flash("{0}:image folder layout problem, contact admin, cry a little bit".format(folder_names), 'error')
             abort(500)
-        variant = folder_names[4] if len(folder_names) == 5 else None
         code = folder_names[3]
         brand = folder_names[2]
         # find the model id for the photos (yuk!)
-        model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') {1} AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{2}'))".format(code, "AND LOWER(variant='{0}')".format(variant) if variant else 'AND variant IS NULL', brand), single=True)
-        print("SELECT id FROM model WHERE LOWER(code='{0}') {1} AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{2}'))".format(code, "AND LOWER(variant='{0}')".format(variant) if variant else 'AND variant IS NULL', brand))
-        print(model, code, variant, brand)
+        model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{1}'))".format(code, brand), single=True)
         if not model or len(model) == 0:
-            flash("No record held for a {0} {1} by {2}".format(code, variant if variant else '', brand))
+            flash("No record held for a {0} by {2}".format(code, brand))
             abort(500)
         
         for image_file in files:
@@ -154,7 +157,7 @@ def import_photos():
             conn = mysql.connect()
             cursor = conn.cursor()
             if not check_existing:
-                query = "INSERT INTO images (title, filename, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format((brand.title() + ' ' + variant.title()) if variant else (brand.title() + ' ' + code.title()), filename, 1, model['id'])
+                query = "INSERT INTO images (title, filename, type, type_id) VALUES ('{0}', '{1}', {2}, {3})".format(brand.title() + ' ' + code.title(), filename, 1, model['id'])
                 cursor.execute(query)
                 conn.commit()
         flash('Images added successfully')
@@ -162,7 +165,7 @@ def import_photos():
     
     # GET
     else:
-        photo_root = APP_ROOT + url_for("static", filename="images/model")
+        photo_root = APP_ROOT + url_for("static", filename="images/models")
         _directories = []
         for root, dirs, files in os.walk(photo_root):
             level = root.replace(photo_root, '').count(os.sep)
@@ -173,98 +176,77 @@ def import_photos():
 
     
 '''
-model   - this is a radio information page
-brand   - the brand of radio, eg: Pacific Radio Co. Ltd, or Clipper
-code    - the model number or chassis number, eg: 18, 6 Valve Dual Wave, or 5M4
-variant - the cabinet style or model nickname, eg: Raleigh, Elite, Tiki
-
-no brand, code or variant can contain an underscore due to this being used
-to replace spaces for www url rules stating urls can't have spaces (FF handles
-this gracefully, chrome currently replaces them with %20 which is not very
-readable)
+model - this is a radio information page
 '''
 @app.route("/model/<brand>/<code>")
-@app.route("/model/<brand>/<code>/<variant>")
-def model(brand, code, variant=None):
+def model(brand, code):
     # if spaces then reroute to the proper version
-    if brand.strip().count(' ') > 0 or code.strip().count(' ') > 0 or (variant.strip().count(' ') > 0 if variant else False):
+    if brand.strip().count(' ') > 0 or code.strip().count(' ') > 0:
         _brand = brand.replace(' ', '_').strip().lower()
         _code = code.replace(' ', '_').strip().lower()
-        _variant = variant.replace(' ', '_').strip().lower() if variant else None
-        if variant:
-            return redirect(request.url.replace('/model/{0}/{1}/{2}'.format(brand, code, variant), '/model/{0}/{1}/{2}'.format(_brand, _code, _variant)))
-        else:
-            return redirect(request.url.replace('/model/{0}/{1}'.format(brand, code), '/model/{0}/{1}'.format(_brand, _code)))
+        return redirect(request.url.replace('/model/{0}/{1}'.format(brand, code), '/model/{0}/{1}'.format(_brand, _code)))
     
+    # TODO: remove when sure, but this should never be needed
     # for the purpose of db queries, convert '_' back to ' '
-    brand = brand.replace('_', ' ').strip().lower()
-    code = code.replace('_', ' ').strip().lower()
-    variant = variant.replace('_', ' ').strip().lower() if variant else None
+    #brand = brand.replace('_', ' ').strip().lower()
+    #code = code.replace('_', ' ').strip().lower()
     
-    # find the db's id for the brand name
+    # find the brand name id
     result = query_db("SELECT id, manufacturer_id, distributor_id FROM brand WHERE alias='{0}'".format(brand), single=True)
-    _brand = result['id']
-    _manufacturer = result['manufacturer_id']
-    _distributor = result['distributor_id']
+    brand_id = result['id']
+    manufacturer_id = result['manufacturer_id']
+    distributor_id = result['distributor_id']
     
-    # find the db's id for the radio model number
-    if variant:
-        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND variant='{1}'".format(code, variant), single=True)
-    else:
-        result = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND LOWER(brand_id='{1}')".format(code, _brand), single=True)
-    if not result: # check to make sure a model was found
+    # find the radio model and chassis info if pertinent
+    model = query_db("SELECT * FROM model WHERE code='{0}' AND brand_id='{1}'".format(code, brand_id), single=True)
+    if not model: # check to make sure a model was found
         abort(404)
-    model_id = result['id']
-    print (model_id)
-    # get the variant if specified, or all matching radios
-    if variant:
-        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' AND variant='{2}'".format(_brand, code, variant))
-    else:
-        models = query_db("SELECT * FROM model WHERE brand_id='{0}' AND code='{1}' ORDER BY start_year ASC".format(_brand, code))
-    print (models)
+    model ['chassis_notes'] = other_models = None
+    if model['chassis'] and model['chassis'] > 0:
+        chassis = query_db("SELECT num_valves, valve_lineup, bands, notes, `if` FROM model WHERE id={0}".format(model['chassis']), single=True)
+        if not chassis:
+            flash('no chassis data for this model, contact admin', 'error')
+            abort(404)
+        model['num_valves'] = chassis['num_valves']
+        model['valve_lineup'] = chassis['valve_lineup']
+        model['bands'] = chassis ['bands']
+        model['if'] = chassis['if']
+        model['chassis_notes'] = strip_outer_p_tags(chassis['notes'])
+        # find all other models using this chassis
+        other_models = query_db("SELECT code, brand_id, start_year FROM model WHERE chassis={0}".format(model['chassis']))
+        for other_model in other_models:
+            other_model['brand'] = query_db("SELECT name FROM brand WHERE id={0}".format(other_model['brand_id']), single=True)['name']
+        print(other_models)
+        
     # get the manufacturer and alias (for link)
-    result = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(_manufacturer), single=True)
-    manufacturer = result['name']
-    manufacturer_alias = result['alias']
+    manufacturer = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(manufacturer_id), single=True)
     
     # get the distributor and alias (for link)
-    distributor = query_db("SELECT name, alias FROM distributor WHERE id='{0}'".format(_distributor), single=True)
+    distributor = query_db("SELECT name, alias FROM distributor WHERE id='{0}'".format(distributor_id), single=True)
     
-    # get the images related to the radio (or primary image for each variant). type=1 means model images
-    if len(models) > 1:
-        images = []
-        for model in models:
-            images.append(query_db("SELECT filename, is_schematic FROM images WHERE rank=1 AND type=1 AND type_id={0}".format(model['id']))[0])
-            images[-1]['variant'] = model['variant'].lower()
-        
-    else: # get all the images for the single model
-        images = query_db("SELECT title, filename, rank, is_schematic FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model_id))
-    
+    # get all the images for the model
+    images = query_db("SELECT title, filename, rank, is_schematic, attribution FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model['id']))
+    print("SELECT title, filename, rank, is_schematic, attribution FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model['id']))
     # build image and thumb paths
     # didn't use url_for for static due to stupid slashes it adds
     # TODO: eventually have this automate the import process or at least thumbs
     for image in images:
-        _variant = variant if not 'variant' in image else image['variant']
-        thumbfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'thumbs', image['filename'])
-        smallimage = os.path.join(os.sep, 'static', 'images', 'model', brand, code, (_variant if _variant else ''), 'lowres', image['filename'])
-        imgfile = os.path.join(os.sep, 'static', 'images', 'model', brand, code, _variant if _variant else '', image['filename'])
+        thumbfile = os.path.join(os.sep, 'static', 'images', 'models', brand, code, 'thumbs', image['filename'])
+        smallimage = os.path.join(os.sep, 'static', 'images', 'models', brand, code, 'lowres', image['filename'])
+        imgfile = os.path.join(os.sep, 'static', 'images', 'models', brand, code, image['filename'])
         # If low-bandwidth mode is set, use lowres images not full unless its a schematic
-        print(bool(image['is_schematic']))
         if get_fullres() or image['is_schematic']:
             image['filename'] = imgfile
         else: # but only use them if they're there
             image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
         image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
-        print(image['filename'])
-        print(image['thumb'])
-        print()
         
     title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
     
     # highlight the valves in the lineup
-    # TODO: make this more efficient, its hideous on long valve lineup lines
+    # TODO: make this more efficient if possible, its hideous on long valve lineup lines (0.33s for bell colt page)
     # and also appears to try matching blank lines
-    lineup = models[0]['valve_lineup']
+    lineup = model['valve_lineup']
     if lineup:
         pos = len(lineup) -1
         while pos >= 0:
@@ -275,9 +257,11 @@ def model(brand, code, variant=None):
             if valve and valve['name'] in lineup[pos+1:end+1]:
                 lineup = lineup[:pos+1] + '<a class="valves" title="' + valve['type'] + '" href="/static/images/valves/' + valve['filename'] + '">' + valve['name'] + '</a>' + lineup[end+1:]
             pos -= 1
-        models[0]['valve_lineup'] = lineup
+        model['valve_lineup'] = lineup
     
-    return render_template("model.html", models=models, title=title, brand=brand, manufacturer=manufacturer, manufacturer_alias=manufacturer_alias, distributor=distributor, code=code, variant=variant, images=images)
+    model['notes'] = strip_outer_p_tags(model['notes'])
+    
+    return render_template("model.html", model=model, other_models=other_models, title=title, brand=brand, manufacturer=manufacturer, distributor=distributor, code=code, images=images)
 
 
     
@@ -311,7 +295,7 @@ def brand(alias=None):
     _manufacturer = query_db("SELECT name, alias FROM manufacturer WHERE id={0}".format(_brand['manufacturer_id']), single=True)
     
     # find all models for this brand
-    _models = (query_db("SELECT DISTINCT start_year, code FROM model WHERE brand_id='{0}' ORDER BY start_year ASC".format(_brand['id'])))
+    _models = (query_db("SELECT DISTINCT start_year, code, chassis FROM model WHERE brand_id='{0}' AND (chassis IS NULL OR chassis > 0) ORDER BY start_year ASC".format(_brand['id'])))
     
     _logo = url_for('static', filename='images/brands/{0}.jpg'.format(_brand['alias']))     
     if not os.path.isfile(APP_ROOT + _logo):
@@ -602,4 +586,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

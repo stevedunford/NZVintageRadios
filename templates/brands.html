@@ -3,14 +3,15 @@
 {% block content %}
 
 <div id="container">
-<form action="brands" method="POST">
-  <select name="id" onchange="this.form.submit()">
-    <option value="" disabled selected style="display:none;">Choose a brand</option>
-    {% for brand in brands %}
-      <option value="{{ brand[0] }}">{{ brand[1] }}</option>
-    {% endfor %}
-  </select>
-</form>
+  <form action="brands" method="POST">
+    <select name="id" onchange="this.form.submit()">
+      <option value="" disabled selected style="display:none;">Choose a brand</option>
+      {% for brand in brands %}
+        <option value="{{ brand[0] }}">{{ brand[1] }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  
 </div>
 
 {% if debug %}
