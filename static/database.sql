@@ -54,13 +54,13 @@ CREATE TABLE IF NOT EXISTS `brand` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~18 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
 	(1, 'Courtenay', 'courtenay', 'Known For Tone', 3, 1, '1930', 0, '1956', 0, '<p>Coutenay was the original brand name of Radio Corp N.Z. (then known as W. Marks Ltd), and was distributed through Stewart Hardware in Courtenay Place (Wellington) - most likely where the name came from.</p><p>After Stewart Hardware shut its doors, Courtenay Radio Ltd was formed in 1933 to distribute the receivers, and then in 1934 Turnbull and Jones Ltd took over distribution, which they held until they pulled out of the radio market in 1956.</p>'),
 	(2, 'Columbus', 'columbus', NULL, 3, 2, '1937', 0, '1960', 0, 'Columbus was the house-brand for Radio Corp. of NZ.'),
-	(3, 'Pacific', 'pacific', 'In A Sphere Of Its Own', 3, 6, '1933', 0, '1937', 1, '<p>Pacific sets were built initially as special runs for Pacific Radio Co. Ltd by Radio Corp. N.Z., and then as standard RCNZ chassis models from around 1935/36.</p><p>Pacific sets from the early-mid 30\'s were known for their art-deco styling - in particular the 1934/35 \'Elite\' console, which is considered very rare and the envy of most collectors.</p><table><tbody><tr><td> <a class="gallery" title="The Pacific Elite Console" href="/static/images/model/pacific/6 valve dual wave/elite/elite.jpg"><img class="inline_image" src="/static/images/model/pacific/6 valve dual wave/elite/thumbs/elite.jpg" alt="Pacific Elite Console 1934/35" /></a></td></tr><tr><td>The world-famous \'Elite\' console</td></tr></tbody></table><p>There are later (post WWII) sets branded Pacific, however these were built by Akrad who took over the name and branding after the demise of the owner of the original brand.</p>'),
+	(3, 'Pacific', 'pacific', 'In A Sphere Of Its Own', 3, 6, '1933', 0, '1937', 1, '<p>Pacific sets were built initially as special runs for Pacific Radio Co. Ltd by Radio Corp. N.Z., and then as standard RCNZ chassis models from around 1935/36.</p><p><a class="gallery img_right" title="The Pacific Elite Console" href="/static/images/models/pacific/elite/elite.jpg"><img class="inline_image" src="/static/images/models/pacific/elite/thumbs/elite.jpg" alt="Pacific Elite Console 1934/35" /></a>Pacific sets from the early-mid 30\'s were known for their art-deco styling - in particular the 1934/35 \'Elite\' console, which is considered very rare and the envy of most collectors.</p>\r\n<p>There are later (post WWII) sets branded \'Pacific\', however these were built by Akrad who took over the name and branding after Pacific Radio Ltd closed.</p>'),
 	(4, 'Pacific (post-WWII)', 'pacific_new', 'In A Sphere Of Its Own', 1, 3, '1947', 1, NULL, 1, '<p>Pacific Radio Co. Ltd ceased trading due to the demise of the owner, and the brand and signature line were taken over by Akrad Radio Ltd in Waihi when radio production resumed after WWII.</p><p>Many Pacific models from Akrad were also released under the Regent brand name.</p><p><img class="img_left" src="/static/images/brands/pacific_new/pacific_old_ad.jpg">Interestingly, as this advert for the original Pacific brand shows, Keith Wrigley (Founder of Akrad Radio) was listed as the local Pacific dealer for Waihi in the early-mid 30\'s so he would have been well aware of the brand.</p>'),
 	(5, 'Clipper', 'clipper', NULL, 1, 0, '1954', 1, NULL, 0, '<p>Clipper was one of the brands in the Akrad stable, found on both car and home radios, and even radiograms</p>'),
 	(6, 'Well-Mayde', 'well_mayde', NULL, 5, 5, '1929', 0, NULL, 0, '<p>The brand name Well-Mayde was established by Johns Ltd in Auckland, and products were manufactured by their factory, Wellmade Ltd.</p>'),
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~6 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -192,7 +192,7 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(95, 'Bell Colt', '514050907.jpg', 1, 7, 0, 23, NULL),
 	(96, 'Bell Colt', '540490991.jpg', 1, 7, 0, 43, NULL),
 	(97, 'Bell Colt Brown', '6.jpg', 1, 7, 0, 6, NULL),
-	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, 0, 100, NULL),
+	(100, 'Bell Colt BC / SW', 'dual-wave.jpg', 1, 7, 0, 65, NULL),
 	(101, 'Bell Colt', '5B4j.jpg', 1, 7, 1, 122, NULL),
 	(102, 'Bell Colt', '5B60.jpg', 1, 7, 1, 123, NULL),
 	(103, 'Bell Colt', '5B61.jpg', 1, 7, 1, 124, NULL),
@@ -284,7 +284,8 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(190, 'Courtenay 84', '509227171.jpg', 1, 18, 0, 99, NULL),
 	(191, 'Courtenay 84', 'rcnz model 84 schematic.png', 1, 18, 1, 99, NULL),
 	(192, 'Pacific Nottingham', 'New Zealand Herald, Volume LXXII, Issue 22130, 8 June 1935, Page 16.jpg', 1, 29, 0, 99, 'PapersPast & NZ Herald 8th June 1935'),
-	(193, 'Pacific Nottingham', 'nottingham.jpg', 1, 29, 0, 1, NULL);
+	(193, 'Pacific Nottingham', 'nottingham.jpg', 1, 29, 0, 1, NULL),
+	(194, 'Bell Colt - Rimlock Valves', 'P1040013.JPG', 1, 7, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -378,7 +379,7 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(27, NULL, '65-BC', 18, '1936', 0, NULL, 0, 6, NULL, 1, '<p>Data from the 1936-37 Johns catalogue:<br>6-Valve broadcast only receiver, AVC, Celestion speaker, external speaker jacks, Tuning meter, pick-up terminals.  Cabinet hand-polished <a href="https://en.wikipedia.org/wiki/Duco">Duco</a>.</p>', NULL),
 	(28, NULL, '5M4', 5, '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p>\r\n<p><a class=\'non_gallery\' title="2 Chassis Variants - Bottom Side" href="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg" title="2 Chassis Variants - Bottom Side"/></a><a class=\'non_gallery\' title="2 Chassis Variants - Top Side" href="/static/images/models/clipper/5m4/5m4oldnewtop.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewtop.jpg" title="2 Chassis Variants - Top Side"/></a>\r\nThere are at least two chassis variants, both using almost the same circuit and the same valve lineup, and can be seen here with the older variant at the bottom.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>', NULL),
 	(29, 1, 'Nottingham', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd art deco tabletop 6-valve dual wave model from 1934</p>', NULL),
-	(30, 0, '12', 1, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s');
+	(30, 0, '12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -393,7 +394,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -411,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~63 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~66 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
