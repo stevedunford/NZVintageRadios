@@ -369,6 +369,16 @@ menuIcon img {
     color: #666;
 }
 
+#container .lightred {
+    background-color: #faa;
+}
+
+#container .lightblue {
+    background-color: #aaf;
+}
+
+
+
 #container img {
     max-width: 200px;
     max-height: 200px;

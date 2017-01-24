@@ -73,15 +73,16 @@ class DistributorForm(FlaskForm):
 
     
 def search_results(id):
-    search = query_db("SELECT brand_id, code, chassis FROM model WHERE code='{0}' AND chassis!=0".format(id))
+    search = query_db("SELECT brand_id, code, chassis FROM model WHERE code='{0}'".format(id))
     if not search or len(search) == 0:
         abort(404)
-    elif len(search) == 1:
+    elif len(search) == 1 and search[0]['brand_id'] != 0:
         search_results = query_db("SELECT alias FROM brand WHERE id='{0}'".format(search[0]['brand_id']), single=True)
     else:
         search_results = []
         for result in search:
-            search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(result['brand_id']), single=True)['alias'], result['code']])
+            if result['brand_id'] != 0:
+                search_results.append([query_db("SELECT alias FROM brand WHERE id='{0}'".format(result['brand_id']), single=True)['alias'], result['code']])
     return search_results
         
         
@@ -215,7 +216,6 @@ def model(brand, code):
         other_models = query_db("SELECT code, brand_id, start_year FROM model WHERE chassis={0}".format(model['chassis']))
         for other_model in other_models:
             other_model['brand'] = query_db("SELECT name FROM brand WHERE id={0}".format(other_model['brand_id']), single=True)['name']
-        print(other_models)
         
     # get the manufacturer and alias (for link)
     manufacturer = query_db("SELECT name, alias FROM manufacturer WHERE id='{0}'".format(manufacturer_id), single=True)
@@ -585,4 +585,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
