@@ -71,13 +71,25 @@ class DistributorForm(FlaskForm):
     nz_wide = BooleanField('nz_wide', default=False)
     notes = TextAreaField('notes', validators=[DataRequired()])
 
-    
+# basic search function - I'm so dreadfully embarrased
 def search_results(id):
-    search = query_db("SELECT brand_id, code, chassis FROM model WHERE code='{0}'".format(id))
+    # check for models
+    search = query_db("SELECT brand_id, code FROM model WHERE code='{0}'".format(id))
     if not search or len(search) == 0:
-        abort(404)
+        # no models, look for brands - code gettin' ugly now
+        search = query_db("SELECT alias FROM brand WHERE alias='{0}'".format(id))
+        if len(search) != 1: #omg, really?! nesting!
+            search = query_db("SELECT alias FROM manufacturer WHERE alias='{0}'".format(id))
+            if len(search) != 1:
+                abort(404) # about time!
+            else:
+                search_results = (url_for('manufacturer', alias=id))
+        else:
+            search_results = (url_for('brand', alias=id))
+        
+    
     elif len(search) == 1 and search[0]['brand_id'] != 0:
-        search_results = query_db("SELECT alias FROM brand WHERE id='{0}'".format(search[0]['brand_id']), single=True)
+        search_results = url_for('model', brand=query_db("SELECT alias FROM brand WHERE id='{0}'".format(search[0]['brand_id']), single=True)['alias'], code=id)
     else:
         search_results = []
         for result in search:
@@ -98,7 +110,7 @@ def index(id=None):
         if type(results) == list: # several results matching
             return render_template("search.html", title='Search Results', search_results=results, search_term=id)
         else: # one result, go straight there
-            return redirect(url_for('model', brand=results['alias'], code=id))
+            return redirect(results)
 
     # And if you just wanted the home page...
     return render_template('index.html', title='Welcome')

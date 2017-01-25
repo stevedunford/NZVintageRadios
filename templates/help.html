@@ -11,11 +11,13 @@
     After some feedback from users who don't have high-speed internet, model images are now stored in two sizes.  By selecting the smaller image size option in the menu most site images should be considerably smaller and faster to load.  This EXCLUDES schematics, as it would make most of them unreadable.  At this point it also excludes images found in the text of pages, as they should not be large to begin with.  If you need to see an image in full size, you can simply reselect high resolution images in the menu.  The chosen option should remain in effect until you close your internet browser.
   </p>
   <p><b>Search</b><br>
-    This is not fully implemented at this point, although you can do a quick model selection for most models by simply writing the model name on the end of the site address.  For example:<br>
+    This is not fully implemented at this point, although you can do a quick model, brand or manufacturer (the site searches in that order) selection by simply writing the name on the end of the site address.  For example:<br>
     <span class="blue">&nbsp;&nbsp;<a href="{{url_for("index", id="colt")}}">http://radio.essentialtech.co.nz/colt</a></span><br>
-    will take you to the Bell Colt page, and<br>
+    will take you to the Bell Colt page,<br>
     <span class="blue">&nbsp;&nbsp;<a href="{{url_for("index", id="12")}}">http://radio.essentialtech.co.nz/12</a></span><br>
-    will take you to the landing page for RCNZ-built model 12's (Both Columbus and Courtenay models were produced).
+    will take you to the landing page for RCNZ-built model 12's (Both Columbus and Courtenay models were produced).<br>
+    <span class="blue">&nbsp;&nbsp;<a href="{{url_for("index", id="rcnz")}}">http://radio.essentialtech.co.nz/rcnz</a></span><br>
+    will take you to Radio Corporation of New Zealand page.
   </p>
   
 </div>
