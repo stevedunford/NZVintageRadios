@@ -74,7 +74,7 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(14, 'Five Star', 'five_star', NULL, 1, 0, '1947', 1, NULL, 0, '<p>Five Star was one of 3 brands introduced by Akrad in the post-war years, the other two being Pacific (taken over after the original Pacific Radio Co. ceased trading) and Regent.</p>\r\n<p>source: https://leanpub.com/pyeradiowaihi/read</p>'),
 	(15, 'Haywin', 'haywin', NULL, 10, 0, '1936', 1, NULL, 0, '<p>Haywin was the radio brand made for, and sold by, Hay\'s Dept Store in Christchurch which opened in 1929, changed its name to HayWrights in 1968, and was aquired in 1982 by Farmers.</p>'),
 	(16, 'Gulbransen', 'gulbransen', NULL, 11, 0, '1929', 0, '1958', 0, '<p>Originally imported by H. W. Clarke who had the Gulbransen Piano importation business - but as the demand for pianos declined with the onset of radio, Gulbransen in the US started into the radio business - a short-lived venture there. However, after import restrictions came into force in 1936, H. W. Clarke  had Collier & Beale begin manufacturing sets under licence from Gulbransen in the US.</p>\r\n<p>Model numbering in the 40\'s appears to have been three digit, with the first indicating the number of valves, the second the number of bands and the third the year.  For example, the model <span style="color:red">6</span>2<b>8</b> was a <span style="color:red">6</span>-valve dual wave set manufactured in 194<b>8</b>.  This continued into the 50\'s with a 4-digit scheme that was essentially the same but with 2 digits for the year.  The model <span style="color:red">5</span>1<b>51</b> was a <span style="color:red">5</span>-valve, broadcast-band only set manufactured in 19<b>51</b>.</p>\r\n<p>The name dropped out of use after 1958 along with another long-running brand manufactured by Collier & Beale: Cromwell.</p>'),
-	(17, 'HMV', 'hmv', 'His Masters Voice', 0, 0, '1926', 0, '1972', 0, '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by Messrs E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).\r\n</p>\r\n<p><span style="bold">Sources:</span><br>http://www.audioculture.co.nz/scenes/emi-new-zealand-the-first-50-years</p>'),
+	(17, 'HMV', 'hmv', 'His Masters Voice', 2, 0, '1926', 0, '1972', 0, '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).\r\n</p>\r\n<p>Model numbering seems to follow a 3-digit scheme where the first 2 digits are the year of the model and the third digit is the number of valves.  Letters after indicate features: BC = Bbroadcast, DW = Dual Wave, P = Portable, RG = Radiogram, TRG = Table Radiogram</p>\r\n<p><span style="bold">Sources:</span><br>http://www.audioculture.co.nz/scenes/emi-new-zealand-the-first-50-years</p>'),
 	(18, 'Companion', 'companion', NULL, 5, 5, '1933', 0, '1951', 0, '<p>The Companion brand name was introduced to coincide with the introduction of superhet radios to the Johns family, and it immediately superceeded all other brand names except for Well Mayde which remained in use for all other products except radios.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~165 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~178 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -285,7 +285,19 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(191, 'Courtenay 84', 'rcnz model 84 schematic.png', 1, 18, 1, 99, NULL),
 	(192, 'Pacific Nottingham', 'New Zealand Herald, Volume LXXII, Issue 22130, 8 June 1935, Page 16.jpg', 1, 29, 0, 99, 'PapersPast & NZ Herald 8th June 1935'),
 	(193, 'Pacific Nottingham', 'nottingham.jpg', 1, 29, 0, 1, NULL),
-	(194, 'Bell Colt - Rimlock Valves', 'P1040013.JPG', 1, 7, 0, 99, NULL);
+	(194, 'Bell Colt - Rimlock Valves', 'P1040013.JPG', 1, 7, 0, 99, NULL),
+	(195, 'Bell Colt 4-Valve 5B67 Probably', '5b67 maybe - 4 valve.jpg', 1, 7, 0, 80, NULL),
+	(196, 'Hmv 495Bc', '522535227.jpg', 1, 31, 0, 99, NULL),
+	(197, 'Hmv 495Bc', '522535263.jpg', 1, 31, 0, 99, NULL),
+	(198, 'Hmv 495Bc', '522535288.jpg', 1, 31, 0, 99, NULL),
+	(199, 'Hmv 495Bc', '522535351.jpg', 1, 31, 0, 99, NULL),
+	(200, 'Hmv 495Bc', '522535391.jpg', 1, 31, 0, 99, NULL),
+	(201, 'Hmv 495Bc', '522535439.jpg', 1, 31, 0, 99, NULL),
+	(202, 'Hmv 495Bc', '550558592.jpg', 1, 31, 0, 99, NULL),
+	(203, 'Hmv 495Bc', '550558671.jpg', 1, 31, 0, 99, NULL),
+	(204, 'Hmv 495Bc', '550559378.jpg', 1, 31, 0, 99, NULL),
+	(205, 'Hmv 495Bc', '550559494.jpg', 1, 31, 0, 99, NULL),
+	(206, 'Hmv 495Bc', '550566054.jpg', 1, 31, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -346,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~30 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~31 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -379,7 +391,8 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(27, NULL, '65-BC', 18, '1936', 0, NULL, 0, 6, NULL, 1, '<p>Data from the 1936-37 Johns catalogue:<br>6-Valve broadcast only receiver, AVC, Celestion speaker, external speaker jacks, Tuning meter, pick-up terminals.  Cabinet hand-polished <a href="https://en.wikipedia.org/wiki/Duco">Duco</a>.</p>', NULL),
 	(28, NULL, '5M4', 5, '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p>\r\n<p><a class=\'non_gallery\' title="2 Chassis Variants - Bottom Side" href="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg" title="2 Chassis Variants - Bottom Side"/></a><a class=\'non_gallery\' title="2 Chassis Variants - Top Side" href="/static/images/models/clipper/5m4/5m4oldnewtop.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewtop.jpg" title="2 Chassis Variants - Top Side"/></a>\r\nThere are at least two chassis variants, both using almost the same circuit and the same valve lineup, and can be seen here with the older variant at the bottom.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>', NULL),
 	(29, 1, 'Nottingham', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd art deco tabletop 6-valve dual wave model from 1934</p>', NULL),
-	(30, 0, '12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s');
+	(30, 0, 'RCNZ 12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s'),
+	(31, NULL, '495BC', 17, '1949', 0, NULL, 0, 5, '7S7, 7B7, 7C6 (or 6AQ6 ?), 7C5, 7Y4', 1, '<p>5-valve broadcast model.  At least 2 chassis variants - one of which has Philips(?) style IF cans, a miniature valve in the lineup, a different tuning cap and other differences like the orientation of the tone switch - possibly different manufacturers?  Or just different runs with changes to suit parts availability (although its odd that the tone switch was rotated and one run was stamped with high / low and the other wasn\'t).  Both sighted models have \'Manufactured by H.M.V. (NZ) Ltd\', however its possible one (or both) were manufactured by other companies, such as Collier & Beale.</p>', '455kc/s');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -481,7 +494,13 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(68, '6K6GT', '6K6G.jpg', '6K6 Output Pentode'),
 	(69, 'EZ35', '6X5.jpg', '6X5 / EZ35 Rectifier - Full Wave AC/DC'),
 	(70, '5Y3G', '5Y3.jpg', 'Type 5Y3G / 5Y3GT Rectifier - Full Wave AC/DC'),
-	(71, '5Y3GT', '5Y3.jpg', 'Type 5Y3G / 5Y3GT Rectifier - Full Wave AC/DC');
+	(71, '5Y3GT', '5Y3.jpg', 'Type 5Y3G / 5Y3GT Rectifier - Full Wave AC/DC'),
+	(72, '6AQ6', '6AQ6.jpg', '6AQ6 First Audio / Detector'),
+	(73, '7Y4', '7Y4.jpg', '7Y4 Rectifier - Full Wave'),
+	(74, '7C5', '7C5.jpg', '7C5 Beam Power Output Amplifier'),
+	(75, '7C6', '7C6.jpg', '7C6 1st Audio / Dual Detector'),
+	(76, '7B7', '7B7.jpg', '7B7 RF Pentode'),
+	(77, '7S7', '7S7.jpg', '7S7 Mixer / Osc');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
