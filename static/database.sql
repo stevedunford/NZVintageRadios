@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~18 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -117,9 +117,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~178 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~194 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -306,7 +306,20 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(209, 'Ultimate Bcu', '1.jpg', 1, 32, 0, 99, NULL),
 	(210, 'Ultimate Bcu', '2.jpg', 1, 32, 0, 99, NULL),
 	(211, 'Ultimate Bcu', '3.jpg', 1, 32, 0, 99, NULL),
-	(212, 'Ultimate Bcu', '4.jpg', 1, 32, 0, 99, NULL);
+	(212, 'Ultimate Bcu', '4.jpg', 1, 32, 0, 99, NULL),
+	(213, 'Ultimate Aau', 'IMG_20170127_180405457.jpg', 1, 33, 0, 99, NULL),
+	(214, 'Ultimate Aau', 'IMG_20170127_180413798.jpg', 1, 33, 0, 99, NULL),
+	(215, 'Ultimate Aau', 'IMG_20170127_180431688.jpg', 1, 33, 0, 99, NULL),
+	(216, 'Ultimate Aau', 'IMG_20170127_180442985.jpg', 1, 33, 0, 99, NULL),
+	(217, 'Ultimate Aau', 'IMG_20170127_180451614.jpg', 1, 33, 0, 99, NULL),
+	(218, 'Ultimate Aau', 'IMG_20170127_180500951.jpg', 1, 33, 0, 99, NULL),
+	(219, 'Ultimate Aau', 'IMG_20170127_180515148.jpg', 1, 33, 0, 99, NULL),
+	(220, 'Ultimate Aau', 'IMG_20170127_180535631.jpg', 1, 33, 0, 99, NULL),
+	(221, 'Ultimate Aau', 'IMG_20170127_180555739.jpg', 1, 33, 0, 99, NULL),
+	(222, 'Ultimate Aau', 'Ultimate AAU.jpg', 1, 33, 0, 1, NULL),
+	(223, 'Courtenay 108 revised schematic', '108 Revised Version.jpg', 1, 34, 1, 99, NULL),
+	(224, 'Courtenay 108', 'Courtenay 108 BFB collection.jpg', 1, 34, 0, 1, 'Brian F Baker Collection - Art & Object'),
+	(225, 'Courtenay 108 original schematic', '108 Early Version.png', 1, 34, 1, 98, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -325,9 +338,9 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~16 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -366,9 +379,9 @@ CREATE TABLE IF NOT EXISTS `model` (
   `notes` longtext COMMENT 'Information about this set',
   `if` text COMMENT 'IF transformer peak freq.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~31 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~33 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -403,7 +416,9 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(29, 1, 'Nottingham', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd art deco tabletop 6-valve dual wave model from 1934</p>', NULL),
 	(30, 0, 'RCNZ 12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s'),
 	(31, NULL, '495BC', 17, '1949', 0, NULL, 0, 5, '7S7, 7B7, 7C6 (or 6AQ6 ?), 7C5, 7Y4', 1, '<p>5-valve broadcast model.  At least 2 chassis variants - one of which has Philips(?) style IF cans, a miniature valve in the lineup, a different tuning cap (and reversed dial) and other differences like the orientation of the tone switch - possibly different manufacturers?  Or just different runs with changes to suit parts availability (although its odd that the tone switch was rotated and one run was stamped with high / low and the other wasn\'t).  Both sighted models have \'Manufactured by H.M.V. (NZ) Ltd\', however its possible one (or both) were manufactured by other companies, such as Collier & Beale.</p>', '455kc/s'),
-	(32, NULL, 'BCU', 19, '1937', 0, NULL, 0, NULL, NULL, NULL, '<p>7-valve all-wave</p>', NULL);
+	(32, NULL, 'BCU', 19, '1937', 0, NULL, 0, NULL, NULL, NULL, '<p>7-valve all-wave</p>', NULL),
+	(33, NULL, 'AAU', 19, '1936', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>6-valve dual-wave model by Radio Ltd.</p>', NULL),
+	(34, NULL, '108', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>Courtenay 108, first aero-dial set from Radio Corp NZ.  Virtually identical to Pacific 6-valve Dual Wave chassis found in the likes of the Pacific Elite, Raleigh, etc. although Pacific used the 6.3V versions of the same valve lineup</p>', '256kc/s');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -434,9 +449,9 @@ CREATE TABLE IF NOT EXISTS `valve` (
   `type` tinytext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~72 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~73 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
@@ -445,7 +460,7 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(3, '6F6', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
 	(4, '6F6G', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
 	(5, '6F6GT', '42.jpg', '42 / 2A5 / 6F6 Output Pentode'),
-	(6, '6D6', '6D6.jpg', '6D6 RF / IF Amp'),
+	(6, '6D6', '6D6.jpg', '6D6 (6.3V version of 58) RF / IF Amp'),
 	(7, '6A7', '6A7.jpg', '2A7 / 6A7 Mixer / Osc'),
 	(8, '6A8', '6A8.jpg', '6A8 Mixer / Osc'),
 	(9, '6A8G', '6A8.jpg', '6A8 Mixer / Osc'),
@@ -511,7 +526,8 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(74, '7C5', '7C5.jpg', '7C5 Beam Power Output Amplifier'),
 	(75, '7C6', '7C6.jpg', '7C6 1st Audio / Dual Detector'),
 	(76, '7B7', '7B7.jpg', '7B7 RF Pentode'),
-	(77, '7S7', '7S7.jpg', '7S7 Mixer / Osc');
+	(77, '7S7', '7S7.jpg', '7S7 Mixer / Osc'),
+	(78, '58', '58.jpg', '58 (2.5V version of 6D6) RF / IF Amp');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
