@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
 DELETE FROM `brand`;
@@ -78,7 +78,9 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(18, 'Companion', 'companion', NULL, 5, 5, '1933', 0, '1951', 0, '<p>The Companion brand name was introduced to coincide with the introduction of superhet radios to the Johns family, and it immediately superceeded all other brand names except for Well Mayde which remained in use for all other products except radios.</p>'),
 	(19, 'Ultimate', 'ultimate', NULL, 15, 0, '1923', 0, NULL, 0, '<p>Ultimate was the first brand name of Radio Ltd.</p>'),
 	(20, 'Courier', 'courier', NULL, 15, 0, '1931', 0, '1955', 0, '<p>Courier was the \'other\' brand name of Radio Ltd. (Ultimate being the main brand)</p>'),
-	(21, 'Courier (original)', 'courier_original', 'Brings Tidings From Afar', 0, 0, '1927', 0, '1930', 1, '<P>The original Courier brand name belonged to J. Wiseman & Sons, a saddle maker.  They had a sideline making radios between 1927 and around 1930 when production ceased for unknown reasons - the Courier name was picked up the following year by Radio Ltd.</p>');
+	(21, 'Courier (original)', 'courier_original', 'Brings Tidings From Afar', 0, 0, '1927', 0, '1930', 1, '<P>The original Courier brand name belonged to J. Wiseman & Sons, a saddle maker.  They had a sideline making radios between 1927 and around 1930 when production ceased for unknown reasons - the Courier name was picked up the following year by Radio Ltd.</p>'),
+	(22, 'Skymaster', 'skymaster', NULL, 8, 8, NULL, 0, NULL, 0, 'Manufactured for Bond & Bond by Bell, the main model was a rebranded Bell Colt with different knobs and a different dial glass.'),
+	(23, 'Skyscraper', 'skyscraper', NULL, 15, 8, NULL, 0, NULL, 0, '<p>House brand for Bond & Bond, a major appliance retailer throughout New Zealand</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -91,9 +93,9 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   `notes` longtext CHARACTER SET utf8 NOT NULL COMMENT 'Details about the distributor',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~6 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -102,14 +104,15 @@ INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
 	(3, 'A. H. Nathan Ltd', 'a_h_nathan', 'Auckland', '<p>Arthur H Nathan Ltd were importers / merchants in Auckland City.  They sold HMV and later model Pacific sets (from Akrad)<img class="brand_image" src="/static/images/distributors/ahnathan.jpg" /></p><p>If you have any more details to share, please contact the admin with them.</p>'),
 	(5, 'Johns Ltd', 'johns', 'Auckland', 'Set up in 1920, slogan -Aucklands Oldest Radio Firm-.  Set up by Clive and Victor Johns, returned soldiers from WW1.  Started by importing and selling radio components, then kitsets.  Had distributorship for U.S. made Hammarlund coils and tuning condensers.  They started manufacturing radios - Altona, Ace and Meniwave.  Formed a new manufacturing co called Wellmayde Ltd making radios under the Well Mayde name. In 1930 1ZJ came on the air - Johns Ltds own radio station. More to come...'),
 	(6, 'Pacific Radio Co. Ltd', 'pacific', 'Wellington', 'The parent company for Pacific radios, based in Wellington but distributed nationwide through various retailers.  Interestingly started on the same day with the same capital and the same number of shares as Courtenay Radio Ltd.  Different shareholders, but the wording in the adverts is basically identical.'),
-	(7, 'His Masters Voice (New Zealand) Ltd', 'hmv', 'Auckland', '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by Messrs E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).');
+	(7, 'His Masters Voice (New Zealand) Ltd', 'hmv', 'Auckland', '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by Messrs E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).'),
+	(8, 'Bond & Bond', 'bond_and_bond', 'Nationwide', 'A major NZ appliance retailer, Skymaster, Skyscraper and Crusader were their house brands.');
 /*!40000 ALTER TABLE `distributor` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.images
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL COMMENT 'Title of the file shown in the browser',
+  `title` varchar(80) NOT NULL COMMENT 'Title of the file shown in the browser',
   `filename` varchar(100) NOT NULL COMMENT 'path to the file',
   `type` tinyint(3) unsigned NOT NULL COMMENT '1=radio, 2=brand, 3=manufacturer, 4=distributor',
   `type_id` int(10) unsigned NOT NULL COMMENT 'which item it belongs to',
@@ -117,9 +120,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~194 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~183 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -290,36 +293,75 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(193, 'Pacific Nottingham', 'nottingham.jpg', 1, 29, 0, 1, NULL),
 	(194, 'Bell Colt - Rimlock Valves', 'P1040013.JPG', 1, 7, 0, 99, NULL),
 	(195, 'Bell Colt 4-Valve 5B67 Probably', '5b67 maybe - 4 valve.jpg', 1, 7, 0, 80, NULL),
-	(196, 'Hmv 495Bc', '522535227.jpg', 1, 31, 0, 99, NULL),
-	(197, 'Hmv 495Bc', '522535263.jpg', 1, 31, 0, 99, NULL),
-	(198, 'Hmv 495Bc', '522535288.jpg', 1, 31, 0, 99, NULL),
-	(199, 'Hmv 495Bc', '522535351.jpg', 1, 31, 0, 99, NULL),
-	(200, 'Hmv 495Bc', '522535391.jpg', 1, 31, 0, 99, NULL),
-	(201, 'Hmv 495Bc', '522535439.jpg', 1, 31, 0, 99, NULL),
-	(202, 'Hmv 495Bc', '550558592.jpg', 1, 31, 0, 99, NULL),
-	(203, 'Hmv 495Bc', '550558671.jpg', 1, 31, 0, 99, NULL),
-	(204, 'Hmv 495Bc', '550559378.jpg', 1, 31, 0, 99, NULL),
-	(205, 'Hmv 495Bc', '550559494.jpg', 1, 31, 0, 99, NULL),
-	(206, 'Hmv 495Bc', '550566054.jpg', 1, 31, 0, 99, NULL),
+	(196, 'Hmv 495BC', '522535227.jpg', 1, 31, 0, 99, NULL),
+	(197, 'Hmv 495BC', '522535263.jpg', 1, 31, 0, 99, NULL),
+	(198, 'Hmv 495BC', '522535288.jpg', 1, 31, 0, 99, NULL),
+	(199, 'Hmv 495BC', '522535351.jpg', 1, 31, 0, 99, NULL),
+	(200, 'Hmv 495BC', '522535391.jpg', 1, 31, 0, 99, NULL),
+	(201, 'Hmv 495BC', '522535439.jpg', 1, 31, 0, 99, NULL),
+	(202, 'Hmv 495BC', '550558592.jpg', 1, 31, 0, 99, NULL),
+	(203, 'Hmv 495BC', '550558671.jpg', 1, 31, 0, 99, NULL),
+	(204, 'Hmv 495BC', '550559378.jpg', 1, 31, 0, 99, NULL),
+	(205, 'Hmv 495BC', '550559494.jpg', 1, 31, 0, 99, NULL),
+	(206, 'Hmv 495BC', '550566054.jpg', 1, 31, 0, 99, NULL),
 	(207, 'Columbus 75', 'schematic 1.jpg', 1, 23, 1, 98, NULL),
 	(208, 'Columbus 75', 'schematic 2 - supplement.jpg', 1, 23, 1, 99, NULL),
-	(209, 'Ultimate Bcu', '1.jpg', 1, 32, 0, 99, NULL),
-	(210, 'Ultimate Bcu', '2.jpg', 1, 32, 0, 99, NULL),
-	(211, 'Ultimate Bcu', '3.jpg', 1, 32, 0, 99, NULL),
-	(212, 'Ultimate Bcu', '4.jpg', 1, 32, 0, 99, NULL),
-	(213, 'Ultimate Aau', 'IMG_20170127_180405457.jpg', 1, 33, 0, 99, NULL),
-	(214, 'Ultimate Aau', 'IMG_20170127_180413798.jpg', 1, 33, 0, 99, NULL),
-	(215, 'Ultimate Aau', 'IMG_20170127_180431688.jpg', 1, 33, 0, 99, NULL),
-	(216, 'Ultimate Aau', 'IMG_20170127_180442985.jpg', 1, 33, 0, 99, NULL),
-	(217, 'Ultimate Aau', 'IMG_20170127_180451614.jpg', 1, 33, 0, 99, NULL),
-	(218, 'Ultimate Aau', 'IMG_20170127_180500951.jpg', 1, 33, 0, 99, NULL),
-	(219, 'Ultimate Aau', 'IMG_20170127_180515148.jpg', 1, 33, 0, 99, NULL),
-	(220, 'Ultimate Aau', 'IMG_20170127_180535631.jpg', 1, 33, 0, 99, NULL),
-	(221, 'Ultimate Aau', 'IMG_20170127_180555739.jpg', 1, 33, 0, 99, NULL),
-	(222, 'Ultimate Aau', 'Ultimate AAU.jpg', 1, 33, 0, 1, NULL),
+	(209, 'Ultimate BCU', '1.jpg', 1, 32, 0, 99, NULL),
+	(210, 'Ultimate BCU', '2.jpg', 1, 32, 0, 99, NULL),
+	(211, 'Ultimate BCU', '3.jpg', 1, 32, 0, 99, NULL),
+	(212, 'Ultimate BCU', '4.jpg', 1, 32, 0, 99, NULL),
+	(214, 'Ultimate AAU', 'IMG_20170127_180413798.jpg', 1, 33, 0, 99, NULL),
+	(215, 'Ultimate AAU', 'IMG_20170127_180431688.jpg', 1, 33, 0, 99, NULL),
+	(216, 'Ultimate AAU', 'IMG_20170127_180442985.jpg', 1, 33, 0, 99, NULL),
+	(217, 'Ultimate AAU', 'IMG_20170127_180451614.jpg', 1, 33, 0, 99, NULL),
+	(218, 'Ultimate AAU', 'IMG_20170127_180500951.jpg', 1, 33, 0, 99, NULL),
+	(219, 'Ultimate AAU', 'IMG_20170127_180515148.jpg', 1, 33, 0, 99, NULL),
+	(220, 'Ultimate AAU', 'IMG_20170127_180535631.jpg', 1, 33, 0, 99, NULL),
+	(221, 'Ultimate AAU', 'IMG_20170127_180555739.jpg', 1, 33, 0, 99, NULL),
+	(222, 'Ultimate AAU', 'Ultimate AAU.jpg', 1, 33, 0, 1, NULL),
 	(223, 'Courtenay 108 revised schematic', '108 Revised Version.jpg', 1, 34, 1, 99, NULL),
 	(224, 'Courtenay 108', 'Courtenay 108 BFB collection.jpg', 1, 34, 0, 1, 'Brian F Baker Collection - Art & Object'),
-	(225, 'Courtenay 108 original schematic', '108 Early Version.png', 1, 34, 1, 98, NULL);
+	(225, 'Courtenay 108 original schematic', '108 Early Version.png', 1, 34, 1, 98, NULL),
+	(226, 'Skyscraper XS', '1.jpg', 1, 37, 0, 99, NULL),
+	(227, 'Skyscraper XS', '2.jpg', 1, 37, 0, 99, NULL),
+	(228, 'Skyscraper XS', '3.jpg', 1, 37, 0, 99, NULL),
+	(229, 'Skyscraper XS', '4.jpg', 1, 37, 0, 99, NULL),
+	(230, 'Courtenay  Model 38 \'Opera\'', 'courtnayspiral.jpg', 1, 39, 0, 1, NULL),
+	(231, 'Courtenay 38', 'RCNZ model 38 004_.jpg', 1, 39, 1, 99, NULL),
+	(232, 'Courtenay 38', 'Courtenay 38 Ballad.png', 1, 39, 0, 53, NULL),
+	(233, 'Courtenay 38', 'Courtenay 38 Opera.png', 1, 39, 0, 50, NULL),
+	(234, 'Courtenay 38', 'Courtenay Spiral Dial Evening Post, Volume CXXIII, Issue 136, 10 June 1937, Page 6.png', 1, 39, 0, 70, NULL),
+	(235, 'Columbus 38', 'columbus 38.jpg', 1, 40, 0, 99, NULL),
+	(236, 'Columbus 38', 'RCNZ model 38 004_.jpg', 1, 40, 1, 100, NULL),
+	(239, 'Pacific 38', '20150914_212253 (1).jpg', 1, 41, 0, 99, NULL),
+	(240, 'Pacific 38', '20150914_212304.jpg', 1, 41, 0, 99, NULL),
+	(241, 'Pacific 38', '20150914_212313.jpg', 1, 41, 0, 99, NULL),
+	(242, 'Pacific 38', '20150914_212350 (1).jpg', 1, 41, 0, 99, NULL),
+	(243, 'Pacific 38', '20150914_212436.jpg', 1, 41, 0, 99, NULL),
+	(244, 'Pacific 38', '20150914_212445.jpg', 1, 41, 0, 99, NULL),
+	(245, 'Pacific 38', 'RCNZ model 38 004_.jpg', 1, 41, 1, 99, NULL),
+	(246, 'Pacific 38', 'PRESS, VOLUME LXXIII, ISSUE 22166, 9 AUGUST 1937.png', 1, 41, 0, 99, NULL),
+	(247, 'Stella 38', '20151217_081346.jpg', 1, 42, 0, 99, NULL),
+	(248, 'Stella 38', '20151217_081432.jpg', 1, 42, 0, 99, NULL),
+	(249, 'Stella 38', '20151217_081514.jpg', 1, 42, 0, 99, NULL),
+	(250, 'Stella 38', '20151217_082059.jpg', 1, 42, 0, 99, NULL),
+	(251, 'Stella 38', '20151217_082118.jpg', 1, 42, 0, 99, NULL),
+	(252, 'Stella 38', '20151217_082141.jpg', 1, 42, 0, 99, NULL),
+	(253, 'Stella 38', '_Stella 38 Front.jpg', 1, 42, 0, 1, NULL),
+	(254, 'Stella 38', '_Stella 38 Rear.jpg', 1, 42, 0, 2, NULL),
+	(255, 'Stella 38', 'RCNZ model 38 004_.jpg', 1, 42, 1, 100, NULL),
+	(256, 'Philco 401', 'green 401.jpg', 1, 5, 0, 3, NULL),
+	(257, 'Philco 401', '544699035.jpg', 1, 5, 0, 4, NULL),
+	(258, 'Philco 401', '544699292.jpg', 1, 5, 0, 2, NULL),
+	(259, 'Ultimate Bcu', '10.jpg', 1, 32, 0, 99, NULL),
+	(260, 'Ultimate Bcu', '13.jpg', 1, 32, 0, 99, NULL),
+	(261, 'Ultimate Bcu', '7.jpg', 1, 32, 0, 99, NULL),
+	(262, 'Ultimate Bcu', '8.jpg', 1, 32, 0, 99, NULL),
+	(263, 'Ultimate Bcu', '9.jpg', 1, 32, 0, 99, NULL),
+	(264, 'Ultimate Bcu', 'unnamed.jpg', 1, 32, 1, 100, NULL),
+	(265, 'Stella 38', 'Stella Aquila 38 spiral dial - Hutt News, Volume 11, Issue 3, 16 June 1937, Page 1 (Medium).png', 1, 42, 0, 99, NULL),
+	(266, 'Columbus 38', 'Columbus Model 38 Tombstone Cabinet 2.jpg', 1, 40, 0, 99, NULL),
+	(267, 'Columbus 38', 'Papers Past - Hutt News - 15 December 1937 - Page 4 - Page 4 Advertisements Column 2.jpg', 1, 40, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -340,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~16 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~15 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -379,16 +421,16 @@ CREATE TABLE IF NOT EXISTS `model` (
   `notes` longtext COMMENT 'Information about this set',
   `if` text COMMENT 'IF transformer peak freq.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~33 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~35 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
 	(1, 0, '6 Valve Dual Wave', 3, '1934', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80', 2, '<p>6-valve chassis built by RCNZ, near-standard \'baking pan\' design, with dark metallic gold paint rather than the usual cadmium plating.  Also notable square \'tabs\' on the corners of the chassis rather than the usual rounded corners.  First Pacific model with \'aero\' dial.  Almost identical to Courtenay 108 circuitry (which appears to be identical, except for 2.5V valves).</p>', '256kc/s'),
 	(2, 1, 'Raleigh', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd art deco tabletop 6-valve dual wave model from 1934</p>', NULL),
 	(3, 1, 'Elite', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd stunning art deco dual-wave console from 1934</p>', NULL),
-	(4, NULL, 'Alabama', 9, '1956', 1, '1961', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>', '465kc/s'),
+	(4, NULL, 'Alabama', 9, '1956', 1, '1962', 1, 5, 'ECH81, EF89, EBC91, EL84, EZ80', 1, '<p>The Philco Alamaba is a 5-valve mantle set available in ivory, grey, green, blue, red and brown</p>\r\n<p>Almost identical to the Majestic set that replaced it after Philco disappeared as a brand in New Zealand, and almost identical to the La Gloria Imp (the main difference being the lack of louvres on the right side of the dial).</p>', '465kc/s'),
 	(5, NULL, '401', 9, '1954', 0, NULL, 0, 4, 'ECH42, EAF42, EL41, EZ40', 1, '<p>4-valve predecessor to the well-known (if not by name) <a href="/model/philco/alabama">Philco Alabama</a>.  Known in some literature as the \'Philco Nevada\'</p>', NULL),
 	(6, NULL, '5M', 1, '1952', 0, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, '<p>Also sold as a Columbus model, this was the last small receiver ever sold under the Courtenay label - within two years Turnbull and Jones would have pulled out of the radio receiver market and the Courtenay name would be history.  This receiver was known as the \'Talisman\', after the HMS Talisman, a Triton class submarine during WW2.</p>', NULL),
 	(7, NULL, 'Colt', 10, '1951', 0, '1980', 0, NULL, 'Various<br>\r\n5B4:   ECH41 or ECH42 or ECH81, EF41, EBC41, EL41, EZ40<br>\r\n5B60: ECH81, EF89, EBC81, EL84, EZ80<br>\r\n5B61: Same as 5B60, although later variants had a solid state rectifier<br>\r\n5B67: ECH81, EF89, EBC81, EL84, BY179 Silicon Rectifier<br><br>\r\nNote: the chassis numbers hint at the model year:  5B<b>4</b>=195<b>4</b>, 5B<b>60</b>=19<b>60</b> etc - however these chassis codes are not found on the chassis so some detective work is required to find the model you\'re working with.', 1, '<p><b>The Bell Colt</b> was the biggest-selling, longest-running and arguably the best known model of valve radio ever designed and built in New Zealand.  The ubiquitous Colt spanned almost 30 years and saw several different chassis versions with 3, 4 and 5 valves, and two different versions of a transistorised model for the last few years of production.</p>\r\n<p>Along with different circuitry, there were many different dial layouts, at least 7 cabinet colours (with various tones of colours as well) and even some different cabinet styles including a light- and a dark-toned solid oak cabinet being offered.<br><a class=\'non_gallery\' title="Airzone Cub (Aus.)" href="/static/images/models/bell/colt/img/airzone.jpg"><img class="img_right" src="/static/images/models/bell/colt/img/airzone.jpg" title="Airzone Cub (Aus.)"/></a>The plastic cabinet dies came from Australia where they were used for the Airzone Cub, just as the previous Bell mantle, the 5E, had used the fragile Airzone 458 cabinet.<br>\r\nYou can see the mold marks for the Airzone logo mounting area on the early cabinets, but the dies must have been modified at some stage because these marks are not visible on later models</p>\r\n<p><a class=\'non_gallery\' title="Push-On Plastic Knobs" href="/static/images/models/bell/colt/img/pushon.jpg"><img class="img_left" src="/static/images/models/bell/colt/img/pushon.jpg" title="Push-On Plastic Knobs"/></a>There are also two different control versions - one has recessed shafts with push-on plastic knobs, and these can be an absolute nightmare to remove if there is <b>any</b> hint of corrosion on the shaft (sometimes needing to be broken off).  <a class=\'non_gallery\' title="Cracked Bell Colt Knobs" href="/static/images/models/bell/colt/img/molded.jpg"><img class="img_right" src="/static/images/models/bell/colt/img/molded.jpg" title="Cracked Bell Colt Knobs"/></a>The other has shafts that pass through the cabinet and these models generally use a grub-screw mounted molded knob more reminiscent of the early-style bakelite knobs.  Its common for these knobs to crack, most likely due to overtightening as they have no metallic sleeve.<br> These are not the only knobs fitted to Colts, and while many arguments arise as to what knobs a Colt SHOULD have, so many of these were produced over the years (more than 6500 in 1961 alone, that\'s around 20,000 knobs not counting the world-wave models which needed one extra!) that it seems reasonable that the factory would use whatever it had (or could get) if-and-when it ran out of one type.</p>\r\n<p><b>OTHER \'COLT\' MODELS</b><br>\r\n<a href="/explorer">EXPLORER</a>: A dual-wave model with a shortwave band.<br>\r\n<a href="/champ">CHAMP</a>: A three-valve set.<br>\r\n<a href="/planet">PLANET</a>: The oak-cabinet models<br>\r\n<a href="/solid state colt">SOLID STATE COLT</a>: The Solid State (Transistorised) model from 1973 onward</p>\r\n<p><a class=\'non_gallery\' title="B&B Skymaster Colt" href="/static/images/models/bell/colt/img/skymaster.jpg"><img class="img_left" src="/static/images/models/bell/colt/img/skymaster.jpg" title="B&B Skymaster Colt"/></a>The Bell Colt was also produced as a Skymaster model for Bond and Bond, and a \'marine\' version of the dual wave chassis without tone control was seen in a Fountain model.<a class=\'non_gallery\' title="Fountain Marine Band" href="/static/images/models/bell/colt/img/fountain.jpg"><img class="img_right" src="/static/images/models/bell/colt/img/fountain.jpg" title="Fountain Marine Band"/></a>  In 1962 when Bell dropped the Colt in favour of its new \'General Radio\' line, Tee Vee  Radio Ltd took over production as the \'Tee-Rad Colt\' for a couple of years, however they were not successful and production went back to Bell.</p>\r\n', 'Various<br>\r\n5B4:   462kc/s<br>\r\n5B60: 455kc/s<br>\r\n5B61: 455kc/s<br>\r\n5B67: 455kc/s'),
@@ -417,8 +459,15 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(30, 0, 'RCNZ 12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s'),
 	(31, NULL, '495BC', 17, '1949', 0, NULL, 0, 5, '7S7, 7B7, 7C6 (or 6AQ6 ?), 7C5, 7Y4', 1, '<p>5-valve broadcast model.  At least 2 chassis variants - one of which has Philips(?) style IF cans, a miniature valve in the lineup, a different tuning cap (and reversed dial) and other differences like the orientation of the tone switch - possibly different manufacturers?  Or just different runs with changes to suit parts availability (although its odd that the tone switch was rotated and one run was stamped with high / low and the other wasn\'t).  Both sighted models have \'Manufactured by H.M.V. (NZ) Ltd\', however its possible one (or both) were manufactured by other companies, such as Collier & Beale.</p>', '455kc/s'),
 	(32, NULL, 'BCU', 19, '1937', 0, NULL, 0, NULL, NULL, NULL, '<p>7-valve all-wave</p>', NULL),
-	(33, NULL, 'AAU', 19, '1936', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>6-valve dual-wave model by Radio Ltd.</p>', NULL),
-	(34, NULL, '108', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>Courtenay 108, first aero-dial set from Radio Corp NZ.  Virtually identical to Pacific 6-valve Dual Wave chassis found in the likes of the Pacific Elite, Raleigh, etc. although Pacific used the 6.3V versions of the same valve lineup</p>', '256kc/s');
+	(33, 36, 'AAU', 19, '1936', 0, NULL, 0, 6, NULL, 2, '<p>6-valve dual-wave set, 2.5V valves, no eye</p>', NULL),
+	(34, NULL, '108', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>Courtenay 108, first aero-dial set from Radio Corp NZ.  Virtually identical to Pacific 6-valve Dual Wave chassis found in the likes of the Pacific Elite, Raleigh, etc. although Pacific used the 6.3V versions of the same valve lineup</p>', '256kc/s'),
+	(36, 0, 'AAU', 19, '1936', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>6-valve dual-wave chassis fitted to several models</p>', NULL),
+	(37, 36, 'XS', 23, '1936', 0, NULL, 0, 6, NULL, 2, '<p>6-valve dual-wave model, chassis and layout label in cabinet seems identical to the Ultimate AAU</p>', NULL),
+	(38, 0, 'RCNZ 38', 0, '1937', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 Magic Eye', 3, '3-band chassis covering broadcast 550 - 1500kHz, Intermediate SW 2.1 - 6MHz and SW 6 - 18MHz.  The chassis uses a unique spiral dial tuning system with an effective tuning distance of over 2 feet and fast / slow tuning to provide very good control of the frequency.  The spiral tuning system is complex though, and unless its been restored it always seems to be broken on sets found today.  The dial assembly consists of either a red-tinted spiral line of light or a red dot (depending on brand) that indicates the frequency on a novel trio of spirals for the three bands.  The band selector slightly rotates the system so that the dot or the end of the line aligns with the correct band.  Setting this up takes some patience and trial-error (There is some indication that there was to be a service bulletin from RCNZ for the dial assy, but it has never been sighted).', '456kc/s'),
+	(39, 38, '38', 1, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Courtenay model 38 used a diamond-shaped point of light to indicate the frequency, in a system they called "Phantom Ace" tuning.  The 2 known cabinet designs were called the Opera (Tombstone model) and Ballad (Console).</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL),
+	(40, 38, '38', 2, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Columbus model 38 used a diamond-shaped point of light to indicate the frequency, in a system they called "Spotlight Spiral Dial" tuning.  The 2 known cabinet designs have no name, although the slatted front model was advertised as being scientifically designed to spread all sound frequencies evenly.</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL),
+	(41, 38, '38', 3, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Pacific model 38 used a spiral line of light to indicate the frequency.  Only one cabinet design has been sighted, which is very conventional by the standards of their earlier Art Deco inspired cabinet designs</p>\r\n<p>The spiral line of light is generated by two aluminium discs, one with a spiral-shaped slot cut in it and the other with a large opening with curved sides.  They rotate independently of each other and in sync (but at different speeds) to the tuning gang in order to produce a line from the center out to a point that indicates the position of the tuning gang.', NULL),
+	(42, 38, '38', 8, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Stella model 38 \'Aquila\' used a diamond-shaped point of light to indicate the frequency, in a system probably called "Spotlight Spiral Dial" tuning (based on the wording of an advert from a Stella agent).  Only one known cabinet design, which is a standard looking tombstone.</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -433,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -451,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~73 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~63 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
