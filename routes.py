@@ -252,17 +252,19 @@ def model(brand, code):
         else: # but only use them if they're there
             image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
         image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
-        
-    for image in chassis_images:
-        thumbfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'thumbs', image['filename'])
-        smallimage = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'lowres', image['filename'])
-        imgfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, image['filename'])
-        # If low-bandwidth mode is set, use lowres images not full unless its a schematic
-        if get_fullres() or image['is_schematic']:
-            image['filename'] = imgfile
-        else: # but only use them if they're there
-            image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
-        image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
+    if 'chassis_images' in locals():
+        for image in chassis_images:
+            thumbfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'thumbs', image['filename'])
+            smallimage = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'lowres', image['filename'])
+            imgfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, image['filename'])
+            # If low-bandwidth mode is set, use lowres images not full unless its a schematic
+            if get_fullres() or image['is_schematic']:
+                image['filename'] = imgfile
+            else: # but only use them if they're there
+                image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
+            image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
+    else:
+        chassis_images=[]
         
     title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
     
@@ -609,4 +611,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run() # (debug=True)

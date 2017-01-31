@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~23 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~7 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~183 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~236 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -327,19 +327,17 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(228, 'Skyscraper XS', '3.jpg', 1, 37, 0, 99, NULL),
 	(229, 'Skyscraper XS', '4.jpg', 1, 37, 0, 99, NULL),
 	(230, 'Courtenay  Model 38 \'Opera\'', 'courtnayspiral.jpg', 1, 39, 0, 1, NULL),
-	(231, 'Courtenay 38', 'RCNZ model 38 004_.jpg', 1, 39, 1, 99, NULL),
 	(232, 'Courtenay 38', 'Courtenay 38 Ballad.png', 1, 39, 0, 53, NULL),
 	(233, 'Courtenay 38', 'Courtenay 38 Opera.png', 1, 39, 0, 50, NULL),
 	(234, 'Courtenay 38', 'Courtenay Spiral Dial Evening Post, Volume CXXIII, Issue 136, 10 June 1937, Page 6.png', 1, 39, 0, 70, NULL),
 	(235, 'Columbus 38', 'columbus 38.jpg', 1, 40, 0, 99, NULL),
-	(236, 'Columbus 38', 'RCNZ model 38 004_.jpg', 1, 40, 1, 100, NULL),
+	(236, 'RCNZ Model 38 Schematic', 'RCNZ model 38 004_.jpg', 1, 38, 1, 100, NULL),
 	(239, 'Pacific 38', '20150914_212253 (1).jpg', 1, 41, 0, 99, NULL),
 	(240, 'Pacific 38', '20150914_212304.jpg', 1, 41, 0, 99, NULL),
 	(241, 'Pacific 38', '20150914_212313.jpg', 1, 41, 0, 99, NULL),
 	(242, 'Pacific 38', '20150914_212350 (1).jpg', 1, 41, 0, 99, NULL),
 	(243, 'Pacific 38', '20150914_212436.jpg', 1, 41, 0, 99, NULL),
 	(244, 'Pacific 38', '20150914_212445.jpg', 1, 41, 0, 99, NULL),
-	(245, 'Pacific 38', 'RCNZ model 38 004_.jpg', 1, 41, 1, 99, NULL),
 	(246, 'Pacific 38', 'PRESS, VOLUME LXXIII, ISSUE 22166, 9 AUGUST 1937.png', 1, 41, 0, 99, NULL),
 	(247, 'Stella 38', '20151217_081346.jpg', 1, 42, 0, 99, NULL),
 	(248, 'Stella 38', '20151217_081432.jpg', 1, 42, 0, 99, NULL),
@@ -349,7 +347,6 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(252, 'Stella 38', '20151217_082141.jpg', 1, 42, 0, 99, NULL),
 	(253, 'Stella 38', '_Stella 38 Front.jpg', 1, 42, 0, 1, NULL),
 	(254, 'Stella 38', '_Stella 38 Rear.jpg', 1, 42, 0, 2, NULL),
-	(255, 'Stella 38', 'RCNZ model 38 004_.jpg', 1, 42, 1, 100, NULL),
 	(256, 'Philco 401', 'green 401.jpg', 1, 5, 0, 3, NULL),
 	(257, 'Philco 401', '544699035.jpg', 1, 5, 0, 4, NULL),
 	(258, 'Philco 401', '544699292.jpg', 1, 5, 0, 2, NULL),
@@ -361,7 +358,12 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(264, 'Ultimate Bcu', 'unnamed.jpg', 1, 32, 1, 100, NULL),
 	(265, 'Stella 38', 'Stella Aquila 38 spiral dial - Hutt News, Volume 11, Issue 3, 16 June 1937, Page 1 (Medium).png', 1, 42, 0, 99, NULL),
 	(266, 'Columbus 38', 'Columbus Model 38 Tombstone Cabinet 2.jpg', 1, 40, 0, 99, NULL),
-	(267, 'Columbus 38', 'Papers Past - Hutt News - 15 December 1937 - Page 4 - Page 4 Advertisements Column 2.jpg', 1, 40, 0, 99, NULL);
+	(267, 'Columbus 38', 'Papers Past - Hutt News - 15 December 1937 - Page 4 - Page 4 Advertisements Column 2.jpg', 1, 40, 0, 99, NULL),
+	(268, 'RCNZ Model 38 Dial Front', '38_dial_1.jpg', 1, 38, 0, 10, NULL),
+	(269, 'RCNZ Model 38 Dial Rear closed', '38_dial_2.jpg', 1, 38, 0, 15, NULL),
+	(270, 'RCNZ Model 38 Dial Rear open', '38_dial_3.jpg', 1, 38, 0, 20, NULL),
+	(271, 'RCNZ Model 38 Behind Dial', '38_dial_4.jpg', 1, 38, 0, 25, NULL),
+	(272, 'RCNZ Model 38 Underside', '38_01.jpg', 1, 38, 0, 5, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -382,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~15 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~16 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -423,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~35 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~41 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -482,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -500,7 +502,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~63 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~73 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
