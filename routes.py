@@ -219,6 +219,7 @@ def model(brand, code):
         if not chassis:
             flash('no chassis data for this model, contact admin', 'error')
             abort(404)
+        chassis_images = query_db("SELECT title, filename, rank, is_schematic, attribution FROM images WHERE type=1 AND type_id={0} ORDER BY rank ASC".format(model['chassis']))
         model['num_valves'] = chassis['num_valves']
         model['valve_lineup'] = chassis['valve_lineup']
         model['bands'] = chassis ['bands']
@@ -252,6 +253,17 @@ def model(brand, code):
             image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
         image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
         
+    for image in chassis_images:
+        thumbfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'thumbs', image['filename'])
+        smallimage = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, 'lowres', image['filename'])
+        imgfile = os.path.join(os.sep, 'static', 'images', 'chassis', manufacturer['alias'], code, image['filename'])
+        # If low-bandwidth mode is set, use lowres images not full unless its a schematic
+        if get_fullres() or image['is_schematic']:
+            image['filename'] = imgfile
+        else: # but only use them if they're there
+            image['filename'] = smallimage if os.path.exists(APP_ROOT + smallimage) else imgfile
+        image['thumb'] = thumbfile if os.path.exists(APP_ROOT + thumbfile) else imgfile
+        
     title = brand + ' ' + code if not code.isnumeric() else brand + ' model ' + code
     
     # highlight the valves in the lineup
@@ -272,7 +284,7 @@ def model(brand, code):
     
     model['notes'] = strip_outer_p_tags(model['notes'])
     
-    return render_template("model.html", model=model, other_models=other_models, title=title, brand=brand, manufacturer=manufacturer, distributor=distributor, code=code, images=images)
+    return render_template("model.html", model=model, other_models=other_models, title=title, brand=brand, manufacturer=manufacturer, distributor=distributor, code=code, images=images, chassis_images=chassis_images)
 
 
     

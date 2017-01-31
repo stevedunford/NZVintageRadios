@@ -10,22 +10,25 @@
   <!-- Main section for showing a radio / variant -->
   <div id="radio_images">
     {% for image in images %}<a class="gallery" title="{{ image['title'] }}{% if image['attribution'] %} | image from {{ image['attribution'] }}{% endif %}" href="{{ image['filename'] }}">
-      <img src="{{ image['thumb'] }}"></a>
+      <img class="gold" src="{{ image['thumb'] }}"></a>
+    {% endfor %}
+    {% for image in chassis_images %}<a class="gallery" title="{{ image['title'] }}{% if image['attribution'] %} | image from {{ image['attribution'] }}{% endif %}" href="{{ image['filename'] }}">
+      <img class="darkblue" src="{{ image['thumb'] }}"></a>
     {% endfor %}
   </div>
   
-  <p><span class='bold'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer['alias']}}">{{ manufacturer['name'] }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</span></p>
+  <p class="grey"><span class='bold'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer['alias']}}">{{ manufacturer['name'] }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</span></p>
   
   <!-- Model notes -->
   <p>{{ model['notes']|safe }}</p>
   
   <div class='icon valve'></div>
-  <p><span class="bold inset">Valve Lineup:</span> {% if model['valve_lineup'] %}{{ model['valve_lineup']|safe }}{% else %}Not currently known{% endif %}
+  <p class="grey"><span class="bold inset">Valve Lineup:</span> {% if model['valve_lineup'] %}{{ model['valve_lineup']|safe }}{% else %}Not currently known{% endif %}
   </p>
   
   {% if model['if'] %}
   <div class='icon if'></div>
-  <p><span class="bold inset">I.F. Frequency: </span>{{ model['if']|safe }}
+  <p class="grey"><span class="bold inset">I.F. Frequency: </span>{{ model['if']|safe }}
   </p>
   {% endif %}
   

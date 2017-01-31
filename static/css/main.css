@@ -377,7 +377,13 @@ menuIcon img {
     background-color: #aaf;
 }
 
+#container .darkblue {
+    background-color: #44f;
+}
 
+#container .grey {
+    background-color: #bbb;
+}
 
 #container img {
     max-width: 200px;
