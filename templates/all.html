@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="container">
+  
+  <h4>
+    All documented models
+  </h4>
+  <div class="list">
+    <ul>
+      {% set vars = {'prev' : "!", 'count' : 0} %}
+      {% for model in models %}
+        {% if model['name'] != vars.prev %}
+          <br><B>{{model['name']}}</B>
+          {% if vars.update({'prev' : model['name']}) %}{% endif %}
+        {% endif %}
+      {% if model['chassis'] == None or model['chassis'] != 0 %}
+        {% if vars.update({'count' : vars.count + 1}) %}{% endif %}
+      
+        <li>
+          <a href={{ url_for('model', brand=model['name'], code=model['code']) }}>
+             {% if model['start_year']|int %}{{ model['start_year'] }}{% else %}????{% endif %} - {{ model['name'] }} {{ model['code'] }}
+          </a>
+        </li>
+      {% endif %}
+      {% endfor %}
+      <br>
+      <b>{{ vars.count }} radios currently documented</b>
+    </ul>
+  </div>
+  
+</div>
+
+{% if debug %}
+<!-- debug -->
+  {{images}}
+  {{models}}<br><br>
+  {{brand}}<br><br>
+  {{distributor}}<br><br>
+  {{manufacturer}}<br><br>
+  {{code}}<br><br>
+  {{variant}}
+{% endif %}
+
+{% endblock %}

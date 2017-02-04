@@ -584,6 +584,12 @@ def hires_off():
     flash("Low bandwidth photos in use")
     return redirect("home")
 
+@app.route("/all")
+def all():
+    print("------------- YEP ----------------")
+    models = query_db("SELECT chassis, code, brand_id, start_year, name FROM model INNER JOIN brand on brand.id=model.brand_id ORDER BY name, start_year, code")
+    return render_template("all.html", title="ALL RADIOS", models=models)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', title="404"), 404
@@ -611,4 +617,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run() # (debug=True)
+    app.run(debug=True)
