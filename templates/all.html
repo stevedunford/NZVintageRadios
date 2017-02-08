@@ -8,26 +8,24 @@
     All documented models
   </h4>
   <div class="list">
-    <ul>
-      {% set vars = {'prev' : "!", 'count' : 0} %}
+      {# vars idea from http://stackoverflow.com/questions/9486393/jinja2-change-the-value-of-a-variable-inside-a-loop #}
+      {% set vars = {'prev' : "", 'count' : 0} %}
+      
       {% for model in models %}
         {% if model['name'] != vars.prev %}
-          <br><B>{{model['name']}}</B>
+          </p><p><b>{{model['name']}}</b><br />
           {% if vars.update({'prev' : model['name']}) %}{% endif %}
         {% endif %}
       {% if model['chassis'] == None or model['chassis'] != 0 %}
         {% if vars.update({'count' : vars.count + 1}) %}{% endif %}
       
-        <li>
           <a href={{ url_for('model', brand=model['name'], code=model['code']) }}>
              {% if model['start_year']|int %}{{ model['start_year'] }}{% else %}????{% endif %} - {{ model['name'] }} {{ model['code'] }}
-          </a>
-        </li>
+          </a><br />
       {% endif %}
-      {% endfor %}
+      {% endfor %}</p>
       <br>
-      <b>{{ vars.count }} radios currently documented</b>
-    </ul>
+      <h4>{{ vars.count }} radios currently documented</h4>
   </div>
   
 </div>

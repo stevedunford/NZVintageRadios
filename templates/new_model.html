@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- NicEdit configuration - simple HTML editor -->
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+	new nicEditor({iconsPath : '/static/js/nicEditorIcons.gif', buttonList : ['bold','italic','underline','removeformat','subscript','superscript','html','image','upload','link','unlink'], maxHeight: '250'}).panelInstance('notes');
+});
+</script>
+
+<div id="container">
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+      <p {% if form.name.errors %} class="error"{% endif %}>Name <span class='reqd'>*</span><br>{{ form.name(size=60) }} {% for error in form.name.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">The full name, ie: <b>Radio Corporation of New Zealand</b></span></p>
+        
+      <p {% if form.alias.errors %} class="error"{% endif %}>Alias <span class='reqd'>*</span><br>{{ form.alias(size=60) }} {% for error in form.alias.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">all lower case, with underscores for spaces if needed (preferably one word though) used by the site for links. eg: Radio Corps alias is <b>rcnz</b>.  Akrads is <b>akrad</b>.  Cash Radio's is <b>cash_radio</b></span></p>
+      
+      <p {% if form.year_started.errors %} class="error"{% endif %}>Year Started<br>{{ form.year_started(size=30) }} {% for error in form.year_started.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they start manufacturing (if known) and is this year approximate</span><br></p>
+      
+      <p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_ended_approx }}<br><span class="smaller blue italic">What year did they cease manufacturing (if known) and is this year approximate</span><br></p>
+      
+      <p {% if form.became.errors %} class="error"{% endif %}>Became {{ form.became }}<br>Why {{ form.became_how }}<br><span class="smaller blue italic">Did they change to another name / company?  And if so, why or how did that happen?</span></p>
+      
+      <p {% if form.address.errors %} class="error"{% endif %}>City/Town {{ form.address(size=60) }}<br><span class="smaller blue italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></p>
+      
+      <p {% if form.notes.errors %} class="error"{% endif %}>Notes <span class='reqd'>*</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br><span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span><br>
+        
+      <p {% if form.logo.errors %} class="error"{% endif %}>Manufacturer Logo: {% for error in form.logo.errors %}<span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.logo }}<br><span class="smaller blue italic">If you have one</span></p>
+ 
+    <p>
+      <input class="bold blue-background rounded" type="submit" value="Add Manufacturer"> <span class="blue italic"><=== Check your details then click here to add the manufacturer...</span>
+    </p>
+    <br><br>
+    <b>ERROR CHART - FOR DEVELOPMENT USE</b><br>
+    name: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    alias: {% for error in form.alias.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    start: {% for error in form.year_started.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    start appr: {% for error in form.year_started_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    end: {% for error in form.year_ended.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    end appr: {% for error in form.year_ended_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    because: {% for error in form.became.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    how: {% for error in form.became_how.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    address: {% for error in form.address.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    notes: {% for error in form.notes.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    logo: {% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
+    
+  </form>
+</div>
+{% endblock %}
+
+

@@ -351,7 +351,24 @@ class ManufacturerForm(FlaskForm):
     became_how = SelectField('how', validators=[Optional()], choices=[('', ''), ('merged with', 'Merged'), ('were taken over by', 'Taken Over'), ('sold out to', 'Sold to'), ('rebranded as', 'Rebranded')], default=None)
     notes = TextAreaField('notes', validators=[DataRequired()])
     logo = FileField('logo') #, default=None, validators=[Regexp(r"(^[^/\\]+(\.(?i)(jpg|png|gif))$)")]
-    
+
+#class ModelForm(FlaskForm):
+#    is_chassis = BooleanField('start_appr', default=False)
+#    chassis = IntegerField('chassis', validators=[Optional(), NumberRange(min=-1, max=65535)], default=None)
+#    code = StringField('code', validators=[DataRequired()])
+#    brand_id = SelectField('brand_id', validators=[Optional()], default=None, coerce=int)
+#    year_started = IntegerField('start', validators=[Optional(), NumberRange(min=1800, max=2017)], default=None)
+#    year_started_approx = BooleanField('start_appr', default=False)
+#    year_ended = IntegerField('end', validators=[Optional(), NumberRange(min=1800, max=2017), check_year_range], default=None)
+#    year_ended_approx = BooleanField('end_appr', default=False)
+#    address = StringField('address', validators=[Optional()], filters=[lambda x: x or None])
+#    num_valves = IntegerField('num_valves', validators=[Optional(), NumberRange(min=0, max=127), check_year_range], default=None) # 0 valves for crystal sets etc
+#    valve_lineup = StringField('valve_lineup', validators=[DataRequired()])
+#    bands = IntegerField('bands', validators=[Optional(), NumberRange(min=1, max=127), check_year_range], default=None)
+#    notes = TextField('notes', validators=[DataRequired()])
+#    i_f = StringField('i_f', validators=[DataRequired()]) #if is a keyword, so underscore is just for Python
+#    
+
 @app.route('/new') # only here for help
 @app.route('/new/<what>', methods=['GET', 'POST'])
 @app.route('/edit/<what>/<alias>', methods=['GET', 'POST'])
@@ -360,8 +377,8 @@ def edit(what=None, alias=None):
         flash('New what?  Use /new/manufacturer, /new/model etc...', 'error')
         abort(404)
         
-    if what != 'manufacturer':
-        flash('Only manufacturers thus far...', 'error')
+    if what != 'manufacturer' and what != 'model':
+        flash('Only manufacturers and models thus far...', 'error')
         abort(404)
     
     # Set up the form with a list of manufacturers for 'became'
@@ -586,7 +603,6 @@ def hires_off():
 
 @app.route("/all")
 def all():
-    print("------------- YEP ----------------")
     models = query_db("SELECT chassis, code, brand_id, start_year, name FROM model INNER JOIN brand on brand.id=model.brand_id ORDER BY name, start_year, code")
     return render_template("all.html", title="ALL RADIOS", models=models)
 

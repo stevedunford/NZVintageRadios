@@ -16,7 +16,7 @@
     {% endfor %}
   </div>
   
-  <p class="grey"><span class='bold'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer['alias']}}">{{ manufacturer['name'] }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran for {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year']|int - model['start_year']|int }} years{% endif %}.{% endif %}</span></p>
+  <p class="grey"><span class='bold'>Manufactured {% if distributor['name'] %}for <a href="/distributor/{{distributor['alias']}}">{{distributor['name']}}</a> {% endif %}by <a href="/manufacturer/{{manufacturer['alias']}}">{{ manufacturer['name'] }}</a> {% if model['start_year']|int  %} in {% if model['start_year_approx'] != 0 %}about {% endif %}{{ model['start_year'] }}{% if model['end_year'] %}, production ran until {% if model['end_year_approx'] != 0 %} about {% endif %}{{ model['end_year'] }}{% endif %}.{% endif %}</span></p>
   
   <!-- Model notes -->
   <p>{{ model['notes']|safe }}</p>
