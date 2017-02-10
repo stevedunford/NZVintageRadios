@@ -3,7 +3,7 @@
 {% block content %}
 
 <div id="container">
-<form action="import_photos" method="POST">
+<form action="{{ import_type }}" method="POST">
   <select name="path" onchange="this.form.submit()">
     <option value="" disabled selected style="display:none;">Choose a brand</option>
     {% for directory in directories %}

@@ -124,8 +124,8 @@ def make_dir(path):
             return False
     return True
         
-@app.route("/model/import_photos", methods=['GET', 'POST'])
-def import_photos():
+@app.route("/photoimport/<source>", methods=['GET', 'POST'])
+def import_photos(source="model"):
     if request.method == 'POST':
         path = request.form.get('path')
         files=[photo for photo in os.listdir(path) if photo[-4:].lower() == ".jpg" or photo[-4:].lower() == ".png"]
@@ -148,11 +148,15 @@ def import_photos():
             flash("{0}:image folder layout problem, contact admin, cry a little bit".format(folder_names), 'error')
             abort(500)
         code = folder_names[3]
-        brand = folder_names[2]
+        brand = folder_names[2] # brand doubles as manufacturer for chassis
         # find the model id for the photos (yuk!)
-        model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{1}'))".format(code, brand), single=True)
+        if source == "models":
+            model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND brand_id=(SELECT id FROM brand WHERE LOWER(alias='{1}'))".format(code, brand), single=True)
+        else: # its a chassis, so brand is actually manufacturer
+            model = query_db("SELECT id FROM model WHERE LOWER(code='{0}') AND brand_id=(SELECT id FROM manufacturer WHERE LOWER(alias='{1}'))".format(brand+' '+code, brand), single=True)
+
         if not model or len(model) == 0:
-            flash("No record held for a {0} by {2}".format(code, brand))
+            flash("No record held for a {0} by {1}".format(code, brand))
             abort(500)
         
         for image_file in files:
@@ -174,25 +178,34 @@ def import_photos():
                 cursor.execute(query)
                 conn.commit()
         flash('Images added successfully')
-        return redirect('/model/import_photos')
+        return redirect('/all')
     
-    # GET
+    # ['GET']
     else:
-        photo_root = APP_ROOT + url_for("static", filename="images/models")
+        if source == "models":
+            import_type = "/photoimport/models"
+        elif source == "chassis":
+            import_type = "/photoimport/chassis"
+        else:
+            flash("Either models or chassis - nothing else will do")
+            abort(404)
+        photo_root = APP_ROOT + url_for("static", filename="images/models" if source == "models" else "images/chassis")
         _directories = []
         for root, dirs, files in os.walk(photo_root):
             level = root.replace(photo_root, '').count(os.sep)
             indent = '---' * (level)
             _directories.append(('{0} {1}/'.format(indent, os.path.basename(root)), os.path.abspath(root)))
         #print (_directories)
-        return render_template("import_photos.html", directories=_directories)
+        return render_template("import_photos.html", import_type=import_type, directories=_directories)
 
+    
     
 '''
 model - this is a radio information page
 '''
 @app.route("/model/<brand>/<code>")
 def model(brand, code):
+        
     # if spaces then reroute to the proper version
     if brand.strip().count(' ') > 0 or code.strip().count(' ') > 0:
         _brand = brand.replace(' ', '_').strip().lower()
