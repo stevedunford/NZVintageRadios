@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
 DELETE FROM `brand`;
@@ -80,7 +80,8 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(20, 'Courier', 'courier', NULL, 15, 0, '1931', 0, '1955', 0, '<p>Courier was the \'other\' brand name of Radio Ltd. (Ultimate being the main brand)</p>'),
 	(21, 'Courier (original)', 'courier_original', 'Brings Tidings From Afar', 0, 0, '1927', 0, '1930', 1, '<P>The original Courier brand name belonged to J. Wiseman & Sons, a saddle maker.  They had a sideline making radios between 1927 and around 1930 when production ceased for unknown reasons - the Courier name was picked up the following year by Radio Ltd.</p>'),
 	(22, 'Skymaster', 'skymaster', NULL, 8, 8, NULL, 0, NULL, 0, 'Manufactured for Bond & Bond by Bell, the main model was a rebranded Bell Colt with different knobs and a different dial glass.'),
-	(23, 'Skyscraper', 'skyscraper', NULL, 15, 8, NULL, 0, NULL, 0, '<p>House brand for Bond & Bond, a major appliance retailer throughout New Zealand</p>');
+	(23, 'Skyscraper', 'skyscraper', NULL, 15, 8, NULL, 0, NULL, 0, '<p>House brand for Bond & Bond, a major appliance retailer throughout New Zealand</p>'),
+	(24, 'Fleetwood', 'fleetwood', NULL, 20, 0, '1957', 0, NULL, 0, '<p>Feetwood appears to have been a simple rebadging of Philips and Mullard models for C. & A. Odlin Ltd, and was introduced to replace the Mullard brand in 1957 and was used on radios and televisions through until the 70\'s.  The Mullard brand was still used on valves and picture tubes.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -120,9 +121,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~259 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~258 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -282,8 +283,8 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(186, 'Bell 6P7', '457300468.jpg', 1, 26, 0, 99, NULL),
 	(187, 'Clipper 5M4', '5m4oldnewbottom.jpg', 1, 28, 0, 99, NULL),
 	(188, 'Clipper 5M4', '5m4oldnewtop.jpg', 1, 28, 0, 99, NULL),
-	(189, 'Courtenay 84', '509152342.jpg', 1, 18, 0, 99, NULL),
-	(190, 'Courtenay 84', '509227171.jpg', 1, 18, 0, 99, NULL),
+	(189, 'Courtenay 84', '509152342.jpg', 1, 18, 0, 1, NULL),
+	(190, 'Courtenay 84', '509227171.jpg', 1, 18, 0, 2, NULL),
 	(191, 'Courtenay 84', 'rcnz model 84 schematic.png', 1, 18, 1, 99, NULL),
 	(192, 'Pacific Nottingham', 'New Zealand Herald, Volume LXXII, Issue 22130, 8 June 1935, Page 16.jpg', 1, 29, 0, 99, 'PapersPast & NZ Herald 8th June 1935'),
 	(193, 'Pacific Nottingham', 'nottingham.jpg', 1, 29, 0, 1, NULL),
@@ -384,7 +385,20 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(297, 'Rcnz 5M', 'Chassis-underside-before.jpg', 1, 46, 0, 99, NULL),
 	(298, 'Courtenay 5M', 'courtenay talisman.jpg', 1, 6, 0, 99, NULL),
 	(299, 'Columbus 6', 'columbus6.jpg', 1, 47, 0, 99, NULL),
-	(300, 'Columbus 6', 'mod6rear.jpg', 1, 47, 0, 99, NULL);
+	(300, 'Columbus 6', 'mod6rear.jpg', 1, 47, 0, 99, NULL),
+	(301, 'Columbus 38', 'console1.jpg', 1, 40, 0, 99, NULL),
+	(302, 'Columbus 38', 'console2.jpg', 1, 40, 0, 99, NULL),
+	(303, 'Columbus 38', 'console3.jpg', 1, 40, 0, 99, NULL),
+	(304, 'Columbus 38', 'console4.jpg', 1, 40, 0, 99, NULL),
+	(305, 'Columbus 38', 'console5.jpg', 1, 40, 0, 99, NULL),
+	(306, 'Columbus 38', 'console6.jpg', 1, 40, 0, 99, NULL),
+	(307, 'Columbus 38', 'console7.jpg', 1, 40, 0, 99, NULL),
+	(308, 'Columbus 38', 'console8.jpg', 1, 40, 0, 99, NULL),
+	(314, 'Courtenay 84', '1.jpg', 1, 18, 0, 10, NULL),
+	(315, 'Courtenay 84', '2.jpg', 1, 18, 0, 20, NULL),
+	(316, 'Courtenay 84', '3.jpg', 1, 18, 0, 30, NULL),
+	(317, 'Courtenay 84', '4.jpg', 1, 18, 0, 40, NULL),
+	(318, 'Courtenay 84', '5.jpg', 1, 18, 0, 50, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -403,7 +417,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table nzvr_db.manufacturer: ~19 rows (approximately)
 DELETE FROM `manufacturer`;
@@ -427,7 +441,8 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(16, 'Ultimate-Ekco (N.Z.) Co. Ltd', 'ultimate_ekco', 'Auckland', '1955', 0, '1965', 0, 7, 'were taken over by', '<p>An overseas link to E. K. Cole Ltd (known as Ekco) was formed to provide technical assistance with the prospect of television becoming a new market segment in the near future.  This led to a reorganisation of the company as Ultimate-Ekco (N.Z.) Co. Ltd.  The also had the spin off that some U.K. Ekco models were produced and sold here alongside the long-standing Ultimate name.</p>'),
 	(17, 'Inductance Specialists Ltd', 'inductance_specialists', 'Greerton, Tauranga', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured RF coils and chokes, IF Transformers, coil packs, etc.  The famous B9 and B10 kitset radio, etc</p>'),
 	(18, 'Beacon Radio Ltd', 'beacon', 'Auckland', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured mains transformers, speaker transformers, chokes, etc.  Later, about 1970, taken over by Phillips NZ.</p>'),
-	(19, 'Auckland Transformer Co. Ltd', 'atc', 'Auckland', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured mains transformers, speaker transformers, chokes, etc.</p><p><a class="gallery img_left" title="ATC Audio Output Transformer Specifications" href="/static/images/manufacturers/atc/specs.png"><img class="inline_image" src="/static/images/manufacturers/atc/specs_tn.png" alt="ATC Audio Output Tranformer Specs" /></a>\r\n');
+	(19, 'Auckland Transformer Co. Ltd', 'atc', 'Auckland', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured mains transformers, speaker transformers, chokes, etc.</p><p><a class="gallery img_left" title="ATC Audio Output Transformer Specifications" href="/static/images/manufacturers/atc/specs.png"><img class="inline_image" src="/static/images/manufacturers/atc/specs_tn.png" alt="ATC Audio Output Tranformer Specs" /></a>\r\n'),
+	(20, 'Philips Electrical Industries of NZ Ltd', 'philips', 'Wellington', '1927', 0, NULL, 0, NULL, NULL, '<p>Philips started in New Zealand in May of 1927 as Philips Lamps (N.Z.) Ltd.  Prior to this, Turnbull & Jones (Wellington) and a New Zealand branch of Lawrence & Hanson Ltd (Aust.) jointly distributed Philips lamps (no radio products existed for Philips at this time).<br><br>\r\nInitially sets were imported from overseas factories, such as the 2510 and the 930A - but they didn\'t really have the performance of the American superhet designs, and so Philips sets struggled to gain traction against imported and locally manufactured sets.  This is probably the reason why, in 1934, they commissioned RCNZ to manufacture superhet radios under the Philips Radioplayer name using mostly Philips valves - apart from the mixer, an American 2A7, since Philips (who didn\'t need mixers in their TRF-based designs) didn\'t yet have a valve for this purpose.<br><br>\r\nIn 1936 Philips NZ finally began setting up a production facility here in NZ, although radio production never really began until around 1939, with full scale production beginning in the following year - but 2 years later the war effort stopped production of domestic radios.<br><br>\r\nFor a few years after the war Philips sets were very American in design, however as Europe began to rebuild the design swung back to have a European flavour again.<br><br>\r\nIn 1958 a new large factory in Naenae was opened and this produced radios and televisions (among other consumer items such as Philishave shavers).<br><br>\r\nThe final valve set produced in NZ was the B2Z56U which was sold between 1968 and 1970 - interestingly long after transistors had taken the stage.');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -447,9 +462,9 @@ CREATE TABLE IF NOT EXISTS `model` (
   `notes` longtext COMMENT 'Information about this set',
   `if` text COMMENT 'IF transformer peak freq.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~40 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~35 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -469,36 +484,38 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(14, 30, '12', 1, '1940', 1, NULL, 0, NULL, NULL, NULL, '<p>The tiny broadcast-band only Model 12, also known as the Courtenay \'Tiki\'.</p>', NULL),
 	(15, NULL, 'Broadcaster', 15, '1936', 1, NULL, 0, 5, NULL, 1, '<p>The awesome-looking Haywin Broadcaster was built for Hay\'s Dept Store in Christchurch.</p>', NULL),
 	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL),
-	(17, NULL, '84', 2, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well which was sighted without the magic eye', '456kc/s'),
-	(18, NULL, '84', 1, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve + 6E5 magic eye, Columbus version as well', '456kc/s'),
+	(17, 49, '84', 2, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well (no magic eye).', NULL),
+	(18, 49, '84', 1, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve, Columbus version as well (which has a magic eye)', NULL),
 	(19, NULL, '65', 2, '1940', 0, NULL, 0, 6, '6K7G, 6K8G, 6K7G, 6B8G, 6F6G, 5Y3G and 6E5 magic eye', 2, '<p>All-world reception, spin tuning dial, automatic 6-station push button station selector.  Table model photo courtesy of Keith Annabell of radio-restoration.com</p>', '464kc/s, 4kc wide flat-top to improve high frequency response (see RCNZ Service Supplement S39/1 I.F. Channels in Models 60 and 65, 17th March 1939)'),
 	(20, NULL, '5151', 16, '1951', 0, NULL, 0, 5, NULL, 1, '<p>Bakelite cabinet, distinctive sweep in from each top corner.  Also produced in 1952 as a 5152.</p>', NULL),
 	(21, NULL, '756', 16, '1946', 0, NULL, 0, 7, NULL, 5, '<p>7-valve, bandspread, 1946</p>', NULL),
 	(22, NULL, '617', 16, '1947', 0, NULL, 0, 6, NULL, 1, '<p>6-valve, AM only, 1947</p>', NULL),
 	(23, NULL, '75', 2, '1940', 0, NULL, 0, 6, 'KTW61, X65, 6K7G, 6B8G, 6F6G, U50 and Y63 Magic Eye', 5, '<p>6-valve + eye, bandspread', '455kc/s'),
-	(24, NULL, '24', 1, '1937', 0, NULL, 0, 5, NULL, NULL, '<p>Unusual 5-valve + eye set with NZ stations on the dial and a list of Australian stations / frequencies in the right-hand window</p>', NULL),
+	(24, 48, '24', 1, '1937', 0, NULL, 0, 5, NULL, NULL, '<p>Unusual 5-valve + eye set with NZ stations on the dial and a list of Australian stations / frequencies in the right-hand window</p>', NULL),
 	(25, NULL, '1', 10, '1952', 0, NULL, 0, NULL, NULL, 1, '<p>The Model 1 was the first portable under the Bell brand.</p>', NULL),
 	(26, NULL, '6P7', 10, '1955', 0, NULL, 0, NULL, NULL, 1, '<p>The 6P7 was a 3-way portable (AC / DC / Battery), and is noted as being one of several \'Hot-Boxes\' available from various manufacturers at the time by John Stokes.  The tranformerless design made them lighter, but less reliable and also meant that the mains was directly connected to the chassis - hopefully neutral, but the plugs at that time were not polarised and so it depended entirely on luck, and the fact that the entire chassis was insulated... however one broken knob could potentially (pun intended) see you and 230V making contact through the metal shaft of the control</p>', NULL),
 	(27, NULL, '65-BC', 18, '1936', 0, NULL, 0, 6, NULL, 1, '<p>Data from the 1936-37 Johns catalogue:<br>6-Valve broadcast only receiver, AVC, Celestion speaker, external speaker jacks, Tuning meter, pick-up terminals.  Cabinet hand-polished <a href="https://en.wikipedia.org/wiki/Duco">Duco</a>.</p>', NULL),
 	(28, NULL, '5M4', 5, '1954', 0, '1956', 1, 5, 'ECH42, EF41, EBC41, EL41, EZ40', 1, '<p>The Clipper 5M4 was the first plastic radio to be fully designed and manufactured in New Zealand (other models of this size existed - the Bell Colt for example - but they used imported dies for the cabinet).  Akrad designed and manufactured the mold for their cabinet.Several colours were released, however ivory is by far the most common to be found.  The rarest would be black, as it is believed only a handful were made to be presented to the shareholders of the company.  Other known colours are red, blue, brown and green.</p>\r\n<p><a class=\'non_gallery\' title="2 Chassis Variants - Bottom Side" href="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewbottom.jpg" title="2 Chassis Variants - Bottom Side"/></a><a class=\'non_gallery\' title="2 Chassis Variants - Top Side" href="/static/images/models/clipper/5m4/5m4oldnewtop.jpg"><img class="img_left" src="/static/images/models/clipper/5m4/5m4oldnewtop.jpg" title="2 Chassis Variants - Top Side"/></a>\r\nThere are at least two chassis variants, both using almost the same circuit and the same valve lineup, and can be seen here with the older variant at the bottom.  The earlier chassis has the serial number stamped on the back while later models have a serial plate riveted on.</p<p>Earlier models also have round IF cans, where the later models use more modern rectangular units.</p<p>The later models have a Rola 5" speaker providing feedback to the 1st audio section via a resistive divider and also have an internal foil antenna glued to the inside of the cabinet and attached by a small bolt and nut in addition to the external orange aerial wire where the earlier models have no feedback and just the external orange aerial wire (both have a black earth wire as well).</p><p>A few other minor variations have been noted, such as Ducon capacitors in the earlier models with mustard caps in the later and a metal shield over the dial lamp in the later ones to try and cut down on the amount of glow through the cabinet.</p>', NULL),
 	(29, 1, 'Nottingham', 3, '1934', 0, NULL, 0, NULL, NULL, 2, '<p>Pacific Radio Ltd art deco tabletop 6-valve dual wave model from 1934</p>', NULL),
-	(30, 0, 'RCNZ 12', 0, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s'),
+	(30, 0, 'RCNZ 12', 3, '1940', 1, NULL, 0, 5, '6K8G, 6K7G, 6B8G, 6K6G, 84', 1, 'A small 5-valve mantle-sized chassis used in Columbus and Courtenay sets - designed for AC or DC (transformerless) operation (with modifications).  Notable for having a very shallow chassis necessitating a riser spot-welded to the back in order to mount the serial plate', '455kc/s'),
 	(31, NULL, '495BC', 17, '1949', 0, NULL, 0, 5, '7S7, 7B7, 7C6 (or 6AQ6 ?), 7C5, 7Y4', 1, '<p>5-valve broadcast model.  At least 2 chassis variants - one of which has Philips(?) style IF cans, a miniature valve in the lineup, a different tuning cap (and reversed dial) and other differences like the orientation of the tone switch - possibly different manufacturers?  Or just different runs with changes to suit parts availability (although its odd that the tone switch was rotated and one run was stamped with high / low and the other wasn\'t).  Both sighted models have \'Manufactured by H.M.V. (NZ) Ltd\', however its possible one (or both) were manufactured by other companies, such as Collier & Beale.</p>', '455kc/s'),
 	(32, NULL, 'BCU', 19, '1937', 0, NULL, 0, NULL, NULL, NULL, '<p>7-valve all-wave</p>', NULL),
 	(33, 36, 'AAU', 19, '1936', 0, NULL, 0, 6, NULL, 2, '<p>6-valve dual-wave set, 2.5V valves, no eye</p>', NULL),
-	(34, NULL, '108', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>Courtenay 108, first aero-dial set from Radio Corp NZ.  Virtually identical to Pacific 6-valve Dual Wave chassis found in the likes of the Pacific Elite, Raleigh, etc. although Pacific used the 6.3V versions of the same valve lineup</p>', '256kc/s'),
+	(34, NULL, '108', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>The Courtenay model 108 was the first aero-dial (round dial) set from Radio Corp NZ.  The circuit is virtually identical to sighted 1934 Pacific 6-valve Dual Wave chassis\' found in the likes of the Pacific Elite, Raleigh, etc. although Pacific used the 6.3V versions of the same valve lineup. (although a service bulletin for the Pacific shows 2.5V valves so there were possibly two versions - making it also possible that there are Courtenay model 108\'s with 6.3V valves).</p>', '256kc/s'),
 	(36, 0, 'AAU', 19, '1936', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 2, '<p>6-valve dual-wave chassis fitted to several models</p>', NULL),
 	(37, 36, 'XS', 23, '1936', 0, NULL, 0, 6, NULL, 2, '<p>6-valve dual-wave model, chassis and layout label in cabinet seems nearly identical to the Ultimate AAU (dial is different)</p>', NULL),
-	(38, 0, 'RCNZ 38', 0, '1937', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 Magic Eye', 3, '3-band chassis covering broadcast 550 - 1500kHz, Intermediate SW 2.1 - 6MHz and SW 6 - 18MHz.  The chassis uses a unique spiral dial tuning system with an effective tuning distance of over 2 feet and fast / slow tuning to provide very good control of the frequency.  The spiral tuning system is complex though, and unless its been restored it always seems to be broken on sets found today.  The dial assembly consists of either a red-tinted spiral line of light or a red dot (depending on brand) that indicates the frequency on a novel trio of spirals for the three bands.  The band selector slightly rotates the system so that the dot or the end of the line aligns with the correct band.  Setting this up takes some patience and trial-error (There is some indication that there was to be a service bulletin from RCNZ for the dial assy, but it has never been sighted).', '456kc/s'),
+	(38, 0, 'RCNZ 38', 3, '1937', 0, NULL, 0, 6, '6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 Magic Eye', 3, '3-band chassis covering broadcast 550 - 1500kHz, Intermediate SW 2.1 - 6MHz and SW 6 - 18MHz.  The chassis uses a unique spiral dial tuning system with an effective tuning distance of over 2 feet and fast / slow tuning to provide very good control of the frequency.  The spiral tuning system is complex though, and unless its been restored it always seems to be broken on sets found today.  The dial assembly consists of either a red-tinted spiral line of light or a red dot (depending on brand) that indicates the frequency on a novel trio of spirals for the three bands.  The band selector slightly rotates the system so that the dot or the end of the line aligns with the correct band.  Setting this up takes some patience and trial-error (There is some indication that there was to be a service bulletin from RCNZ for the dial assy, but it has never been sighted).', '456kc/s'),
 	(39, 38, '38', 1, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Courtenay model 38 used a diamond-shaped point of light to indicate the frequency, in a system they called "Phantom Ace" tuning.  The 2 known cabinet designs were called the Opera (Tombstone model) and Ballad (Console).</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL),
 	(40, 38, '38', 2, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Columbus model 38 used a diamond-shaped point of light to indicate the frequency, in a system they called "Spotlight Spiral Dial" tuning.  The 2 known cabinet designs have no name, although the slatted front model was advertised as being scientifically designed to spread all sound frequencies evenly.</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL),
 	(41, 38, '38', 3, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Pacific model 38 used a spiral line of light to indicate the frequency.  Only one cabinet design has been sighted, which is very conventional by the standards of their earlier Art Deco inspired cabinet designs</p>\r\n<p>The spiral line of light is generated by two aluminium discs, one with a spiral-shaped slot cut in it and the other with a large opening with curved sides.  They rotate independently of each other and in sync (but at different speeds) to the tuning gang in order to produce a line from the center out to a point that indicates the position of the tuning gang.', NULL),
 	(42, 38, '38', 8, '1937', 0, NULL, 0, NULL, NULL, NULL, 'The Stella model 38 \'Aquila\' used a diamond-shaped point of light to indicate the frequency, in a system probably called "Spotlight Spiral Dial" tuning (based on the wording of an advert from a Stella agent).  Only one known cabinet design, which is a standard looking tombstone.</p>\r\n<p>The diamond shaped point of light is generated by two aluminium discs with opposing spiral-shaped slots cut in them.  They rotate independently of each other and in sync with the tuning gang in order to produce a hole where the two spirals meet that indicates the position of the tuning gang.', NULL),
-	(43, 0, 'RCNZ 18', 1, '1936', 0, '1937', 1, 6, '6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 magic eye on some models', 2, '<p>Model 18 chassis, found in tabletop cabinets, often with a vibrator power supply, or tombstone as mains only.  Dual wave. Radiomuseum has a tombstone without magic eye, and the schematic does not show one.  Production serial numbers have been noted in both 1936 and 1937.', '456kc/s'),
+	(43, 0, 'RCNZ 18', 3, '1936', 0, '1937', 1, 6, '6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 magic eye on some models', 2, '<p>Model 18 chassis, found in tabletop cabinets, often with a vibrator power supply, or tombstone as mains only.  Dual wave. Radiomuseum has a tombstone without magic eye, and the schematic does not show one.  Production serial numbers have been noted in both 1936 and 1937.', '456kc/s'),
 	(44, 43, '18', 1, '1936', 0, NULL, 0, NULL, NULL, NULL, 'Courtenay released several variations of the RCNZ model 18 including table top and tombstone models - some have magic eyes fitted.', NULL),
 	(45, 43, '18', 2, '1936', 0, '1937', 0, NULL, NULL, NULL, 'Columbus had several different model 18 variants - these were a 1936 dual wave 6-valve (plus eye on some models) set.', NULL),
 	(46, 0, 'RCNZ 5M', 3, '1951', 1, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, '<p>5-valve mantle radio chassis, found in Columbus and Courtenay radios that looked very much the same aside from the dial.  Similar in style to the 5, and physically narrower than the 5B.</p>', NULL),
-	(47, NULL, '6', 2, '1946', 0, NULL, 0, 5, NULL, 1, '<p>The model 6 was released for Columbus only, and had a metal body with moulded plastic front.  It was a very small cabinet for the time considering the octal GT style valves.</p><p>Images courtesy of kevsradios.100webcustomers.com</p>', NULL);
+	(47, NULL, '6', 2, '1946', 0, NULL, 0, 5, NULL, 1, '<p>The model 6 was released for Columbus only, and had a metal body with moulded plastic front.  It was a very small cabinet for the time considering the octal GT style valves.</p><p>Images courtesy of kevsradios.100webcustomers.com</p>', NULL),
+	(48, 0, 'RCNZ 24', 3, '1937', 0, NULL, 0, 5, '6A8, 6K7, 6B7G, 42, 80 and 6E5 magic eye on some models', 1, '<p>5-valve (and 6E5 magic eye on some models) chassis, fairly basic design although engineered for an unusual cabinet design with two controls (tuning and on/off) on the left, two more (volume and tone) on the right and the eye dead center between them.  Uses a 5" RCNZ EM speaker</p>', '456kc/s'),
+	(49, 0, 'RCNZ 84', 3, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve chassis, similar (reasonably basic) design to the model 24.  A magic eye is included in the schematic, however it has been sighted on the Columbus version but not the Courtenay.', '456kc/s');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -529,7 +546,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   `type` tinytext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table nzvr_db.valve: ~82 rows (approximately)
 DELETE FROM `valve`;
@@ -616,7 +633,8 @@ INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
 	(84, '6G5', '6U5.jpg', '6U5 / 6G5 Magic Eye'),
 	(85, '6U5G', '6U5.jpg', '6U5 / 6G5 Magic Eye'),
 	(86, '6G5G', '6U5.jpg', '6U5 / 6G5 Magic Eye'),
-	(87, 'Y63', '6U5.jpg', '6U5 / 6G5 (and Y63) Magic Eye');
+	(87, 'Y63', '6U5.jpg', '6U5 / 6G5 (and Y63) Magic Eye'),
+	(88, '6B7G', '6B7.jpg', '2B7 / 6B7 First Audio / Detector');
 /*!40000 ALTER TABLE `valve` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
