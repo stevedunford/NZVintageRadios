@@ -646,4 +646,3 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run()#debug=True)
