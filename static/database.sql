@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~24 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~7 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~258 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~272 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -398,7 +398,15 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(315, 'Courtenay 84', '2.jpg', 1, 18, 0, 20, NULL),
 	(316, 'Courtenay 84', '3.jpg', 1, 18, 0, 30, NULL),
 	(317, 'Courtenay 84', '4.jpg', 1, 18, 0, 40, NULL),
-	(318, 'Courtenay 84', '5.jpg', 1, 18, 0, 50, NULL);
+	(318, 'Courtenay 84', '5.jpg', 1, 18, 0, 50, NULL),
+	(319, 'Ultimate Rcp', '20160122_012641.jpg', 1, 51, 0, 99, NULL),
+	(320, 'Ultimate Rcp', '480560379.jpg', 1, 51, 0, 99, NULL),
+	(321, 'Ultimate Rcp', '484904049 (1).jpg', 1, 51, 0, 99, NULL),
+	(322, 'Ultimate Rcp', '525387654.jpg', 1, 51, 0, 99, NULL),
+	(323, 'Ultimate Rcp', '529874237.jpg', 1, 51, 0, 99, NULL),
+	(324, 'Ultimate Rcp', '538486292.jpg', 1, 51, 0, 99, NULL),
+	(325, 'Ultimate Rcp', 'Dial Scale at night.jpg', 1, 51, 0, 99, NULL),
+	(326, 'Ultimate Rcp', 'Ultimate-1957.jpg', 1, 51, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -419,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~19 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~20 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -464,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~35 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~48 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -484,8 +492,8 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(14, 30, '12', 1, '1940', 1, NULL, 0, NULL, NULL, NULL, '<p>The tiny broadcast-band only Model 12, also known as the Courtenay \'Tiki\'.</p>', NULL),
 	(15, NULL, 'Broadcaster', 15, '1936', 1, NULL, 0, 5, NULL, 1, '<p>The awesome-looking Haywin Broadcaster was built for Hay\'s Dept Store in Christchurch.</p>', NULL),
 	(16, NULL, 'Atom', 15, '1949', 0, NULL, 0, 4, NULL, 1, '<p>The Haywin Atom was a tiny white plastic-cased 4-valve bookshelf receiver.</p>', NULL),
-	(17, 49, '84', 2, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve + 6E5 magic eye, Courtenay version as well (no magic eye).', NULL),
-	(18, 49, '84', 1, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve, Columbus version as well (which has a magic eye)', NULL),
+	(17, 49, '84', 2, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve + 6E5 magic eye.', NULL),
+	(18, 49, '84', 1, '1938', 0, NULL, 0, 5, NULL, 1, '<p>5-valve radio, art deco cabinet, at least two different dial styles sighted - one of which looks very similar to the Columbus dial, the other a more common \'gold\' embossed card dial typical to Courtenay sets of this era.', NULL),
 	(19, NULL, '65', 2, '1940', 0, NULL, 0, 6, '6K7G, 6K8G, 6K7G, 6B8G, 6F6G, 5Y3G and 6E5 magic eye', 2, '<p>All-world reception, spin tuning dial, automatic 6-station push button station selector.  Table model photo courtesy of Keith Annabell of radio-restoration.com</p>', '464kc/s, 4kc wide flat-top to improve high frequency response (see RCNZ Service Supplement S39/1 I.F. Channels in Models 60 and 65, 17th March 1939)'),
 	(20, NULL, '5151', 16, '1951', 0, NULL, 0, 5, NULL, 1, '<p>Bakelite cabinet, distinctive sweep in from each top corner.  Also produced in 1952 as a 5152.</p>', NULL),
 	(21, NULL, '756', 16, '1946', 0, NULL, 0, 7, NULL, 5, '<p>7-valve, bandspread, 1946</p>', NULL),
@@ -515,7 +523,9 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(46, 0, 'RCNZ 5M', 3, '1951', 1, NULL, 0, 5, '6BE6, 6BA6, 6AV6, 6AQ5, 6X4', 1, '<p>5-valve mantle radio chassis, found in Columbus and Courtenay radios that looked very much the same aside from the dial.  Similar in style to the 5, and physically narrower than the 5B.</p>', NULL),
 	(47, NULL, '6', 2, '1946', 0, NULL, 0, 5, NULL, 1, '<p>The model 6 was released for Columbus only, and had a metal body with moulded plastic front.  It was a very small cabinet for the time considering the octal GT style valves.</p><p>Images courtesy of kevsradios.100webcustomers.com</p>', NULL),
 	(48, 0, 'RCNZ 24', 3, '1937', 0, NULL, 0, 5, '6A8, 6K7, 6B7G, 42, 80 and 6E5 magic eye on some models', 1, '<p>5-valve (and 6E5 magic eye on some models) chassis, fairly basic design although engineered for an unusual cabinet design with two controls (tuning and on/off) on the left, two more (volume and tone) on the right and the eye dead center between them.  Uses a 5" RCNZ EM speaker</p>', '456kc/s'),
-	(49, 0, 'RCNZ 84', 3, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve chassis, similar (reasonably basic) design to the model 24.  A magic eye is included in the schematic, however it has been sighted on the Columbus version but not the Courtenay.', '456kc/s');
+	(49, 0, 'RCNZ 84', 3, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve chassis, similar (reasonably basic) design to the model 24.  A magic eye is included in the schematic, however it has been sighted on the Columbus version but not the Courtenay.', '456kc/s'),
+	(50, 0, 'Ultimate RCP', 16, '1953', 0, '1959', 0, 5, NULL, 1, '<p>The second variant of the Cygnet (the earlier chassis code is RBZ - a 4-valve model).  Excellent performing chassis using a ferrite aerial which provides excellent reception.</p>', NULL),
+	(51, 50, 'RCP', 19, '1953', 0, '1959', 0, 5, NULL, 1, 'The RCP \'Cygnet\' was a bookshelf plastic radio available in 5 pastel colours according to advertising.  Sighted colours are white, green, blue, grey and tortishell / brown.</p><p>This model was released under several brands, including Ultimate, Rolls, Ekco and Golden Knight (and possibly others).', NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -530,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -548,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~82 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~83 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
