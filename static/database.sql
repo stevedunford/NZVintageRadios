@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `brand` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~24 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -76,12 +76,13 @@ INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distr
 	(16, 'Gulbransen', 'gulbransen', NULL, 11, 0, '1929', 0, '1958', 0, '<p>Originally imported by H. W. Clarke who had the Gulbransen Piano importation business - but as the demand for pianos declined with the onset of radio, Gulbransen in the US started into the radio business - a short-lived venture there. However, after import restrictions came into force in 1936, H. W. Clarke  had Collier & Beale begin manufacturing sets under licence from Gulbransen in the US.</p>\r\n<p>Model numbering in the 40\'s appears to have been three digit, with the first indicating the number of valves, the second the number of bands and the third the year.  For example, the model <span style="color:red">6</span>2<b>8</b> was a <span style="color:red">6</span>-valve dual wave set manufactured in 194<b>8</b>.  This continued into the 50\'s with a 4-digit scheme that was essentially the same but with 2 digits for the year.  The model <span style="color:red">5</span>1<b>51</b> was a <span style="color:red">5</span>-valve, broadcast-band only set manufactured in 19<b>51</b>.</p>\r\n<p>The name dropped out of use after 1958 along with another long-running brand manufactured by Collier & Beale: Cromwell.</p>'),
 	(17, 'HMV', 'hmv', 'His Masters Voice', 2, 0, '1926', 0, '1972', 0, '<p>HMV was an international brand that reaches back into the earliest days of radio.  In New Zealand it was a franchise owned from 1910 by E J Hyams, with the primary Australasian agency being held in Sydney.</p><p>In 1926 His Masters Voice (New Zealand) Ltd was formed and gramaphones, radios and radiograms were imported, produced and even manufactured for HMV (the principal manufacturer outside HMV themselves was Collier & Beale).\r\n</p>\r\n<p>Model numbering seems to follow a 3-digit scheme where the first 2 digits are the year of the model and the third digit is the number of valves.  Letters after indicate features: BC = Bbroadcast, DW = Dual Wave, P = Portable, RG = Radiogram, TRG = Table Radiogram.  After 1957 this moved to 4-digits, with the first 2 being the year, and the second two indicating the model for that year (01, 02, 03 etc depending how many models were released that year).</p>\r\n<p><span style="bold">Sources:</span><br>http://www.audioculture.co.nz/scenes/emi-new-zealand-the-first-50-years</p>'),
 	(18, 'Companion', 'companion', NULL, 5, 5, '1933', 0, '1951', 0, '<p>The Companion brand name was introduced to coincide with the introduction of superhet radios to the Johns family, and it immediately superceeded all other brand names except for Well Mayde which remained in use for all other products except radios.</p>'),
-	(19, 'Ultimate', 'ultimate', NULL, 15, 0, '1923', 0, NULL, 0, '<p>Ultimate was the first brand name of Radio Ltd.</p>'),
+	(19, 'Ultimate', 'ultimate', NULL, 15, 0, '1923', 0, NULL, 0, '<p>Ultimate was the original brand name of Radio Ltd.</p>'),
 	(20, 'Courier', 'courier', NULL, 15, 0, '1931', 0, '1955', 0, '<p>Courier was the \'other\' brand name of Radio Ltd. (Ultimate being the main brand)</p>'),
 	(21, 'Courier (original)', 'courier_original', 'Brings Tidings From Afar', 0, 0, '1927', 0, '1930', 1, '<P>The original Courier brand name belonged to J. Wiseman & Sons, a saddle maker.  They had a sideline making radios between 1927 and around 1930 when production ceased for unknown reasons - the Courier name was picked up the following year by Radio Ltd.</p>'),
 	(22, 'Skymaster', 'skymaster', NULL, 8, 8, NULL, 0, NULL, 0, 'Manufactured for Bond & Bond by Bell, the main model was a rebranded Bell Colt with different knobs and a different dial glass.'),
 	(23, 'Skyscraper', 'skyscraper', NULL, 15, 8, NULL, 0, NULL, 0, '<p>House brand for Bond & Bond, a major appliance retailer throughout New Zealand</p>'),
-	(24, 'Fleetwood', 'fleetwood', NULL, 20, 0, '1957', 0, NULL, 0, '<p>Feetwood appears to have been a simple rebadging of Philips and Mullard models for C. & A. Odlin Ltd, and was introduced to replace the Mullard brand in 1957 and was used on radios and televisions through until the 70\'s.  The Mullard brand was still used on valves and picture tubes.</p>');
+	(24, 'Fleetwood', 'fleetwood', NULL, 20, 0, '1957', 0, NULL, 0, '<p>Feetwood appears to have been a simple rebadging of Philips and Mullard models for C. & A. Odlin Ltd, and was introduced to replace the Mullard brand in 1957 and was used on radios and televisions through until the 70\'s.  The Mullard brand was still used on valves and picture tubes.</p>'),
+	(25, 'Fitzgerald', 'fitzgerald', NULL, 21, 0, NULL, 0, NULL, 0, '<p>Most likely a sideline brand of radios to the main business of servicing radio equipment.</p>');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.distributor
@@ -96,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~7 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -121,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `images` (
   `rank` int(11) DEFAULT '99' COMMENT '1=highest priority',
   `attribution` varchar(100) DEFAULT NULL COMMENT 'If (c) then add details here',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~272 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~279 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -406,7 +407,37 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(323, 'Ultimate Rcp', '529874237.jpg', 1, 51, 0, 99, NULL),
 	(324, 'Ultimate Rcp', '538486292.jpg', 1, 51, 0, 99, NULL),
 	(325, 'Ultimate Rcp', 'Dial Scale at night.jpg', 1, 51, 0, 99, NULL),
-	(326, 'Ultimate Rcp', 'Ultimate-1957.jpg', 1, 51, 0, 99, NULL);
+	(326, 'Ultimate Rcp', 'Ultimate-1957.jpg', 1, 51, 0, 99, NULL),
+	(327, 'Courtenay 15', '521826970.jpg', 1, 53, 0, 99, NULL),
+	(328, 'Courtenay 15', '521827110.jpg', 1, 53, 0, 99, NULL),
+	(329, 'Courtenay 15', '521827255.jpg', 1, 53, 0, 99, NULL),
+	(330, 'Courtenay 15', '521827708.jpg', 1, 53, 0, 99, NULL),
+	(331, 'Courtenay 15', '521828545.jpg', 1, 53, 0, 99, NULL),
+	(332, 'Courtenay 15', '521828694.jpg', 1, 53, 0, 99, NULL),
+	(333, 'Courtenay 15', '521829193.jpg', 1, 53, 0, 99, NULL),
+	(334, 'Rcnz 15', 'RCNZ 15 chassis layout.jpg', 1, 52, 0, 99, NULL),
+	(335, 'Rcnz 15', 'RCNZ 15 schematic.jpg', 1, 52, 0, 99, NULL),
+	(336, 'Pacific 15', '468812601.jpg', 1, 54, 0, 99, NULL),
+	(337, 'Pacific 15', '468812727.jpg', 1, 54, 0, 99, NULL),
+	(338, 'Bell Colt Early Transistorised Model', '556797917.jpg', 1, 7, 0, 99, NULL),
+	(339, 'Fitzgerald 1933 Bc', 'IMG_20170219_181850214.jpg', 1, 55, 0, 99, NULL),
+	(340, 'Fitzgerald 1933 Bc', 'IMG_20170219_181857759.jpg', 1, 55, 0, 99, NULL),
+	(341, 'Fitzgerald 1933 Bc', 'IMG_20170219_181905713_HDR.jpg', 1, 55, 0, 99, NULL),
+	(342, 'Fitzgerald 1933 Bc', 'IMG_20170219_181911723.jpg', 1, 55, 0, 99, NULL),
+	(343, 'Fitzgerald 1933 Bc', 'IMG_20170219_181916727.jpg', 1, 55, 0, 99, NULL),
+	(344, 'Fitzgerald 1933 Bc', 'IMG_20170219_181926951_HDR.jpg', 1, 55, 0, 99, NULL),
+	(345, 'Fitzgerald 1933 Bc', 'IMG_20170219_181933727_HDR.jpg', 1, 55, 0, 99, NULL),
+	(346, 'Fitzgerald 1933 Bc', 'IMG_20170219_181942638_HDR.jpg', 1, 55, 0, 99, NULL),
+	(347, 'Fitzgerald 1933 Bc', 'IMG_20170219_182016701.jpg', 1, 55, 0, 99, NULL),
+	(348, 'Fitzgerald 1933 Bc', 'IMG_20170219_182116256.jpg', 1, 55, 0, 99, NULL),
+	(349, 'Fitzgerald 1933 Bc', 'IMG_20170219_182131878_HDR.jpg', 1, 55, 0, 99, NULL),
+	(350, 'Fitzgerald 1933 Bc', 'IMG_20170219_182140897.jpg', 1, 55, 0, 99, NULL),
+	(351, 'Fitzgerald 1933 Bc', 'IMG_20170219_182145045.jpg', 1, 55, 0, 99, NULL),
+	(352, 'Fitzgerald 1933 Bc', 'IMG_20170219_182151417_HDR.jpg', 1, 55, 0, 99, NULL),
+	(353, 'Fitzgerald 1933 Bc', 'IMG_20170219_182158360.jpg', 1, 55, 0, 99, NULL),
+	(354, 'Fitzgerald 1933 Bc', 'IMG_20170219_182309408.jpg', 1, 55, 0, 99, NULL),
+	(355, 'Fitzgerald 1933 Bc', 'IMG_20170219_182318651.jpg', 1, 55, 0, 99, NULL),
+	(356, 'Fitzgerald 1933 Bc', 'IMG_20170219_182342466.jpg', 1, 55, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -425,9 +456,9 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `notes` longtext NOT NULL COMMENT 'Details about the manufacturer',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~20 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~19 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -450,7 +481,8 @@ INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `y
 	(17, 'Inductance Specialists Ltd', 'inductance_specialists', 'Greerton, Tauranga', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured RF coils and chokes, IF Transformers, coil packs, etc.  The famous B9 and B10 kitset radio, etc</p>'),
 	(18, 'Beacon Radio Ltd', 'beacon', 'Auckland', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured mains transformers, speaker transformers, chokes, etc.  Later, about 1970, taken over by Phillips NZ.</p>'),
 	(19, 'Auckland Transformer Co. Ltd', 'atc', 'Auckland', NULL, 0, NULL, 0, NULL, NULL, '<p>Manufactured mains transformers, speaker transformers, chokes, etc.</p><p><a class="gallery img_left" title="ATC Audio Output Transformer Specifications" href="/static/images/manufacturers/atc/specs.png"><img class="inline_image" src="/static/images/manufacturers/atc/specs_tn.png" alt="ATC Audio Output Tranformer Specs" /></a>\r\n'),
-	(20, 'Philips Electrical Industries of NZ Ltd', 'philips', 'Wellington', '1927', 0, NULL, 0, NULL, NULL, '<p>Philips started in New Zealand in May of 1927 as Philips Lamps (N.Z.) Ltd.  Prior to this, Turnbull & Jones (Wellington) and a New Zealand branch of Lawrence & Hanson Ltd (Aust.) jointly distributed Philips lamps (no radio products existed for Philips at this time).<br><br>\r\nInitially sets were imported from overseas factories, such as the 2510 and the 930A - but they didn\'t really have the performance of the American superhet designs, and so Philips sets struggled to gain traction against imported and locally manufactured sets.  This is probably the reason why, in 1934, they commissioned RCNZ to manufacture superhet radios under the Philips Radioplayer name using mostly Philips valves - apart from the mixer, an American 2A7, since Philips (who didn\'t need mixers in their TRF-based designs) didn\'t yet have a valve for this purpose.<br><br>\r\nIn 1936 Philips NZ finally began setting up a production facility here in NZ, although radio production never really began until around 1939, with full scale production beginning in the following year - but 2 years later the war effort stopped production of domestic radios.<br><br>\r\nFor a few years after the war Philips sets were very American in design, however as Europe began to rebuild the design swung back to have a European flavour again.<br><br>\r\nIn 1958 a new large factory in Naenae was opened and this produced radios and televisions (among other consumer items such as Philishave shavers).<br><br>\r\nThe final valve set produced in NZ was the B2Z56U which was sold between 1968 and 1970 - interestingly long after transistors had taken the stage.');
+	(20, 'Philips Electrical Industries of NZ Ltd', 'philips', 'Wellington', '1927', 0, NULL, 0, NULL, NULL, '<p>Philips started in New Zealand in May of 1927 as Philips Lamps (N.Z.) Ltd.  Prior to this, Turnbull & Jones (Wellington) and a New Zealand branch of Lawrence & Hanson Ltd (Aust.) jointly distributed Philips lamps (no radio products existed for Philips at this time).<br><br>\r\nInitially sets were imported from overseas factories, such as the 2510 and the 930A - but they didn\'t really have the performance of the American superhet designs, and so Philips sets struggled to gain traction against imported and locally manufactured sets.  This is probably the reason why, in 1934, they commissioned RCNZ to manufacture superhet radios under the Philips Radioplayer name using mostly Philips valves - apart from the mixer, an American 2A7, since Philips (who didn\'t need mixers in their TRF-based designs) didn\'t yet have a valve for this purpose.<br><br>\r\nIn 1936 Philips NZ finally began setting up a production facility here in NZ, although radio production never really began until around 1939, with full scale production beginning in the following year - but 2 years later the war effort stopped production of domestic radios.<br><br>\r\nFor a few years after the war Philips sets were very American in design, however as Europe began to rebuild the design swung back to have a European flavour again.<br><br>\r\nIn 1958 a new large factory in Naenae was opened and this produced radios and televisions (among other consumer items such as Philishave shavers).<br><br>\r\nThe final valve set produced in NZ was the B2Z56U which was sold between 1968 and 1970 - interestingly long after transistors had taken the stage.'),
+	(21, 'Fitzgerald Radio Service Ltd', 'fitzgerald', '39 Woodham Rd, Christchurch', NULL, 0, NULL, 0, NULL, NULL, '<p>Nothing really known about Fitzgerald Radio Service Ltd.  Most likely only ever a few sets produced as a sideline to servicing radios.</p>');
 /*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.model
@@ -470,9 +502,9 @@ CREATE TABLE IF NOT EXISTS `model` (
   `notes` longtext COMMENT 'Information about this set',
   `if` text COMMENT 'IF transformer peak freq.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~48 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~52 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -525,7 +557,11 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(48, 0, 'RCNZ 24', 3, '1937', 0, NULL, 0, 5, '6A8, 6K7, 6B7G, 42, 80 and 6E5 magic eye on some models', 1, '<p>5-valve (and 6E5 magic eye on some models) chassis, fairly basic design although engineered for an unusual cabinet design with two controls (tuning and on/off) on the left, two more (volume and tone) on the right and the eye dead center between them.  Uses a 5" RCNZ EM speaker</p>', '456kc/s'),
 	(49, 0, 'RCNZ 84', 3, '1938', 0, NULL, 0, 5, '6A8, 6K7, 6B7, 42, 80 (and 6E5 magic eye on some models)', 1, '<p>5-valve chassis, similar (reasonably basic) design to the model 24.  A magic eye is included in the schematic, however it has been sighted on the Columbus version but not the Courtenay.', '456kc/s'),
 	(50, 0, 'Ultimate RCP', 16, '1953', 0, '1959', 0, 5, NULL, 1, '<p>The second variant of the Cygnet (the earlier chassis code is RBZ - a 4-valve model).  Excellent performing chassis using a ferrite aerial which provides excellent reception.</p>', NULL),
-	(51, 50, 'RCP', 19, '1953', 0, '1959', 0, 5, NULL, 1, 'The RCP \'Cygnet\' was a bookshelf plastic radio available in 5 pastel colours according to advertising.  Sighted colours are white, green, blue, grey and tortishell / brown.</p><p>This model was released under several brands, including Ultimate, Rolls, Ekco and Golden Knight (and possibly others).', NULL);
+	(51, 50, 'RCP', 19, '1953', 0, '1959', 0, 5, NULL, 1, 'The RCP \'Cygnet\' was a bookshelf plastic radio available in 5 pastel colours according to advertising.  Sighted colours are white, green, blue, grey and tortishell / brown.</p><p>This model was released under several brands, including Ultimate, Rolls, Ekco and Golden Knight (and possibly others).', NULL),
+	(52, 0, 'RCNZ 15', 3, '1935', 0, NULL, 0, 5, '6A7, 6D6, 6B7, 42, 80', 1, '<p> Basic 1935 5-valve with aero dial, single band, no RF stage.', '456kc/s'),
+	(53, 52, '15', 1, '1935', 0, NULL, 0, 5, NULL, 1, 'Courtenay 5-valve, AM broadcast only.  This is likely one of the first \'unified\' chassis models where Courtenay and Pacific got the same chassis (and in this case it seems the same cabinet - see the Pacific model 15) - just with different badging.  After this the dials and cabinets started to become quite different for most models.', NULL),
+	(54, 52, '15', 3, '1935', 0, NULL, 0, 5, NULL, 1, 'Pacific 5-valve, AM broadcast only.  This is likely one of the first \'unified\' chassis models where Courtenay and Pacific got the same chassis (and in this case it seems the same cabinet - see the Courtenay model 15) - just with different badging.  After this the dials and cabinets started to become quite different for most models.', NULL),
+	(55, NULL, '1933 BC', 25, '1933', 1, NULL, 0, 5, NULL, 1, '<p>A very rare console from a Chch service company.  Nothing much is known.', NULL);
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -540,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~1 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~0 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -558,7 +594,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~83 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~82 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES
