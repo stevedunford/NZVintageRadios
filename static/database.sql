@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `brand` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.brand: ~21 rows (approximately)
+-- Dumping data for table nzvr_db.brand: ~25 rows (approximately)
 DELETE FROM `brand`;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`id`, `name`, `alias`, `tagline`, `manufacturer_id`, `distributor_id`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `notes`) VALUES
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nzvr_db.distributor: ~4 rows (approximately)
+-- Dumping data for table nzvr_db.distributor: ~7 rows (approximately)
 DELETE FROM `distributor`;
 /*!40000 ALTER TABLE `distributor` DISABLE KEYS */;
 INSERT INTO `distributor` (`id`, `name`, `alias`, `address`, `notes`) VALUES
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8 COMMENT='locations and descriptions of images used on the site\r\n';
 
--- Dumping data for table nzvr_db.images: ~279 rows (approximately)
+-- Dumping data for table nzvr_db.images: ~310 rows (approximately)
 DELETE FROM `images`;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schematic`, `rank`, `attribution`) VALUES
@@ -437,7 +437,13 @@ INSERT INTO `images` (`id`, `title`, `filename`, `type`, `type_id`, `is_schemati
 	(353, 'Fitzgerald 1933 Bc', 'IMG_20170219_182158360.jpg', 1, 55, 0, 99, NULL),
 	(354, 'Fitzgerald 1933 Bc', 'IMG_20170219_182309408.jpg', 1, 55, 0, 99, NULL),
 	(355, 'Fitzgerald 1933 Bc', 'IMG_20170219_182318651.jpg', 1, 55, 0, 99, NULL),
-	(356, 'Fitzgerald 1933 Bc', 'IMG_20170219_182342466.jpg', 1, 55, 0, 99, NULL);
+	(356, 'Fitzgerald 1933 Bc', 'IMG_20170219_182342466.jpg', 1, 55, 0, 99, NULL),
+	(357, 'Pacific 106', '1.jpg', 1, 57, 0, 99, NULL),
+	(358, 'Pacific 106', '2.jpg', 1, 57, 0, 99, NULL),
+	(359, 'Pacific 106', '3.jpg', 1, 57, 0, 99, NULL),
+	(360, 'Pacific 106', '4.jpg', 1, 57, 0, 99, NULL),
+	(361, 'Pacific 106', '5.jpg', 1, 57, 0, 99, NULL),
+	(362, 'Rcnz 106', '106 schematic.jpg', 1, 56, 0, 99, NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.manufacturer
@@ -458,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   UNIQUE KEY `alias` (`alias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.manufacturer: ~19 rows (approximately)
+-- Dumping data for table nzvr_db.manufacturer: ~21 rows (approximately)
 DELETE FROM `manufacturer`;
 /*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
 INSERT INTO `manufacturer` (`id`, `name`, `alias`, `address`, `year_started`, `year_started_approx`, `year_ended`, `year_ended_approx`, `became`, `became_how`, `notes`) VALUES
@@ -504,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `model` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.model: ~52 rows (approximately)
+-- Dumping data for table nzvr_db.model: ~54 rows (approximately)
 DELETE FROM `model`;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
 INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_year_approx`, `end_year`, `end_year_approx`, `num_valves`, `valve_lineup`, `bands`, `notes`, `if`) VALUES
@@ -561,7 +567,10 @@ INSERT INTO `model` (`id`, `chassis`, `code`, `brand_id`, `start_year`, `start_y
 	(52, 0, 'RCNZ 15', 3, '1935', 0, NULL, 0, 5, '6A7, 6D6, 6B7, 42, 80', 1, '<p> Basic 1935 5-valve with aero dial, single band, no RF stage.', '456kc/s'),
 	(53, 52, '15', 1, '1935', 0, NULL, 0, 5, NULL, 1, 'Courtenay 5-valve, AM broadcast only.  This is likely one of the first \'unified\' chassis models where Courtenay and Pacific got the same chassis (and in this case it seems the same cabinet - see the Pacific model 15) - just with different badging.  After this the dials and cabinets started to become quite different for most models.', NULL),
 	(54, 52, '15', 3, '1935', 0, NULL, 0, 5, NULL, 1, 'Pacific 5-valve, AM broadcast only.  This is likely one of the first \'unified\' chassis models where Courtenay and Pacific got the same chassis (and in this case it seems the same cabinet - see the Courtenay model 15) - just with different badging.  After this the dials and cabinets started to become quite different for most models.', NULL),
-	(55, NULL, '1933 BC', 25, '1933', 1, NULL, 0, 5, NULL, 1, '<p>A very rare console from a Chch service company.  Nothing much is known.', NULL);
+	(55, NULL, '1933 BC', 25, '1933', 1, NULL, 0, 5, NULL, 1, '<p>A very rare console from a Chch service company.  Nothing much is known.', NULL),
+	(56, 0, 'RCNZ 106', 3, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 1, 'Used in Courtenay and Pacific models in 1933/34.  6-valve superhet with AVC.  This model 106 should not be confused with an earlier (1931) 6-valve TRF console produced by RCNZ - also called the model 106.', '175kc/s'),
+	(57, 56, '106', 3, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 1, '1934 Pacific 6-valve set.  Note the same chassis was used in the Courtenay model 106', '175kc/s'),
+	(58, 56, '106', 1, '1934', 0, NULL, 0, 6, '58, 2A7, 58, 2B7, 2A5, 80', 1, '1934 Courtenay 6-valve set.  Note the same chassis was used in the 1934 Pacific 6-valve set', '175kc/s');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 
 -- Dumping structure for table nzvr_db.user
@@ -576,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.user: ~0 rows (approximately)
+-- Dumping data for table nzvr_db.user: ~1 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`user_id`, `date_joined`, `username`, `email`, `password`) VALUES
@@ -594,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `valve` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 
--- Dumping data for table nzvr_db.valve: ~82 rows (approximately)
+-- Dumping data for table nzvr_db.valve: ~83 rows (approximately)
 DELETE FROM `valve`;
 /*!40000 ALTER TABLE `valve` DISABLE KEYS */;
 INSERT INTO `valve` (`id`, `name`, `filename`, `type`) VALUES

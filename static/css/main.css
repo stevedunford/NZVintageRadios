@@ -369,6 +369,10 @@ menuIcon img {
     color: #666;
 }
 
+#container .bold {
+    font-weight: bolder;
+}
+
 #container .lightred {
     background-color: #faa;
 }

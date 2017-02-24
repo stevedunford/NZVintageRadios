@@ -543,6 +543,10 @@ def manufacturer(alias=None):
 def tips():
     return render_template("tech.html", title="Technical Info")
     
+@app.route("/links")
+def links():
+    return render_template("links.html", title="Useful Links")
+    
 @app.route("/publications")
 def publications():
     return render_template("publications.html", title="Publications")
@@ -646,4 +650,4 @@ def strip_outer_p_tags(text):
 
 
 if __name__ == "__main__":
-    app.run()#debug=True)
+    app.run(debug=True)
