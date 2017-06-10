@@ -16,13 +16,11 @@
           </p><p><b>{{model['name']}}</b><br />
           {% if vars.update({'prev' : model['name']}) %}{% endif %}
         {% endif %}
-      {% if model['chassis'] == None or model['chassis'] != 0 %}
         {% if vars.update({'count' : vars.count + 1}) %}{% endif %}
       
           <a href={{ url_for('model', brand=model['name'], code=model['code']) }}>
              {% if model['start_year']|int %}{{ model['start_year'] }}{% else %}????{% endif %} - {{ model['name'] }} {{ model['code'] }}
           </a><br />
-      {% endif %}
       {% endfor %}</p>
       <br>
       <h4>{{ vars.count }} radios currently documented</h4>

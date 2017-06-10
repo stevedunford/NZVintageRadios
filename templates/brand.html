@@ -36,7 +36,7 @@
       <li class='bold'>YEAR - MODEL NAME</li>
       {% for model in models %}
         <li>
-          <a href={{ url_for('model', brand=brand['name'], code=model['code']) }}>
+          <a href={{ model['url'] }}>
              {% if model['start_year']|int %}{{ model['start_year'] }}{% else %}????{% endif %} - {{ model['code'] }}
           </a>
         </li>

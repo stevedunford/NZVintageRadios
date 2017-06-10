@@ -6,44 +6,32 @@
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
 	new nicEditor({iconsPath : '/static/js/nicEditorIcons.gif', buttonList : ['bold','italic','underline','removeformat','subscript','superscript','html','image','upload','link','unlink'], maxHeight: '250'}).panelInstance('notes');
+    new nicEditor({iconsPath : '/static/js/nicEditorIcons.gif', buttonList : ['bold','italic','underline','removeformat','subscript','superscript','html','image','upload','link','unlink'], maxHeight: '250'}).panelInstance('chassis_notes');
 });
 </script>
 
 <div id="container">
+  <p class="grey">All new models will sit in an admin queue to be checked to ensure the listing meets the standards required for the site.  If the model is a brand not listed or you have any other additional information about the model please email admin@vintageradio.co.nz</p>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
-      <p {% if form.name.errors %} class="error"{% endif %}>Name <span class='reqd'>*</span><br>{{ form.name(size=60) }} {% for error in form.name.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">The full name, ie: <b>Radio Corporation of New Zealand</b></span></p>
-        
-      <p {% if form.alias.errors %} class="error"{% endif %}>Alias <span class='reqd'>*</span><br>{{ form.alias(size=60) }} {% for error in form.alias.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">all lower case, with underscores for spaces if needed (preferably one word though) used by the site for links. eg: Radio Corps alias is <b>rcnz</b>.  Akrads is <b>akrad</b>.  Cash Radio's is <b>cash_radio</b></span></p>
+      <!-- Model Brand --><p {% if form.brand_id.errors %} class="error"{% endif %}>Brand {{ form.brand_id }} {% for error in form.brand_id.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">The radio brand - if you leave this blank the radio will sit in an unclassified group.</span></p>
       
-      <p {% if form.year_started.errors %} class="error"{% endif %}>Year Started<br>{{ form.year_started(size=30) }} {% for error in form.year_started.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year did they start manufacturing (if known) and is this year approximate</span><br></p>
+      <!-- Model Code --><p {% if form.code.errors %} class="error"{% endif %}>Code <span class='reqd'>*</span><br>{{ form.code(size=60) }} {% for error in form.code.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">The model code, ie: <b>18</b>, <b>5150</b>, <b>Buffalo</b> or <b>6-Valve Dual Wave</b>.  This is generally found either on the back of the chassis or a label inside the cabinet.</span></p>
       
-      <p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_ended_approx }}<br><span class="smaller blue italic">What year did they cease manufacturing (if known) and is this year approximate</span><br></p>
+      <!-- Model Nickname --><p {% if form.nickname.errors %} class="error"{% endif %}>Nickname / Variant<br>{{ form.nickname(size=60) }} {% for error in form.nickname.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br><span class="smaller blue italic">If the radio has a nickname (often only ever found in advertising), add it here.  For example, the 1934/5 Pacific 6-Valve Dual-Wave set came in 7 different variants, like the <b>Elite</b> and <b>Raleigh</b>.  The Courtenay Model 38 tombstone was known as the <b>Opera</b>.</span></p>
+
+      <!-- Model Year Begin --><p {% if form.year_started.errors %} class="error"{% endif %}>Year Started<br>{{ form.year_started(size=30) }} {% for error in form.year_started.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_started_approx }}<br><span class="smaller blue italic">What year was this model introduced (if known) and is this year approximate</span><br></p>
       
-      <p {% if form.became.errors %} class="error"{% endif %}>Became {{ form.became }}<br>Why {{ form.became_how }}<br><span class="smaller blue italic">Did they change to another name / company?  And if so, why or how did that happen?</span></p>
+      <!-- Model Year End --><p {% if form.year_ended.errors %} class="error"{% endif %}>Year Finished<br>{{ form.year_ended(size=30) }} {% for error in form.year_ended.errors %} <span class='error'>{{ error }}</span>{% endfor %} - Approximate? {{ form.year_ended_approx }}<br><span class="smaller blue italic">What year did this model cease production (if known) and is this year approximate.  Leave blank if unknown.</span><br></p>
+
+      <!-- Model Notes --><p {% if form.notes.errors %} class="error"{% endif %}>Notes <span class='reqd'>*</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br><span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span><br>
+
+      <!-- Chassis Details --><p {% if form.chassis_id.errors %} class="error"{% endif %}>Chassis {{ form.chassis_id }}<br><span class="smaller blue italic">&nbsp;If this model uses a chassis already in the database then select it here, otherwise enter the chassis information below.</span><br><div class="grey">&nbsp;Chassis &nbsp;Manufacturer {{ form.manufacturer }}<br><span class="smaller blue italic">&nbsp;Choose 'Unknown' if you don't know</span><hr>&nbsp;Number of Bands {{ form.bands }}<br><span class="smaller blue italic">&nbsp;Is it AM only? (1)  AM + SW? (2), AM and several SW bands?  Add them up and enter the number here.</span><hr>&nbsp;Number of Valves {{ form.num_valves }}<br><span class="smaller blue italic">&nbsp;How many valves does this model have (including magic eye(s)?</span><hr>&nbsp;Valve Lineup {{ form.valve_lineup }}<br><span class="smaller blue italic">&nbsp;Each valve comma-seaparated from RF to output, then rectifier, then magic eye if it has one.<br>&nbsp;for example: 6D6, 6A7, 6D6, 6B7, 42, 80 and 6E5 magic eye, or 6K8G, 6K7G, 6B8G, 6K6G, 84</span><hr>&nbsp;IF Peak Frequency {{ form.if_peak }}<br><span class="smaller blue italic">&nbsp;IF Frequency - enter in this format: <b>455kc/s</b> if known</span><hr>&nbsp;Chassis Notes {{ form.chassis_notes }}<br><span class="smaller blue italic">&nbsp;Notes specific to the chassis (if any)</span></div></p>
       
-      <p {% if form.address.errors %} class="error"{% endif %}>City/Town {{ form.address(size=60) }}<br><span class="smaller blue italic">Where were they primarily based (City, and suburb if know, better still head office address if known)</span></p>
-      
-      <p {% if form.notes.errors %} class="error"{% endif %}>Notes <span class='reqd'>*</span>{% for error in form.notes.errors %} <span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.notes }}<br><span class="smaller blue italic">As much pertinent information as you can - keep the formatting to a minimum this can be fixed later</span><br>
-        
-      <p {% if form.logo.errors %} class="error"{% endif %}>Manufacturer Logo: {% for error in form.logo.errors %}<span class='error'>{{ error }}</span>{% endfor %}<br>{{ form.logo }}<br><span class="smaller blue italic">If you have one</span></p>
- 
+
     <p>
-      <input class="bold blue-background rounded" type="submit" value="Add Manufacturer"> <span class="blue italic"><=== Check your details then click here to add the manufacturer...</span>
+      <input class="bold blue-background rounded" type="submit" value="Add Model"> <span class="blue italic"><=== Check your details then click here to add the model...</span>
     </p>
-    <br><br>
-    <b>ERROR CHART - FOR DEVELOPMENT USE</b><br>
-    name: {% for error in form.name.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    alias: {% for error in form.alias.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    start: {% for error in form.year_started.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    start appr: {% for error in form.year_started_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    end: {% for error in form.year_ended.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    end appr: {% for error in form.year_ended_approx.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    because: {% for error in form.became.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    how: {% for error in form.became_how.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    address: {% for error in form.address.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    notes: {% for error in form.notes.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
-    logo: {% for error in form.logo.errors %}<span class='error'>[{{ error }}]</span>{% endfor %}<br />
     
   </form>
 </div>
